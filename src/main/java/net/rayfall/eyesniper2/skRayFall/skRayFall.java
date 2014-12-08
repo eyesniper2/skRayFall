@@ -53,7 +53,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	
 	 @Override
 	    public void onEnable() {
-		 getLogger().info("Yay! You are running skRayFall 1.0.6!\nNathan and Lewis <3 you");
+		 getLogger().info("Yay! You are running skRayFall 1.0.6.1!\nNathan and Lewis <3 you");
 		 Skript.registerAddon(this);
 		 getLogger().info("Cooking Bacon...");
 		 try {
@@ -62,7 +62,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		    } catch (IOException e) {
 		        getLogger().info("MCStats had an issue :/ " + e.getMessage() + "This will not affect anything. *Server gets moar bacon*");
 		    }
-		 if (getServer().getPluginManager().getPlugin("Citizens").isEnabled())
+		 if (getServer().getPluginManager().isPluginEnabled("Citizens"))
 		    {
 			 getLogger().info("Getting more bacon for the army of citizens...");
 			 Skript.registerEffect(EffCreateCitizen.class,"create [a] citizen named %string% (at|%direction%) %location% [as (a|an) %entitytypes%]");
@@ -145,6 +145,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	    public void onDisable(){
 		 getLogger().info("Awww, you have disabled skRayFall D:");
 	 }
+	 
 	 
 	 }
 
