@@ -4,6 +4,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
@@ -16,7 +17,7 @@ import ch.njol.skript.util.Slot;
 @SuppressWarnings({ "unused" })
 public class EvtCraftClick extends SkriptEvent {
 	
-	@javax.annotation.Nullable
+	@Nullable
 	private Literal<Number> evtslotclick;
 	@SuppressWarnings("unchecked")
 	

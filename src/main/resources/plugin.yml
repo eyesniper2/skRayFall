@@ -1,7 +1,12 @@
 name: skRayFall
 description: An addon for skript that adds Citizens support, EffectLib support and other features.
 author: eyesniper2
+website: http://rayfall.net/
 main: net.rayfall.eyesniper2.skRayFall.skRayFall
-version: 1.0.6.1
+version: 1.0.7
 depend: [Skript]
-soft-depend: [Citizens, EffectLib]
+softdepend: [Citizens, EffectLib]
+commands:
+  skrayfall:
+    description: Base for all skRayFall commands.
+    usage: /skrayfall <reload|createeffect> [effectname] [effectType]

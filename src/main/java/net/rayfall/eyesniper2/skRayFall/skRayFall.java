@@ -25,10 +25,15 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSpawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
+import net.rayfall.eyesniper2.skRayFall.Commands.EffectLibCommands;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -50,12 +55,19 @@ import de.slikey.effectlib.EffectManager;
 public class skRayFall extends JavaPlugin implements Listener {
 	
 	public static EffectManager effectManager;
+	public static Plugin plugin = null;
 	
 	 @Override
 	    public void onEnable() {
-		 getLogger().info("Yay! You are running skRayFall 1.0.6.1!\nNathan and Lewis <3 you");
+		 getLogger().info("Yay! You are running skRayFall 1.0.7!\nNathan and Lewis <3 you");
 		 Skript.registerAddon(this);
+		 saveDefaultConfig();
+		 this.getCommand("skrayfall").setExecutor(new EffectLibCommands(this));
+		 if (plugin == null){
+			 plugin = this;
+		 }
 		 getLogger().info("Cooking Bacon...");
+		 
 		 try {
 		        Metrics metrics = new Metrics(this);
 		        metrics.start();
@@ -131,6 +143,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 getLogger().info("Got bacon for the EffectLib partical ninjas!");
 			 EffectLib lib = EffectLib.instance();
 			 effectManager = new EffectManager(lib);
+			 //to be added in the next update
+			 //Skript.registerEffect(EffGeneralEffectLib.class, "(spawn|create|apply) effectlib effect %string% (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffEffectLibAtom.class, "(spawn|create|apply) the atom (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffEffectLibBleed.class, "(spawn|create|apply) the bleed (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffBasicEffectLib.class,"spawn formation %string% at %location% for %timespan%");
@@ -138,6 +152,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 }
 		 
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
+		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
+		 Skript.registerEffect(EffSetScore.class,"set score %string% in sidebar of %player% to %number%");
+		 Skript.registerEffect(EffDeleteScore.class,"delete score %string% in sidebar of %player%");
+		 Skript.registerEffect(EffRemoveScoreboard.class,"(wipe|erase) %player%['s] sidebar");
 		 getLogger().info("Bacon is ready!");
 	 }
 	 

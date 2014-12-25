@@ -1,10 +1,10 @@
 package net.rayfall.eyesniper2.skRayFall.CitizenConditions;
 
-import javax.annotation.Nullable;
-
 import net.citizensnpcs.api.event.NPCEvent;
 import net.citizensnpcs.api.npc.NPC;
+
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;

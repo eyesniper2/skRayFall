@@ -1,12 +1,11 @@
 package net.rayfall.eyesniper2.skRayFall.CitizenExpressions;
 
-import javax.annotation.Nullable;
-
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 
 import org.bukkit.event.Event;
+import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;

@@ -1,14 +1,14 @@
 package net.rayfall.eyesniper2.skRayFall.CitizenEffects;
 
-import javax.annotation.Nullable;
-
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.api.trait.trait.Equipment;
+
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
