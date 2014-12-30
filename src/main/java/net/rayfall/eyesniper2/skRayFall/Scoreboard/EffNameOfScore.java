@@ -1,12 +1,9 @@
 package net.rayfall.eyesniper2.skRayFall.Scoreboard;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
@@ -37,18 +34,19 @@ public class EffNameOfScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-	if (player.getSingle(evt) == null){
+	if (!(player.getSingle(evt).isOnline())){
 		Skript.error("The player is not online!");
 	}
 	else{
-		ScoreboardManager sbManager = Bukkit.getScoreboardManager();
-		Scoreboard sb = sbManager.getNewScoreboard();
-		
-		Objective objective = sb.registerNewObjective("hold", "dummy");
-		objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-		objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
-		
-		player.getSingle(evt).setScoreboard(sb);
+		if (player.getSingle(evt).getScoreboard().getObjective("sideHold") != null){
+			Objective objective = player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+			objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
+		}
+		else{
+			Objective objectiveh = player.getSingle(evt).getScoreboard().registerNewObjective("sideHold", "dummy");
+			objectiveh.setDisplaySlot(DisplaySlot.SIDEBAR);
+			objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
+		}
 	}
 	
 		

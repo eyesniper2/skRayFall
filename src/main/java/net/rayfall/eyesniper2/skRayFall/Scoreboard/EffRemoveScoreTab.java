@@ -11,18 +11,16 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffDeleteScore extends Effect{
+public class EffRemoveScoreTab extends Effect{
+	//(wipe|erase|delete) %player%['s] tab[score]
 	
-	//delete score %string% in sidebar of %player%
-	private Expression<String> name;
 	private Expression<Player> player;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		name = (Expression<String>) e[0];
-		player = (Expression<Player>) e[1];
+		player = (Expression<Player>) e[0];
 		return true;
 	}
 
@@ -33,26 +31,17 @@ public class EffDeleteScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if (!(player.getSingle(evt).isOnline())){
+		if (player.getSingle(evt) == null){
 			Skript.error("The player is not online!");
 		}
 		else{
-			if(player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null){
-				if(player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR).getScore(name.getSingle(evt).replace("\"", "")) != null) {
-					player.getSingle(evt).getScoreboard().resetScores(name.getSingle(evt).replace("\"", ""));
-				}
-				else{
-					Skript.error("That score does not exist!");
-				}
+			if (player.getSingle(evt).getScoreboard().getObjective("holdTab") != null){
+				player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.PLAYER_LIST).unregister();
 			}
 			else{
-				Skript.error("No sidebar score has been set!");
+				Skript.error("That player doesn't have a tab score!");
 			}
-			
-			
-			
 		}
-		
 		
 	}
 

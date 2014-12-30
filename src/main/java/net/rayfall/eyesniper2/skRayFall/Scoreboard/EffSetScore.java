@@ -8,6 +8,7 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.eclipse.jdt.annotation.Nullable;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -37,10 +38,15 @@ public class EffSetScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
+		if (player.getSingle(evt).getScoreboard() == null){
+			Skript.error("This player is either not online or has yet to have a the name of a scoreboard set for them");
+		}
+		else{
 		Scoreboard sb = player.getSingle(evt).getScoreboard();
 		Objective objective = sb.getObjective(DisplaySlot.SIDEBAR);
 		Score score = objective.getScore(name.getSingle(evt).replace("\"", ""));
 		score.setScore(num.getSingle(evt).intValue());
+	}
 	}
 
 }

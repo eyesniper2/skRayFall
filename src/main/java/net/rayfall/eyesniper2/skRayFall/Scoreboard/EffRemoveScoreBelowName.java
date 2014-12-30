@@ -11,16 +11,15 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffRemoveScoreboard extends Effect{
-//(wipe|erase) %player%['s] sidebar
+public class EffRemoveScoreBelowName extends Effect{
+	//(wipe|erase|delete) score below %player%
 	
 	private Expression<Player> player;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-
 		player = (Expression<Player>) e[0];
 		return true;
 	}
@@ -32,14 +31,18 @@ public class EffRemoveScoreboard extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if(player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null){
-		player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR).unregister();
-	}
-		else{
-			Skript.error("A scoreboard has not been set for this player");
+		if (player.getSingle(evt) == null){
+			Skript.error("The player is not online!");
 		}
+		else{
+			if (player.getSingle(evt).getScoreboard().getObjective("holdBottom") != null){
+				player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.BELOW_NAME).unregister();
+			}
+			else{
+				Skript.error("That player doesnt have a scoreboard under their name!");
+			}
+		}
+		
 	}
-	
-	
 
 }

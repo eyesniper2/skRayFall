@@ -13,7 +13,7 @@ import ch.njol.util.Kleenean;
 
 public class ExprLastCitizen extends SimpleExpression<Number>{
 	
-	public static NPC lastNPC = null;
+	public static NPC lastNPC;
 
 	@Override
 	public Class<? extends Number> getReturnType() {

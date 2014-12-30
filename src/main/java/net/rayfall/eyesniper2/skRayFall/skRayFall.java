@@ -32,16 +32,24 @@ import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreBelowName;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreTab;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreBelowName;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 import org.mcstats.Metrics;
 
 import ch.njol.skript.Skript;
@@ -59,7 +67,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 	
 	 @Override
 	    public void onEnable() {
-		 getLogger().info("Yay! You are running skRayFall 1.0.7!\nNathan and Lewis <3 you");
+		 getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!\nNathan and Lewis <3 you");
+		 getServer().getPluginManager().registerEvents(this, this);
 		 Skript.registerAddon(this);
 		 saveDefaultConfig();
 		 this.getCommand("skrayfall").setExecutor(new EffectLibCommands(this));
@@ -152,16 +161,29 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 }
 		 
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
+		 //ScoreBoard Stuff
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
 		 Skript.registerEffect(EffSetScore.class,"set score %string% in sidebar of %player% to %number%");
 		 Skript.registerEffect(EffDeleteScore.class,"delete score %string% in sidebar of %player%");
-		 Skript.registerEffect(EffRemoveScoreboard.class,"(wipe|erase) %player%['s] sidebar");
+		 Skript.registerEffect(EffRemoveScoreboard.class,"(wipe|erase|delete) %player%['s] sidebar");
+		 Skript.registerEffect(EffSetScoreBelowName.class,"set score %string% below %player% to %number% for %player%");
+		 Skript.registerEffect(EffRemoveScoreBelowName.class,"(wipe|erase) below score[s] for %player%");
+		 Skript.registerEffect(EffSetScoreTab.class,"set tab[list] score of %player% to %number% for %player%");
+		 Skript.registerEffect(EffRemoveScoreTab.class,"(wipe|erase|delete) %player%['s] tab[list]");
 		 getLogger().info("Bacon is ready!");
 	 }
 	 
 	 @Override
 	    public void onDisable(){
 		 getLogger().info("Awww, you have disabled skRayFall D:");
+	 }
+	 
+	 @EventHandler
+	 public void onJoin(PlayerJoinEvent evt){
+		 Player player = evt.getPlayer();
+		 ScoreboardManager manager = Bukkit.getScoreboardManager();
+		 Scoreboard board = manager.getNewScoreboard();
+		 player.setScoreboard(board);
 	 }
 	 
 	 
