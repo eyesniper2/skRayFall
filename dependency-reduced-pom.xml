@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rayfall.eyesniper2</groupId>
   <artifactId>skRayFall</artifactId>
-  <version>1.0.8</version>
+  <version>1.1.0</version>
   <build>
     <plugins>
       <plugin>
@@ -57,6 +57,10 @@
       <id>elmakers-repo</id>
       <url>http://maven.elmakers.com/repository/</url>
     </repository>
+    <repository>
+      <id>shadowvolt-repo</id>
+      <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -64,6 +68,12 @@
       <artifactId>spigot-api</artifactId>
       <version>1.8-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.citizensnpcs</groupId>
@@ -76,6 +86,12 @@
       <artifactId>effectlib</artifactId>
       <version>2.4</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.comphenix.protocol</groupId>
+      <artifactId>ProtocolLib</artifactId>
+      <version>3.6.3-SNAPSHOT</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.bukkit</groupId>

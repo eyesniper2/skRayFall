@@ -29,6 +29,9 @@ import net.rayfall.eyesniper2.skRayFall.Commands.EffectLibCommands;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
+import net.rayfall.eyesniper2.skRayFall.EffectLib.EffGeneralEffectLib;
+import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
+import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
@@ -38,6 +41,7 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
+import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -50,7 +54,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
+
+import com.vexsoftware.votifier.model.VotifierEvent;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
@@ -153,14 +160,40 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 EffectLib lib = EffectLib.instance();
 			 effectManager = new EffectManager(lib);
 			 //to be added in the next update
-			 //Skript.registerEffect(EffGeneralEffectLib.class, "(spawn|create|apply) effectlib effect %string% (at|on|to) [the] %entities/location% for %timespan%");
+			 Skript.registerEffect(EffGeneralEffectLib.class, "(spawn|create|apply) effectlib effect %string% (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffEffectLibAtom.class, "(spawn|create|apply) the atom (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffEffectLibBleed.class, "(spawn|create|apply) the bleed (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffBasicEffectLib.class,"spawn formation %string% at %location% for %timespan%");
-			 
 		 }
-		 
+		//Votifier Stuff 
+		 if (getServer().getPluginManager().isPluginEnabled("Votifier")){
+			 getLogger().info("Getting more bacon for the Votifier runners!");
+			 Skript.registerEvent("On Vote", SimpleEvent.class, VotifierEvent.class, "vote[ing]");
+			 EventValues.registerEventValue(VotifierEvent.class, Player.class, new Getter<Player, VotifierEvent>() {
+				    @SuppressWarnings("deprecation")
+					@Nullable
+		            @Override
+		            public Player get(VotifierEvent VotifierEvent) {
+		            	String h = VotifierEvent.getVote().getUsername();
+		            	if (Bukkit.getPlayer(h).isOnline()){
+		            		return Bukkit.getPlayer(h);
+		            	}
+		            	else
+		            		Skript.error("That player does not exist or is not online right now.");
+		            		String oh = VotifierEvent.getVote().getUsername();
+		            		return (Player) Bukkit.getOfflinePlayer(oh);
+		            }
+		        }, 0);
+		 }
+		 else{
+			 getLogger().info("No Votifier Found! *Checks oven for finished bacon*");
+		 }
+		 //Cool 1.8 Stuff!
+		 Skript.registerEffect(EffTitle.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
+		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
+		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
 		 //ScoreBoard Stuff
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
 		 Skript.registerEffect(EffSetScore.class,"set score %string% in sidebar of %player% to %number%");

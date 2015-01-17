@@ -21,15 +21,15 @@
 					<artifactSet>
 						<includes>
 							<include>org.mcstats.*:*</include>
-							
+
 						</includes>
 					</artifactSet>
 					<relocations>
 						<relocation>
 							<pattern>org.mcstats</pattern>
 							<shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
-							</relocation>
-							
+						</relocation>
+
 					</relocations>
 				</configuration>
 				<executions>
@@ -44,10 +44,10 @@
 		</plugins>
 	</build>
 	<repositories>
-       <repository>
-           <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-       </repository>
+		<repository>
+			<id>spigot-repo</id>
+			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+		</repository>
 		<repository>
 			<id>citizensapi-repo</id>
 			<url>http://repo.citizensnpcs.co/</url>
@@ -60,14 +60,18 @@
 			<id>elmakers-repo</id>
 			<url>http://maven.elmakers.com/repository/ </url>
 		</repository>
+		<repository>
+			<id>shadowvolt-repo</id>
+			<url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
+		</repository>
 	</repositories>
 	<dependencies>
-	<dependency>
-            <groupId>org.spigotmc</groupId>
-          <artifactId>spigot-api</artifactId>
-          <version>1.8-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigot-api</artifactId>
+			<version>1.8-R0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>net.citizensnpcs</groupId>
 			<artifactId>citizensapi</artifactId>
@@ -87,10 +91,15 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-		<groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>1.8-R0.1-SNAPSHOT</version>
-            </dependency>
+			<groupId>com.comphenix.protocol</groupId>
+			<artifactId>ProtocolLib</artifactId>
+			<version>3.6.3-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>bukkit</artifactId>
+			<version>1.8-R0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
-	<version>1.0.8</version>
+	<version>1.1.0</version>
 </project>

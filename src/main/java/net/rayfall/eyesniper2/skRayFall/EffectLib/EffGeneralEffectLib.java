@@ -23,6 +23,7 @@ public class EffGeneralEffectLib extends Effect{
 	private Expression<?> target;
 	private Expression<Timespan> dur;
 	private Expression<String> holdEffectName;
+	//(spawn|create|apply) effectlib effect %string% (at|on|to) [the] %entities/location% for %timespan%
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -80,10 +81,8 @@ public class EffGeneralEffectLib extends Effect{
 				Skript.error("There was an issue loading your particle type");
 			}
 			
-			
-			final Object[] os = target.getArray(evt);
+			final Object o = target.getSingle(evt);
 			Bukkit.broadcastMessage("all checks good!");
-			for (final Object o : os) {
 				if (o instanceof Entity) {
 					Bukkit.broadcastMessage("Started Ent");
 					atom.setEntity((Entity) o);
@@ -91,7 +90,6 @@ public class EffGeneralEffectLib extends Effect{
 					atom.start();
 				} 
 				else if (o instanceof Location) {
-					
 					Bukkit.broadcastMessage("Started Loc");
 					@SuppressWarnings("unchecked")
 					final Expression<Location> loc = (Expression<Location>) o;
@@ -100,10 +98,11 @@ public class EffGeneralEffectLib extends Effect{
 					atom.start();
 				} 
 				else {
+					Bukkit.broadcastMessage(o.getClass().toString());
 					Bukkit.broadcastMessage("Failed");
 					assert false;
 				}
-			}
+			
 			
 		}
 		else{
