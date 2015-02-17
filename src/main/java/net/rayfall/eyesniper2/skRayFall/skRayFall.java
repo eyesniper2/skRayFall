@@ -7,6 +7,7 @@ import net.citizensnpcs.api.event.NPCDeathEvent;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
+import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCNamed;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCid;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenAttack;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenLookTarget;
@@ -22,6 +23,7 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDespawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffEquipCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSetCitizenName;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSpawnCitizen;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffStartBuilderBuild;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
@@ -31,8 +33,12 @@ import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffGeneralEffectLib;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
+import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffParticles;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.CondisScoreboardSet;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreBelowName;
@@ -41,15 +47,19 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
+import net.rayfall.eyesniper2.skRayFall.Titles.EffActionBar;
+import net.rayfall.eyesniper2.skRayFall.Titles.EffTabTitles;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
 
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -57,6 +67,14 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
+import com.comphenix.protocol.Packets;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ConnectionSide;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.nbt.NbtCompound;
+import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
 import ch.njol.skript.Skript;
@@ -67,6 +85,7 @@ import ch.njol.skript.util.Getter;
 import de.slikey.effectlib.EffectLib;
 import de.slikey.effectlib.EffectManager;
 
+@SuppressWarnings("deprecation")
 public class skRayFall extends JavaPlugin implements Listener {
 	
 	public static EffectManager effectManager;
@@ -147,6 +166,11 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            }
 		        }, 0);
 			 Skript.registerCondition(CondisNPCid.class, "(NPC|Citizen) is %number%");
+			 Skript.registerCondition(CondisNPCNamed.class, "(NPC|Citizen)['s] [is] name[d] [is] %string%");
+			 if(getServer().getPluginManager().isPluginEnabled("Builder")){
+				 getLogger().info("Getting bacon sandwiches for builders!");
+				 Skript.registerEffect(EffStartBuilderBuild.class, "make citizen %number% build %string% at %location% [speed %number%] for %player%");
+			 }
 		    }
 		 else{
 		      getLogger().info("Citizens not found! Sorry you cant make friends, but don't worry we will still be your friend <3");   
@@ -170,8 +194,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 getLogger().info("Getting more bacon for the Votifier runners!");
 			 Skript.registerEvent("On Vote", SimpleEvent.class, VotifierEvent.class, "vote[ing]");
 			 EventValues.registerEventValue(VotifierEvent.class, Player.class, new Getter<Player, VotifierEvent>() {
-				    @SuppressWarnings("deprecation")
-					@Nullable
+				    @Nullable
 		            @Override
 		            public Player get(VotifierEvent VotifierEvent) {
 		            	String h = VotifierEvent.getVote().getUsername();
@@ -191,6 +214,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 //Cool 1.8 Stuff!
 		 Skript.registerEffect(EffTitle.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
+		 Skript.registerEffect(EffParticles.class, "show [%number%] %string% particle[s] at %location% [offset with %number%, %number% (and|,) %number%] for %player%");
+		 Skript.registerEffect(EffActionBar.class, "set action bar of %player% to %string%");
+		 Skript.registerEffect(EffTabTitles.class, "set tab header to %string% and footer to %string% for %player%");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
@@ -203,6 +229,28 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffRemoveScoreBelowName.class,"(wipe|erase) below score[s] for %player%");
 		 Skript.registerEffect(EffSetScoreTab.class,"set tab[list] score of %player% to %number% for %player%");
 		 Skript.registerEffect(EffRemoveScoreTab.class,"(wipe|erase|delete) %player%['s] tab[list]");
+		 //Still working on this!
+		 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% no nbt");
+		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
+		 if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
+			 getLogger().info("Enabling ProtocolLib content! *High-five*");
+		 ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(
+					this, ConnectionSide.SERVER_SIDE, ListenerPriority.HIGH, 
+					Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {
+				@Override
+				public void onPacketSending(PacketEvent event) {
+					if (event.getPacketID() == Packets.Server.SET_SLOT) {
+						addGlow(new ItemStack[] { event.getPacket().getItemModifier().read(0) });
+					} else {
+						addGlow(event.getPacket().getItemArrayModifier().read(0));
+					}
+				}
+			});
+		 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
+		 }
+		 else{
+			 getLogger().info("No ProtocolLib Found! *eats some bacon*");
+		 }
 		 getLogger().info("Bacon is ready!");
 	 }
 	 
@@ -219,6 +267,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 player.setScoreboard(board);
 	 }
 	 
+	 
+	 private void addGlow(ItemStack[] stacks) {
+			for (ItemStack stack : stacks) {
+				if (stack != null) {
+					if (stack.getEnchantmentLevel(Enchantment.ARROW_INFINITE) == 70 || stack.getEnchantmentLevel(Enchantment.WATER_WORKER) == 70) {
+						NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(stack);
+						compound.put(NbtFactory.of("HideFlags", 1));
+					}
+				}
+			}
+		}
 	 
 	 }
 

@@ -1,5 +1,6 @@
 package net.rayfall.eyesniper2.skRayFall.utli;
 
+import ch.njol.skript.Skript;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class YMLParticleGetter {
@@ -81,7 +82,8 @@ public class YMLParticleGetter {
 		case "mobappearance":
 			return ParticleEffect.MOB_APPEARANCE;
 		default:
-			return null;
+			Skript.error("No particle type selected! Using a Crit instead.");
+			return ParticleEffect.CRIT;
 		}
 	}
 }

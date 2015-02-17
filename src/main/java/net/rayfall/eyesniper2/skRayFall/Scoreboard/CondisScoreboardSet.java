@@ -5,43 +5,40 @@ import org.bukkit.event.Event;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.eclipse.jdt.annotation.Nullable;
 
-import ch.njol.skript.lang.Effect;
+import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffRemoveScoreboard extends Effect{
-//(wipe|erase) %player%['s] sidebar
+public class CondisScoreboardSet extends Condition{
+	
+	//side bar is set for %player% 
 	
 	private Expression<Player> player;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-
 		player = (Expression<Player>) e[0];
 		return true;
 	}
 
 	@Override
-	public String toString(@Nullable Event evt, boolean arg1) {
+	public String toString(@Nullable Event arg0, boolean arg1) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	protected void execute(Event evt) {
-		try{
-			player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR).unregister();
+	public boolean check(Event evt) {
+		if(player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null){
+			return true;
 		}
-		finally{
-			
+			else{
+				return false;
+			}
 		}
-		
-		
-		
 	}
-	
-	
 
-}
+

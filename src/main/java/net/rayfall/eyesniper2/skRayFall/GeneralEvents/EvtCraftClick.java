@@ -30,7 +30,7 @@ public class EvtCraftClick extends SkriptEvent {
 	public boolean check(Event evt) {
 		final InventoryClickEvent e = (InventoryClickEvent) evt;
 		if (InventoryType.CRAFTING == e.getInventory().getType()){
-			if (e.getSlotType() != InventoryType.SlotType.QUICKBAR || e.getSlotType() != InventoryType.SlotType.CONTAINER){
+			if (e.getSlotType() != InventoryType.SlotType.QUICKBAR && e.getSlotType() != InventoryType.SlotType.CONTAINER){
 				if (evtslotclick == null){
 					return true;
 				}
