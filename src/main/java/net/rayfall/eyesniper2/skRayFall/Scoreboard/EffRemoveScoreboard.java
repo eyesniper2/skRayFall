@@ -31,10 +31,10 @@ public class EffRemoveScoreboard extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		try{
+		if (player.getSingle(evt).getScoreboard().getObjective("sideHold") != null){
 			player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR).unregister();
 		}
-		finally{
+		else{
 			
 		}
 		
