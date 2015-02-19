@@ -50,9 +50,9 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffActionBar;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffTabTitles;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
+import net.rayfall.eyesniper2.skRayFall.utli.ProtocolLibUtli;
 
 import org.bukkit.Bukkit;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -67,14 +67,6 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
-import com.comphenix.protocol.Packets;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.ConnectionSide;
-import com.comphenix.protocol.events.ListenerPriority;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.wrappers.nbt.NbtCompound;
-import com.comphenix.protocol.wrappers.nbt.NbtFactory;
 import com.vexsoftware.votifier.model.VotifierEvent;
 
 import ch.njol.skript.Skript;
@@ -214,7 +206,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 //Cool 1.8 Stuff!
 		 Skript.registerEffect(EffTitle.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
-		 Skript.registerEffect(EffParticles.class, "show [%number%] %string% particle[s] at %location% [offset with %number%, %number% (and|,) %number%] for %player%");
+		 Skript.registerEffect(EffParticles.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number% (and|,) %number%]");
 		 Skript.registerEffect(EffActionBar.class, "set action bar of %player% to %string%");
 		 Skript.registerEffect(EffTabTitles.class, "set tab header to %string% and footer to %string% for %player%");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
@@ -234,19 +226,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
 		 if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
 			 getLogger().info("Enabling ProtocolLib content! *High-five*");
-		 ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(
-					this, ConnectionSide.SERVER_SIDE, ListenerPriority.HIGH, 
-					Packets.Server.SET_SLOT, Packets.Server.WINDOW_ITEMS) {
-				@Override
-				public void onPacketSending(PacketEvent event) {
-					if (event.getPacketID() == Packets.Server.SET_SLOT) {
-						addGlow(new ItemStack[] { event.getPacket().getItemModifier().read(0) });
-					} else {
-						addGlow(event.getPacket().getItemArrayModifier().read(0));
-					}
-				}
-			});
+			 
 		 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
+		 ProtocolLibUtli.run();
 		 }
 		 else{
 			 getLogger().info("No ProtocolLib Found! *eats some bacon*");
@@ -267,17 +249,6 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 player.setScoreboard(board);
 	 }
 	 
-	 
-	 private void addGlow(ItemStack[] stacks) {
-			for (ItemStack stack : stacks) {
-				if (stack != null) {
-					if (stack.getEnchantmentLevel(Enchantment.ARROW_INFINITE) == 70 || stack.getEnchantmentLevel(Enchantment.WATER_WORKER) == 70) {
-						NbtCompound compound = (NbtCompound) NbtFactory.fromItemTag(stack);
-						compound.put(NbtFactory.of("HideFlags", 1));
-					}
-				}
-			}
-		}
 	 
 	 }
 
