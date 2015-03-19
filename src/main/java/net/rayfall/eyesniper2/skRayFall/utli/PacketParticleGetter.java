@@ -1,7 +1,7 @@
 package net.rayfall.eyesniper2.skRayFall.utli;
 
 import ch.njol.skript.Skript;
-import net.minecraft.server.v1_8_R1.EnumParticle;
+import net.minecraft.server.v1_8_R2.EnumParticle;
 
 public class PacketParticleGetter {
 	public static EnumParticle get(String p) {

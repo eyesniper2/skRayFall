@@ -24,14 +24,15 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffEquipCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSetCitizenName;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSpawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffStartBuilderBuild;
+import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprBottomRightSchematic;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
+import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprTopLeftSchematic;
 import net.rayfall.eyesniper2.skRayFall.Commands.EffectLibCommands;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
-import net.rayfall.eyesniper2.skRayFall.EffectLib.EffGeneralEffectLib;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffParticles;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
@@ -53,6 +54,7 @@ import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
 import net.rayfall.eyesniper2.skRayFall.utli.ProtocolLibUtli;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -162,6 +164,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 if(getServer().getPluginManager().isPluginEnabled("Builder")){
 				 getLogger().info("Getting bacon sandwiches for builders!");
 				 Skript.registerEffect(EffStartBuilderBuild.class, "make citizen %number% build %string% at %location% [speed %number%] for %player%");
+				 Skript.registerExpression(ExprTopLeftSchematic.class, Location.class, ExpressionType.SIMPLE, "for builder %number% get the location of the top left of schematic centered at %location%");
+				 Skript.registerExpression(ExprBottomRightSchematic.class, Location.class, ExpressionType.SIMPLE, "for builder %number% get the location of the bottom right of schematic centered at %location%");
 			 }
 		    }
 		 else{
@@ -175,8 +179,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 getLogger().info("Got bacon for the EffectLib partical ninjas!");
 			 EffectLib lib = EffectLib.instance();
 			 effectManager = new EffectManager(lib);
-			 //to be added in the next update
-			 Skript.registerEffect(EffGeneralEffectLib.class, "(spawn|create|apply) effectlib effect %string% (at|on|to) [the] %entities/location% for %timespan%");
+			 //more stuff to be added
 			 Skript.registerEffect(EffEffectLibAtom.class, "(spawn|create|apply) the atom (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffEffectLibBleed.class, "(spawn|create|apply) the bleed (formation|effect) (at|on|to) [the] %entities/location% for %timespan%");
 			 Skript.registerEffect(EffBasicEffectLib.class,"spawn formation %string% at %location% for %timespan%");
