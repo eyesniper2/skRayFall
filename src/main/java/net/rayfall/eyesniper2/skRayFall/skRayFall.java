@@ -193,7 +193,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            @Override
 		            public Player get(VotifierEvent VotifierEvent) {
 		            	String h = VotifierEvent.getVote().getUsername();
-		            	if (Bukkit.getPlayer(h).isOnline()){
+		            	if (Bukkit.getPlayer(h) != null && Bukkit.getPlayer(h).isOnline()){
 		            		return Bukkit.getPlayer(h);
 		            	}
 		            	else
