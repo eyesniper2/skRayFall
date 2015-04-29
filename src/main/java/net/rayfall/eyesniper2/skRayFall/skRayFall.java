@@ -55,6 +55,7 @@ import net.rayfall.eyesniper2.skRayFall.utli.ProtocolLibUtli;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -100,9 +101,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 try {
 		        Metrics metrics = new Metrics(this);
 		        metrics.start();
-		    } catch (IOException e) {
+		   } catch (IOException e) {
 		        getLogger().info("MCStats had an issue :/ " + e.getMessage() + "This will not affect anything. *Server gets moar bacon*");
-		    }
+		   }
 		 if (getServer().getPluginManager().isPluginEnabled("Citizens"))
 		    {
 			 getLogger().info("Getting more bacon for the army of citizens...");
@@ -117,12 +118,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffSetCitizenName.class,"(set|make) citizen[s] %number% name to %string%");
 			 Skript.registerEffect(EffCitizenSetMaxHealth.class,"(set|make) citizen[s] %number% max health [to] %number%");
 			 //doesn't work
-			 Skript.registerEffect(EffCitizenNameVisable.class,"(set|make) citizen[s] %number% nametag (1¦invisible|0¦visible)");
+			 Skript.registerEffect(EffCitizenNameVisable.class,"(set|make) citizen[s] %number% nametag (1Â¦invisible|0Â¦visible)");
 			 Skript.registerEffect(EffCitizenLookTarget.class,"make citizen %number% look at %location%");
 			 Skript.registerEffect(EffCitizenAttack.class,"make citizen %number% (attack|fight) %livingentities%");
 			 //buggy
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
-			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1¦invulnerable|0¦vulnerable)");
+			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1Â¦invulnerable|0Â¦vulnerable)");
 			 Skript.registerExpression(ExprLastCitizen.class, Number.class, ExpressionType.SIMPLE, "last created citizen [id]");
 			 Skript.registerExpression(ExprNameOfCitizen.class, String.class, ExpressionType.SIMPLE, "name of citizen %number%");
 			 Skript.registerExpression(ExprGeneralCitizen.class, Entity.class, ExpressionType.PROPERTY, "citizen %number%");
@@ -188,18 +189,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 if (getServer().getPluginManager().isPluginEnabled("Votifier")){
 			 getLogger().info("Getting more bacon for the Votifier runners!");
 			 Skript.registerEvent("On Vote", SimpleEvent.class, VotifierEvent.class, "vote[ing]");
-			 EventValues.registerEventValue(VotifierEvent.class, Player.class, new Getter<Player, VotifierEvent>() {
+			 EventValues.registerEventValue(VotifierEvent.class, String.class, new Getter<String, VotifierEvent>() {
 				    @Nullable
 		            @Override
-		            public Player get(VotifierEvent VotifierEvent) {
+		            public String get(VotifierEvent VotifierEvent) {
 		            	String h = VotifierEvent.getVote().getUsername();
-		            	if (Bukkit.getPlayer(h).isOnline()){
-		            		return Bukkit.getPlayer(h);
-		            	}
-		            	else
-		            		Skript.error("That player does not exist or is not online right now.");
-		            		String oh = VotifierEvent.getVote().getUsername();
-		            		return (Player) Bukkit.getOfflinePlayer(oh);
+		            	return h;
 		            }
 		        }, 0);
 		 }
