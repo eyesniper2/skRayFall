@@ -34,7 +34,7 @@ public class ExprLastCitizen extends SimpleExpression<Number>{
 	@Override
 	public String toString(@Nullable Event arg0,
 			boolean arg1) {
-		return "Last NPC grabed was " + lastNPC.getFullName();
+		return "Last NPC grabed was ";
 	}
 
 	@Override

@@ -21,6 +21,9 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCreateCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDeleteCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDespawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffEquipCitizen;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryFollowDistance;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryProtect;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryStopFollow;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSetCitizenName;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSpawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffStartBuilderBuild;
@@ -36,6 +39,7 @@ import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffParticles;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
+import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetPlayerListName;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
@@ -51,7 +55,10 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffActionBar;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffTabTitles;
 import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
-import net.rayfall.eyesniper2.skRayFall.utli.ProtocolLibUtli;
+
+
+
+
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -70,13 +77,14 @@ import org.bukkit.scoreboard.ScoreboardManager;
 import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
-import com.vexsoftware.votifier.model.VotifierEvent;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
+
+import com.vexsoftware.votifier.model.VotifierEvent;
+
 import de.slikey.effectlib.EffectLib;
 import de.slikey.effectlib.EffectManager;
 
@@ -112,7 +120,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffDespawnCitizen.class,"despawn citizen %number%");
 			 Skript.registerEffect(EffEquipCitizen.class,"(equip|give) citizen %number% with [an] %itemstack%");
 			 Skript.registerEffect(EffSpawnCitizen.class,"respawn citizen %number% (at|%direction%) %location%");
-			 Skript.registerEffect(EffDeleteCitizen.class,"delete citizen %number%");
+			 Skript.registerEffect(EffDeleteCitizen.class,"(remove|destroy) citizen %number%");
 			 //Only supports one living entity add support for groups
 			 Skript.registerEffect(EffCitizenSpeak.class,"make citizen %number% (say|communicate) %string% to %livingentities%");
 			 Skript.registerEffect(EffSetCitizenName.class,"(set|make) citizen[s] %number% name to %string%");
@@ -140,6 +148,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		                return NPCRightClickEvent.getNPC();
 		            }
 		        }, 0);
+			 EventValues.registerEventValue(NPCRightClickEvent.class, Number.class, new Getter<Number, NPCRightClickEvent>() {
+		            @Override
+		            public Number get(NPCRightClickEvent NPCRightClickEvent) {
+		                return NPCRightClickEvent.getNPC().getId();
+		            }
+		        }, 0);
 			 Skript.registerEvent("NPC/Citizen Left Click", SimpleEvent.class, NPCLeftClickEvent.class,"(NPC|Citizen) left click");
 			 EventValues.registerEventValue(NPCLeftClickEvent.class, Player.class, new Getter<Player, NPCLeftClickEvent>() {
 		            @Override
@@ -151,6 +165,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            @Override
 		            public NPC get(NPCLeftClickEvent NPCLeftClickEvent) {
 		                return NPCLeftClickEvent.getNPC();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(NPCLeftClickEvent.class, Number.class, new Getter<Number, NPCLeftClickEvent>() {
+		            @Override
+		            public Number get(NPCLeftClickEvent NPCLeftClickEvent) {
+		                return NPCLeftClickEvent.getNPC().getId();
 		            }
 		        }, 0);
 			 Skript.registerEvent("NPC/Citizen Death", SimpleEvent.class, NPCDeathEvent.class,"(NPC|Citizen) death");
@@ -167,6 +187,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 				 Skript.registerEffect(EffStartBuilderBuild.class, "make citizen %number% build %string% at %location% [speed %number%] for %player%");
 				 Skript.registerExpression(ExprTopLeftSchematic.class, Location.class, ExpressionType.SIMPLE, "for builder %number% get the location of the top left of schematic centered at %location%");
 				 Skript.registerExpression(ExprBottomRightSchematic.class, Location.class, ExpressionType.SIMPLE, "for builder %number% get the location of the bottom right of schematic centered at %location%");
+			 }
+			 if(getServer().getPluginManager().isPluginEnabled("Sentry")){
+				 getLogger().info("Roasting bacon for Sentry's!");
+				 Skript.registerEffect(EffSentryProtect.class, "set citizen %number% to protect %player%");
+				 Skript.registerEffect(EffSentryStopFollow.class, "make sentry %number% stop following");
+				 Skript.registerEffect(EffSentryFollowDistance.class, "set follow[ distance] of citizen %number% to %number%");
 			 }
 		    }
 		 else{
@@ -197,6 +223,14 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            	return h;
 		            }
 		        }, 0);
+			 EventValues.registerEventValue(VotifierEvent.class, String.class, new Getter<String, VotifierEvent>() {
+				    @Nullable
+		            @Override
+		            public String get(VotifierEvent VotifierEvent) {
+		            	String v = VotifierEvent.getVote().getServiceName();
+		            	return v;
+		            }
+		        }, 0);
 		 }
 		 else{
 			 getLogger().info("No Votifier Found! *Checks oven for finished bacon*");
@@ -204,13 +238,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 //Cool 1.8 Stuff!
 		 Skript.registerEffect(EffTitle.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
-		 Skript.registerEffect(EffParticles.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number% (and|,) %number%]");
+		 Skript.registerEffect(EffParticles.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
 		 Skript.registerEffect(EffActionBar.class, "set action bar of %player% to %string%");
 		 Skript.registerEffect(EffTabTitles.class, "set tab header to %string% and footer to %string% for %player%");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
-		 //ScoreBoard Stuff
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
 		 Skript.registerEffect(EffSetScore.class,"set score %string% in sidebar of %player% to %number%");
 		 Skript.registerEffect(EffDeleteScore.class,"delete score %string% in sidebar of %player%");
@@ -219,18 +252,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffRemoveScoreBelowName.class,"(wipe|erase) below score[s] for %player%");
 		 Skript.registerEffect(EffSetScoreTab.class,"set tab[list] score of %player% to %number% for %player%");
 		 Skript.registerEffect(EffRemoveScoreTab.class,"(wipe|erase|delete) %player%['s] tab[list]");
-		 //Still working on this!
-		 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% no nbt");
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
-		 if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
-			 getLogger().info("Enabling ProtocolLib content! *High-five*");
-			 
+		 Skript.registerEffect(EffSetPlayerListName.class, "set %player% tab name to %string%");
 		 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
-		 ProtocolLibUtli.run();
-		 }
-		 else{
-			 getLogger().info("No ProtocolLib Found! *eats some bacon*");
-		 }
+		 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt");
 		 getLogger().info("Bacon is ready!");
 	 }
 	 

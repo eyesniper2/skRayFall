@@ -2,7 +2,9 @@ package net.rayfall.eyesniper2.skRayFall.GeneralExpressions;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
@@ -20,6 +22,9 @@ public class ExprShinyItem extends SimplePropertyExpression<ItemStack, ItemStack
 	public ItemStack convert(ItemStack itemStack) {
 	        if (itemStack.getType() == Material.BOW) itemStack.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 70);
 	        else itemStack.addUnsafeEnchantment(Enchantment.WATER_WORKER, 70);
+	        ItemMeta t = itemStack.getItemMeta();
+			t.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+			itemStack.setItemMeta(t);
 	        return itemStack;
 	    }
 
