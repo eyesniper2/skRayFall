@@ -1,4 +1,4 @@
-package net.rayfall.eyesniper2.skRayFall.Titles;
+package net.rayfall.eyesniper2.skRayFall.V1_8_3;
 
 import java.lang.reflect.Field;
 
@@ -16,7 +16,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffTabTitles extends Effect{
+public class EffTabTitlesV1_8_3 extends Effect{
 	
 	//set tab header to %string% and footer to %string% for %player%
 	

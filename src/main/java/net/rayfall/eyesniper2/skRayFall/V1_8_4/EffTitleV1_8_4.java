@@ -1,12 +1,12 @@
-package net.rayfall.eyesniper2.skRayFall.Titles;
+package net.rayfall.eyesniper2.skRayFall.V1_8_4;
 
-import net.minecraft.server.v1_8_R2.IChatBaseComponent;
-import net.minecraft.server.v1_8_R2.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_8_R2.PacketPlayOutTitle;
-import net.minecraft.server.v1_8_R2.PacketPlayOutTitle.EnumTitleAction;
-import net.minecraft.server.v1_8_R2.PlayerConnection;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent;
+import net.minecraft.server.v1_8_R3.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction;
+import net.minecraft.server.v1_8_R3.PlayerConnection;
 
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -19,7 +19,7 @@ import ch.njol.util.Kleenean;
 
 
 
-public class EffTitle extends Effect{
+public class EffTitleV1_8_4 extends Effect{
 	//send %player% title %string% [with subtitle %string%] for %timespan% [with %timespan% fade in and %timespan% fade out]
 	
 	private Expression<String> title;

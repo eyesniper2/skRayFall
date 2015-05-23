@@ -125,10 +125,24 @@
 		</dependency>
 		<dependency>
 			<groupId>org.spigotmc</groupId>
-			<artifactId>spigot</artifactId>
+			<artifactId>spigotV1_8_3</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/libs/spigot-1.8.3.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_8</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_8_4</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.8.4.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>net.aufdemrand</groupId>
@@ -138,10 +152,17 @@
 			<systemPath>${project.basedir}/libs/sentry.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>com.gmail.filoghost</groupId>
+			<artifactId>holographicdisplays</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/HolographicDisplaysAPI.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.jdt</groupId>
 			<artifactId>org.eclipse.jdt.annotation</artifactId>
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.4</version>
+	<version>1.5</version>
 </project>

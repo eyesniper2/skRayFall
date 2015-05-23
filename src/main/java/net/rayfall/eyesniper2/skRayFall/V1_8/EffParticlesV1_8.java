@@ -1,19 +1,22 @@
-package net.rayfall.eyesniper2.skRayFall.GeneralEffects;
+package net.rayfall.eyesniper2.skRayFall.V1_8;
 
-import net.minecraft.server.v1_8_R2.PacketPlayOutWorldParticles;
-import net.rayfall.eyesniper2.skRayFall.utli.PacketParticleGetter;
+import net.minecraft.server.v1_8_R1.EnumParticle;
+import net.minecraft.server.v1_8_R1.PacketPlayOutWorldParticles;
+
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_8_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffParticles extends Effect{	
+public class EffParticlesV1_8 extends Effect{	
 	//show %number% of %string% particle[s] at %location% for %player% [offset with %number%, %number% (and|,) %number%]
 	private Expression<Number> partNum;
 	private Expression<Player> player;
@@ -49,6 +52,9 @@ public class EffParticles extends Effect{
 		float hx = 0f;
 		float hy = 0f;
 		float hz = 0f;
+		float id = 0;
+		int[] array = new int[0];
+		String core = type.getSingle(evt);
 		if (x != null){
 			hx = x.getSingle(evt).floatValue();
 		}
@@ -58,8 +64,22 @@ public class EffParticles extends Effect{
 		if (z != null){
 			hz = z.getSingle(evt).floatValue();
 		}
+		if (core.toUpperCase().replace(" ", "_").contains("BLOCK_CRACK")||core.toUpperCase().replace(" ", "_").contains("BLOCK_DUST")){
+			int index = type.getSingle(evt).lastIndexOf("_");
+			try{
+			id = Integer.parseInt(type.getSingle(evt).substring(index + 1));
+			}
+			catch(Exception e){
+				Skript.error("Could not parse datavalue!");
+				id = 0;
+			}
+			core = core.substring(0, index);
+			array = new int[1];
+			Bukkit.broadcastMessage("id: "+ id + "core: " + core);
+		}
+		EnumParticle part = PacketParticleGetterV1_8.get(core);
 
-		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(PacketParticleGetter.get(type.getSingle(evt)), false, (float) location.getSingle(evt).getX(), (float) location.getSingle(evt).getY(), (float) location.getSingle(evt).getZ(), hx, hy, hz, 0f, partNum.getSingle(evt).intValue(), new int[0]);
+		PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles(part, true, (float) location.getSingle(evt).getX(), (float) location.getSingle(evt).getY(), (float) location.getSingle(evt).getZ(), hx, hy, hz, id, partNum.getSingle(evt).intValue(), array);
 		((CraftPlayer) player.getSingle(evt)).getHandle().playerConnection.sendPacket(packet);
 	}
 

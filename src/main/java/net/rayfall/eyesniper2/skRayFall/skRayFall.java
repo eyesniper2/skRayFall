@@ -37,12 +37,14 @@ import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
-import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffParticles;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetPlayerListName;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedBindedHolo;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedClientSideHolo;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedHologram;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.CondisScoreboardSet;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
@@ -52,13 +54,21 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
-import net.rayfall.eyesniper2.skRayFall.Titles.EffActionBar;
-import net.rayfall.eyesniper2.skRayFall.Titles.EffTabTitles;
-import net.rayfall.eyesniper2.skRayFall.Titles.EffTitle;
 
 
 
-
+import net.rayfall.eyesniper2.skRayFall.V1_8.EffActionBarV1_8;
+import net.rayfall.eyesniper2.skRayFall.V1_8.EffParticlesV1_8;
+import net.rayfall.eyesniper2.skRayFall.V1_8.EffTabTitlesV1_8;
+import net.rayfall.eyesniper2.skRayFall.V1_8.EffTitleV1_8;
+import net.rayfall.eyesniper2.skRayFall.V1_8_3.EffActionBarV1_8_3;
+import net.rayfall.eyesniper2.skRayFall.V1_8_3.EffParticlesV1_8_3;
+import net.rayfall.eyesniper2.skRayFall.V1_8_3.EffTabTitlesV1_8_3;
+import net.rayfall.eyesniper2.skRayFall.V1_8_3.EffTitleV1_8_3;
+import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffActionBarV1_8_4;
+import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffParticlesV1_8_4;
+import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffTabTitlesV1_8_4;
+import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffTitleV1_8_4;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -240,12 +250,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 else{
 			 getLogger().info("No Votifier Found! *Checks oven for finished bacon*");
 		 }
-		 //Cool 1.8 Stuff!
-		 Skript.registerEffect(EffTitle.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+		 if (getServer().getPluginManager().isPluginEnabled("HolographicDisplays")){
+				getLogger().info("Bacon holograms found");
+				Skript.registerEffect(EffTimedHologram.class, "create hologram %string% at %location% for %timespan%");
+				Skript.registerEffect(EffTimedBindedHolo.class, "bind hologram %string% to %entity% for %timespan% [offset by %number%, %number%( and|,) %number%]");
+				if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
+					getLogger().info("Client Side bacon holograms enabled");
+					Skript.registerEffect(EffTimedClientSideHolo.class, "display hologram %string% at %location% to %player% for %timespan%");
+				}
+		}
+
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
-		 Skript.registerEffect(EffParticles.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-		 Skript.registerEffect(EffActionBar.class, "set action bar of %player% to %string%");
-		 Skript.registerEffect(EffTabTitles.class, "set tab header to %string% and footer to %string% for %player%");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
@@ -259,14 +274,38 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffRemoveScoreTab.class,"(wipe|erase|delete) %player%['s] tab[list]");
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
 		 Skript.registerEffect(EffSetPlayerListName.class, "set %player% tab name to %string%");
-		 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
-		 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt");
+		 if (Bukkit.getVersion().contains("1.8")){
+			 getLogger().info("Enabling general 1.8 bacon!");
+			 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
+			 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt"); 
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.8)")){
+			 getLogger().info("Getting all the special 1.8 bacon!");
+			 Skript.registerEffect(EffTitleV1_8.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_8.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_8.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_8.class, "set tab header to %string% and footer to %string% for %player%");
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.8.3)")){
+			 getLogger().info("Getting the extra special 1.8.3 bacon!");
+			 Skript.registerEffect(EffTitleV1_8_3.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_8_3.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_8_3.class, "set tab header to %string% and footer to %string% for %player%");
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.8.4)")){
+			 getLogger().info("Getting the extra special 1.8.4 bacon!");
+			 Skript.registerEffect(EffTitleV1_8_4.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_8_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
+		 }
 		 getLogger().info("Bacon is ready!");
 	 }
 	 
 	 @Override
 	    public void onDisable(){
-		 getLogger().info("Awww, you have disabled skRayFall D:");
+		 getLogger().info("Bacon has been eaten. Make some more soon!");
 	 }
 	 
 	 @EventHandler

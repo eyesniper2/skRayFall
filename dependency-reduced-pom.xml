@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rayfall.eyesniper2</groupId>
   <artifactId>skRayFall</artifactId>
-  <version>1.4</version>
+  <version>1.5</version>
   <build>
     <plugins>
       <plugin>
@@ -123,10 +123,24 @@
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
-      <artifactId>spigot</artifactId>
+      <artifactId>spigotV1_8_3</artifactId>
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.3.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigotV1_8</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigotV1_8_4</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.4.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>net.aufdemrand</groupId>
@@ -134,6 +148,13 @@
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>D:\Java Workbench\skRayFall/libs/sentry.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.gmail.filoghost</groupId>
+      <artifactId>holographicdisplays</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>D:\Java Workbench\skRayFall/libs/HolographicDisplaysAPI.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>

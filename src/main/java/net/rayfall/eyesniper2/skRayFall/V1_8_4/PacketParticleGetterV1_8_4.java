@@ -1,9 +1,9 @@
-package net.rayfall.eyesniper2.skRayFall.utli;
+package net.rayfall.eyesniper2.skRayFall.V1_8_4;
 
 import ch.njol.skript.Skript;
-import net.minecraft.server.v1_8_R2.EnumParticle;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 
-public class PacketParticleGetter {
+public class PacketParticleGetterV1_8_4 {
 	public static EnumParticle get(String p) {
 		switch (p.replace("\"", "").replace(" ", "_").toUpperCase()) {
 	case "BARRIER":
