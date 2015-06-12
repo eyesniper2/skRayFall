@@ -32,7 +32,7 @@ import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprTopLeftSchematic;
-import net.rayfall.eyesniper2.skRayFall.Commands.EffectLibCommands;
+import net.rayfall.eyesniper2.skRayFall.Commands.GeneralCommands;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
@@ -102,6 +102,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	
 	public static EffectManager effectManager;
 	public static Plugin plugin = null;
+	public boolean enableFastScoreboards = true;
 	
 	 @Override
 	    public void onEnable() {
@@ -109,12 +110,11 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 getServer().getPluginManager().registerEvents(this, this);
 		 Skript.registerAddon(this);
 		 saveDefaultConfig();
-		 this.getCommand("skrayfall").setExecutor(new EffectLibCommands(this));
+		 this.getCommand("skrayfall").setExecutor(new GeneralCommands(this));
 		 if (plugin == null){
 			 plugin = this;
 		 }
 		 getLogger().info("Cooking Bacon...");
-		 
 		 try {
 		        Metrics metrics = new Metrics(this);
 		        metrics.start();
@@ -293,13 +293,14 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_3.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
-		 if(Bukkit.getVersion().contains("(MC: 1.8.4)")){
-			 getLogger().info("Getting the extra special 1.8.4 bacon!");
+		 if(Bukkit.getVersion().contains("(MC: 1.8.4)") || Bukkit.getVersion().contains("(MC: 1.8.5)") || Bukkit.getVersion().contains("(MC: 1.8.6)") || Bukkit.getVersion().contains("(MC: 1.8.7)")){
+			 getLogger().info("Getting the extra special 1.8.4 - 1.8.7 bacon!");
 			 Skript.registerEffect(EffTitleV1_8_4.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
 			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
+		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
 		 getLogger().info("Bacon is ready!");
 	 }
 	 
@@ -310,10 +311,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 	 
 	 @EventHandler
 	 public void onJoin(PlayerJoinEvent evt){
-		 Player player = evt.getPlayer();
-		 ScoreboardManager manager = Bukkit.getScoreboardManager();
-		 Scoreboard board = manager.getNewScoreboard();
-		 player.setScoreboard(board);
+		 if (enableFastScoreboards == true){
+			 Player player = evt.getPlayer();
+			 ScoreboardManager manager = Bukkit.getScoreboardManager();
+			 Scoreboard board = manager.getNewScoreboard();
+			 player.setScoreboard(board);
+		 }
 	 }
 	 
 	 

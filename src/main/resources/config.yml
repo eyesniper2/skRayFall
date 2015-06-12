@@ -1,1 +1,17 @@
-#Nothing here yet!
+#skRayFall
+
+#-------------------------------------------------------------------------------------------
+#Set if skRayFall will auto assign scoreboards to players when they join the server. 
+#It is recommended you keep this enable if you are going to use skRayFalls scoreboards, 
+#disabling it may have unintentional side effects. Only disable this feature if you want 
+#to use scoreboard commands or are having issues with other scoreboard plugins not working. 
+
+#Options: true or false      Recommended setting: true
+
+enableFastScoreBoards: true
+
+#-------------------------------------------------------------------------------------------
+
+#Documentation: http://www.skunity.com/SkRayFall
+#Github repo: https://github.com/eyesniper2/skRayFall
+#Skript forums: http://dev.bukkit.org/bukkit-plugins/skript/forum/misc/70069-addon-sk-ray-fall-1-5/

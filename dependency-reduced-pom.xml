@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rayfall.eyesniper2</groupId>
   <artifactId>skRayFall</artifactId>
-  <version>1.5</version>
+  <version>1.5.2</version>
   <build>
     <plugins>
       <plugin>
@@ -141,6 +141,13 @@
       <version>1.0</version>
       <scope>system</scope>
       <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.4.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigotV1_8_6</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.6.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>net.aufdemrand</groupId>

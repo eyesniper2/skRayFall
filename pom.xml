@@ -145,6 +145,13 @@
 			<systemPath>${project.basedir}/libs/spigot-1.8.4.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_8_6</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.8.6.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>net.aufdemrand</groupId>
 			<artifactId>sentry</artifactId>
 			<version>1.0</version>
@@ -164,5 +171,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.5</version>
+	<version>1.5.2</version>
 </project>
