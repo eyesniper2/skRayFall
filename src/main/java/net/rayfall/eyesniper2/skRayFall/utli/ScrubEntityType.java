@@ -64,6 +64,10 @@ public class ScrubEntityType {
 			return EntityType.VILLAGER;
 		case "zombie":
 			return EntityType.ZOMBIE;
+		case "armor stand":
+			return EntityType.ARMOR_STAND;
+		case "guardian":
+			return EntityType.GUARDIAN;
 		default:
 			Skript.error("Oh no! NPC type was invalid or unspecified, don't panic we got this! Making a Human instead.");
 			return EntityType.PLAYER;

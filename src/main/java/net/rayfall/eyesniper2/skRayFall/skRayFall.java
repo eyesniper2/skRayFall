@@ -42,6 +42,10 @@ import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetPlayerListName;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EditHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticClientHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffDeleteHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedBindedHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedClientSideHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedHologram;
@@ -97,7 +101,6 @@ import com.vexsoftware.votifier.model.VotifierEvent;
 import de.slikey.effectlib.EffectLib;
 import de.slikey.effectlib.EffectManager;
 
-@SuppressWarnings("deprecation")
 public class skRayFall extends JavaPlugin implements Listener {
 	
 	public static EffectManager effectManager;
@@ -229,13 +232,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            @Override
 		            public Player get(VotifierEvent VotifierEvent) {
 		            	String h = VotifierEvent.getVote().getUsername();
-		            	if (Bukkit.getPlayer(h).isOnline()){
+		            	if (Bukkit.getPlayer(h) != null && Bukkit.getPlayer(h).isOnline()){
 		            		return Bukkit.getPlayer(h);
 		            	}
 		            	else
 		            		Skript.error("That player does not exist or is not online right now.");
-		            		String oh = VotifierEvent.getVote().getUsername();
-		            		return (Player) Bukkit.getOfflinePlayer(oh);
+		            		return null;
 		            }
 		        }, 0);
 			 EventValues.registerEventValue(VotifierEvent.class, String.class, new Getter<String, VotifierEvent>() {
@@ -254,9 +256,13 @@ public class skRayFall extends JavaPlugin implements Listener {
 				getLogger().info("Bacon holograms found");
 				Skript.registerEffect(EffTimedHologram.class, "create hologram %string% at %location% for %timespan%");
 				Skript.registerEffect(EffTimedBindedHolo.class, "bind hologram %string% to %entity% for %timespan% [offset by %number%, %number%( and|,) %number%]");
+				Skript.registerEffect(EffCreateStaticHoloObject.class, "create holo object %string% with id %string% at %location%");
+				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
+				Skript.registerEffect(EditHoloObject.class, "edit holo object %string% to %string%");
 				if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
 					getLogger().info("Client Side bacon holograms enabled");
 					Skript.registerEffect(EffTimedClientSideHolo.class, "display hologram %string% at %location% to %player% for %timespan%");
+					Skript.registerEffect(EffCreateStaticClientHoloObject.class, "create client side holo object %string% with id %string% at %location% to %player%");
 				}
 		}
 
