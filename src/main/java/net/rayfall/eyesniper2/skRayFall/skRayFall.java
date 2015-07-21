@@ -21,6 +21,7 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCreateCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDeleteCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDespawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffEquipCitizen;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffGiveLookCloseTrait;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryFollowDistance;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryProtect;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSentryStopFollow;
@@ -40,9 +41,13 @@ import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetPlayerListName;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
+import net.rayfall.eyesniper2.skRayFall.GeneralEvents.StoreEvent;
+import net.rayfall.eyesniper2.skRayFall.GeneralEvents.StoreListener;
+import net.rayfall.eyesniper2.skRayFall.GeneralEvents.UnstoreEvent;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EditHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticClientHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffDeleteHoloObject;
@@ -73,6 +78,8 @@ import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffActionBarV1_8_4;
 import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffParticlesV1_8_4;
 import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffTabTitlesV1_8_4;
 import net.rayfall.eyesniper2.skRayFall.V1_8_4.EffTitleV1_8_4;
+import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteEvent;
+import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -95,9 +102,6 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
-
-import com.vexsoftware.votifier.model.VotifierEvent;
-
 import de.slikey.effectlib.EffectLib;
 import de.slikey.effectlib.EffectManager;
 
@@ -143,6 +147,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffCitizenAttack.class,"make citizen %number% (attack|fight) %livingentities%");
 			 //buggy
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
+			 Skript.registerEffect(EffGiveLookCloseTrait.class, "give npc %number% the look close trait");
 			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1¦invulnerable|0¦vulnerable)");
 			 Skript.registerExpression(ExprLastCitizen.class, Number.class, ExpressionType.SIMPLE, "last created citizen [id]");
 			 Skript.registerExpression(ExprNameOfCitizen.class, String.class, ExpressionType.SIMPLE, "name of citizen %number%");
@@ -226,26 +231,20 @@ public class skRayFall extends JavaPlugin implements Listener {
 		//Votifier Stuff 
 		 if (getServer().getPluginManager().isPluginEnabled("Votifier")){
 			 getLogger().info("Getting more bacon for the Votifier runners!");
-			 Skript.registerEvent("On Vote", SimpleEvent.class, VotifierEvent.class, "vote[ing]");
-			 EventValues.registerEventValue(VotifierEvent.class, Player.class, new Getter<Player, VotifierEvent>() {
+			 new RayFallVoteListener(this);
+			 Skript.registerEvent("On Vote", SimpleEvent.class, RayFallVoteEvent.class, "vote[ing]");
+			 EventValues.registerEventValue(RayFallVoteEvent.class, Player.class, new Getter<Player, RayFallVoteEvent>() {
 				    @Nullable
 		            @Override
-		            public Player get(VotifierEvent VotifierEvent) {
-		            	String h = VotifierEvent.getVote().getUsername();
-		            	if (Bukkit.getPlayer(h) != null && Bukkit.getPlayer(h).isOnline()){
-		            		return Bukkit.getPlayer(h);
-		            	}
-		            	else
-		            		Skript.error("That player does not exist or is not online right now.");
-		            		return null;
+		            public Player get(RayFallVoteEvent evt) {
+		            	return evt.getPlayer();
 		            }
 		        }, 0);
-			 EventValues.registerEventValue(VotifierEvent.class, String.class, new Getter<String, VotifierEvent>() {
+			 EventValues.registerEventValue(RayFallVoteEvent.class, String.class, new Getter<String, RayFallVoteEvent>() {
 				    @Nullable
 		            @Override
-		            public String get(VotifierEvent VotifierEvent) {
-		            	String v = VotifierEvent.getVote().getServiceName();
-		            	return v;
+		            public String get(RayFallVoteEvent evt) {
+		            	return evt.getSite();
 		            }
 		        }, 0);
 		 }
@@ -259,6 +258,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffCreateStaticHoloObject.class, "create holo object %string% with id %string% at %location%");
 				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
 				Skript.registerEffect(EditHoloObject.class, "edit holo object %string% to %string%");
+				Skript.registerEffect(EffBoundHoloObject.class, "create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]");
 				if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")){
 					getLogger().info("Client Side bacon holograms enabled");
 					Skript.registerEffect(EffTimedClientSideHolo.class, "display hologram %string% at %location% to %player% for %timespan%");
@@ -268,6 +268,38 @@ public class skRayFall extends JavaPlugin implements Listener {
 
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
+		 Skript.registerEvent("On Store", SimpleEvent.class, StoreEvent.class,"(store|chest add)");
+		 Skript.registerEvent("On Unstore", SimpleEvent.class, UnstoreEvent.class,"(unstore|chest remove)");
+		 new StoreListener(this);
+		 EventValues.registerEventValue(StoreEvent.class, ItemStack.class, new Getter<ItemStack, StoreEvent>() {
+			    @Nullable
+	            @Override
+	            public ItemStack get(StoreEvent evt) {
+	            	return evt.getItem();
+	            }
+	        }, 0);
+		 EventValues.registerEventValue(StoreEvent.class, Player.class, new Getter<Player, StoreEvent>() {
+			    @Nullable
+	            @Override
+	            public Player get(StoreEvent evt) {
+	            	return evt.getPlayer();
+	            }
+	        }, 0);
+		 EventValues.registerEventValue(UnstoreEvent.class, ItemStack.class, new Getter<ItemStack, UnstoreEvent>() {
+			    @Nullable
+	            @Override
+	            public ItemStack get(UnstoreEvent evt) {
+	            	return evt.getItem();
+	            }
+	        }, 0);
+		 EventValues.registerEventValue(UnstoreEvent.class, Player.class, new Getter<Player, UnstoreEvent>() {
+			    @Nullable
+	            @Override
+	            public Player get(UnstoreEvent evt) {
+	            	return evt.getPlayer();
+	            }
+	        }, 0);
+	 
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");

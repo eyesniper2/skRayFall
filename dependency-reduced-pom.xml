@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rayfall.eyesniper2</groupId>
   <artifactId>skRayFall</artifactId>
-  <version>1.5.3</version>
+  <version>1.6</version>
   <build>
     <plugins>
       <plugin>

@@ -1,6 +1,12 @@
 package net.rayfall.eyesniper2.skRayFall.Holograms;
 
 import java.util.HashMap;
+
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
+import org.bukkit.entity.Entity;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import ch.njol.skript.Skript;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
@@ -23,6 +29,15 @@ public class HoloManager {
 		}
 	}
 	
+	
+	public static boolean isInHoloMap(String id){
+		if (holomap.containsKey(id)){
+			return true;
+		}
+		else
+			return false;
+	}
+	
 	public static Hologram removeFromHoloMap(String id){
 		if (holomap.containsKey(id)){
 			Hologram h = holomap.get(id);
@@ -33,6 +48,7 @@ public class HoloManager {
 			return null;
 		}
 	}
+	
 	public static Hologram getFromHoloMap(String s){
 		if (holomap.containsKey(s)){
 			return holomap.get(s);
@@ -54,6 +70,22 @@ public class HoloManager {
 			h.delete();
 		}
 		holomap.clear();
+	}
+	
+	public static void followEntity(final Entity e, final String id, final double x, final double y, final double z){
+		new BukkitRunnable() {
+		    @Override
+		    public void run() {
+		    	Hologram hologram = getFromHoloMap(id);
+		    	if (isInHoloMap(id) == true){
+		    		hologram.teleport(e.getLocation().add(x, y, z));	
+		    	}
+		    	else{
+		    		cancel();
+		    	}
+		    }
+		}.runTaskTimer(skRayFall.plugin, 1L, 1L);
+		
 	}
 
 }
