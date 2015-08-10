@@ -4,6 +4,7 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 
+import org.bukkit.entity.Damageable;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -31,12 +32,12 @@ public class EffCitizenSetMaxHealth extends Effect{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 		NPC npcH = registry.getById(id.getSingle(evt).intValue());
-		npcH.getBukkitEntity().setMaxHealth(maxHealth.getSingle(evt).doubleValue());
+		Damageable npc = (Damageable) npcH.getEntity();
+		npc.setMaxHealth(maxHealth.getSingle(evt).doubleValue());
 	}
 
 }

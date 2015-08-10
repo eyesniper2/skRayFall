@@ -7,9 +7,14 @@ import net.citizensnpcs.api.event.NPCDeathEvent;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
+import net.gravitydevelopment.updater.Updater;
+import net.gravitydevelopment.updater.Updater.UpdateResult;
+import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPC;
+import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCIdGeneral;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCNamed;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCid;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenAttack;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenHold;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenLookTarget;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenMove;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenNameVisable;
@@ -32,8 +37,11 @@ import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprBottomRightSchema
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
+import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprOwnerOfCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprTopLeftSchematic;
 import net.rayfall.eyesniper2.skRayFall.Commands.GeneralCommands;
+import net.rayfall.eyesniper2.skRayFall.CrackShotEffects.EffPlaceMine;
+import net.rayfall.eyesniper2.skRayFall.CrackShotExpressions.ExprCrackShotWeapon;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffBasicEffectLib;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLib.EffEffectLibBleed;
@@ -82,6 +90,7 @@ import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteEvent;
 import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteListener;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -96,6 +105,11 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
+
+import com.shampaggon.crackshot.events.WeaponDamageEntityEvent;
+import com.shampaggon.crackshot.events.WeaponExplodeEvent;
+import com.shampaggon.crackshot.events.WeaponShootEvent;
+import com.shampaggon.crackshot.events.WeaponTriggerEvent;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
@@ -128,6 +142,13 @@ public class skRayFall extends JavaPlugin implements Listener {
 		    } catch (IOException e) {
 		        getLogger().info("MCStats had an issue :/ " + e.getMessage() + "This will not affect anything. *Server gets moar bacon*");
 		    }
+		 if(this.getConfig().getBoolean("UpdateAlerts", false)){
+			 Updater updater = new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
+			 if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE){
+				 getServer().getConsoleSender().sendMessage("[ " + ChatColor.DARK_AQUA + "skRayFall" + ChatColor.RESET + " ]" + ChatColor.RED + "An update for skRayFall is available!");
+			 }
+		 }
+		 
 		 if (getServer().getPluginManager().isPluginEnabled("Citizens"))
 		    {
 			 getLogger().info("Getting more bacon for the army of citizens...");
@@ -135,6 +156,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffCitizenMove.class,"move citizen %number% to %location% [at speed %number%]");
 			 Skript.registerEffect(EffDespawnCitizen.class,"despawn citizen %number%");
 			 Skript.registerEffect(EffEquipCitizen.class,"(equip|give) citizen %number% with [an] %itemstack%");
+			 Skript.registerEffect(EffCitizenHold.class, "make citizen %number% hold [an] %itemstack%");
 			 Skript.registerEffect(EffSpawnCitizen.class,"respawn citizen %number% (at|%direction%) %location%");
 			 Skript.registerEffect(EffDeleteCitizen.class,"(remove|destroy) citizen %number%");
 			 //Only supports one living entity add support for groups
@@ -147,11 +169,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffCitizenAttack.class,"make citizen %number% (attack|fight) %livingentities%");
 			 //buggy
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
-			 Skript.registerEffect(EffGiveLookCloseTrait.class, "give npc %number% the look close trait");
+			 Skript.registerEffect(EffGiveLookCloseTrait.class, "(give|set) npc %number% the look close trait");
 			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1¦invulnerable|0¦vulnerable)");
 			 Skript.registerExpression(ExprLastCitizen.class, Number.class, ExpressionType.SIMPLE, "last created citizen [id]");
 			 Skript.registerExpression(ExprNameOfCitizen.class, String.class, ExpressionType.SIMPLE, "name of citizen %number%");
 			 Skript.registerExpression(ExprGeneralCitizen.class, Entity.class, ExpressionType.PROPERTY, "citizen %number%");
+			 Skript.registerExpression(ExprOwnerOfCitizen.class, String.class, ExpressionType.PROPERTY, "owner of (citizen|npc) %number%");
 			 Skript.registerEvent("NPC/Citizen Right Click", SimpleEvent.class, NPCRightClickEvent.class,"(NPC|Citizen) right click");
 			 EventValues.registerEventValue(NPCRightClickEvent.class, Player.class, new Getter<Player, NPCRightClickEvent>() {
 		            @Override
@@ -198,7 +221,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            }
 		        }, 0);
 			 Skript.registerCondition(CondisNPCid.class, "(NPC|Citizen) is %number%");
+			 Skript.registerCondition(CondisNPCIdGeneral.class, "%entity% is (citizen|npc) %number%");
 			 Skript.registerCondition(CondisNPCNamed.class, "(NPC|Citizen)['s] [is] name[d] [is] %string%");
+			 Skript.registerCondition(CondisNPC.class, "%entity% is [a] (npc|citizen)");
 			 if(getServer().getPluginManager().isPluginEnabled("Builder")){
 				 getLogger().info("Getting bacon sandwiches for builders!");
 				 Skript.registerEffect(EffStartBuilderBuild.class, "make citizen %number% build %string% at %location% [speed %number%] for %player%");
@@ -265,6 +290,66 @@ public class skRayFall extends JavaPlugin implements Listener {
 					Skript.registerEffect(EffCreateStaticClientHoloObject.class, "create client side holo object %string% with id %string% at %location% to %player%");
 				}
 		}
+		 //CrackShot Stuff
+		 if (getServer().getPluginManager().isPluginEnabled("CrackShot")){
+			 getLogger().info("Giving CrackShot snipers bacon.");
+			 Skript.registerExpression(ExprCrackShotWeapon.class, ItemStack.class, ExpressionType.SIMPLE, "(gun|crackshot weapon) %string%");
+			 Skript.registerEffect(EffPlaceMine.class, "(place|set|spawn) mine at %location% for %player% as %string%");
+			 Skript.registerEvent("(crackshot|weapon|gun) shoot", SimpleEvent.class, WeaponShootEvent.class,"(crackshot|weapon|gun) shoot");
+			 EventValues.registerEventValue(WeaponShootEvent.class, Player.class, new Getter<Player, WeaponShootEvent>() {
+				    @Nullable
+		            @Override
+		            public Player get(WeaponShootEvent evt) {
+		            	return evt.getPlayer();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(WeaponShootEvent.class, Entity.class, new Getter<Entity, WeaponShootEvent>() {
+				    @Nullable
+		            @Override
+		            public Entity get(WeaponShootEvent evt) {
+		            	return evt.getProjectile();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(WeaponShootEvent.class, String.class, new Getter<String, WeaponShootEvent>() {
+				    @Nullable
+		            @Override
+		            public String get(WeaponShootEvent evt) {
+		            	return evt.getWeaponTitle();
+		            }
+		        }, 0);
+			 Skript.registerEvent("(crackshot|weapon|gun) damage", SimpleEvent.class, WeaponDamageEntityEvent.class,"(crackshot|weapon|gun) damage");
+			 EventValues.registerEventValue(WeaponDamageEntityEvent.class, String.class, new Getter<String, WeaponDamageEntityEvent>() {
+				    @Nullable
+		            @Override
+		            public String get(WeaponDamageEntityEvent evt) {
+		            	return evt.getWeaponTitle();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(WeaponDamageEntityEvent.class, Entity.class, new Getter<Entity , WeaponDamageEntityEvent>(){
+				 @Nullable
+		            @Override
+		            public Entity get(WeaponDamageEntityEvent evt) {
+		            	return evt.getVictim();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponDamageEntityEvent.class, Player.class, new Getter<Player, WeaponDamageEntityEvent>(){
+				 @Nullable
+		           @Override
+		            public Player get(WeaponDamageEntityEvent evt) {
+		            	return evt.getPlayer();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponDamageEntityEvent.class, String.class, new Getter<String, WeaponDamageEntityEvent>(){
+				 @Nullable
+		           @Override
+		            public String get(WeaponDamageEntityEvent evt) {
+		            	return evt.getWeaponTitle();
+				 }
+			 }, 0);
+			 //Skript.registerEvent("weapon explosion", SimpleEvent.class, WeaponExplodeEvent.class,"(crackshot|weapon) (explode|explosion)");
+			 //Skript.registerEvent("landmine explode", SimpleEvent.class, WeaponTriggerEvent.class,"[crackshot] landmine explode");
+		 }
+		 
 
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
@@ -331,8 +416,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_3.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
-		 if(Bukkit.getVersion().contains("(MC: 1.8.4)") || Bukkit.getVersion().contains("(MC: 1.8.5)") || Bukkit.getVersion().contains("(MC: 1.8.6)") || Bukkit.getVersion().contains("(MC: 1.8.7)")){
-			 getLogger().info("Getting the extra special 1.8.4 - 1.8.7 bacon!");
+		 if(Bukkit.getVersion().contains("(MC: 1.8.4)") || Bukkit.getVersion().contains("(MC: 1.8.5)") || Bukkit.getVersion().contains("(MC: 1.8.6)") || Bukkit.getVersion().contains("(MC: 1.8.7)") || Bukkit.getVersion().contains("(MC: 1.8.8)")){
+			 getLogger().info("Getting the extra special 1.8.4 - 1.8.8 bacon!");
 			 Skript.registerEffect(EffTitleV1_8_4.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
 			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%");

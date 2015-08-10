@@ -31,8 +31,11 @@ public class EffSetPlayerListName extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if (player.getSingle(evt).isOnline()){
+		if (player.getSingle(evt) instanceof Player && player.getSingle(evt).isOnline()){
 		player.getSingle(evt).setPlayerListName(name.getSingle(evt).replace("\"", ""));
+		}
+		else{
+			return;
 		}
 	}
 

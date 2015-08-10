@@ -6,6 +6,7 @@ import net.citizensnpcs.api.npc.NPCRegistry;
 
 import org.bukkit.entity.Entity;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
@@ -54,8 +55,14 @@ public class ExprGeneralCitizen extends SimpleExpression<Entity>{
 	protected Entity[] get(org.bukkit.event.Event evt) {
 		
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-	    NPC npc = registry.getById(((Number)this.id.getSingle(evt)).intValue());
-	    return new Entity[] { npc.getEntity() };
+		try{
+			NPC npc = registry.getById(((Number)this.id.getSingle(evt)).intValue());
+			return new Entity[] { npc.getEntity() };
+		}
+		catch(NullPointerException e){
+			Skript.error("That citizen/npc does not exist ");
+			return null;
+		}
 
 	}
 	
