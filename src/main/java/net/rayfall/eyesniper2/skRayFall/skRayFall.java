@@ -139,12 +139,6 @@ public class skRayFall extends JavaPlugin implements Listener {
 		    } catch (IOException e) {
 		        getLogger().info("MCStats had an issue :/ " + e.getMessage() + "This will not affect anything. *Server gets moar bacon*");
 		    }
-		 if(this.getConfig().getBoolean("UpdateAlerts", false)){
-			 Updater updater = new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
-			 if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE){
-				 getServer().getConsoleSender().sendMessage("[ " + ChatColor.DARK_AQUA + "skRayFall" + ChatColor.RESET + " ]" + ChatColor.RED + "An update for skRayFall is available!");
-			 }
-		 }
 		 
 		 if (getServer().getPluginManager().isPluginEnabled("Citizens"))
 		    {
@@ -421,6 +415,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
+		 if(this.getConfig().getBoolean("UpdateAlerts", false)){
+			 Updater updater = new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
+			 if(updater.getResult() == UpdateResult.UPDATE_AVAILABLE){
+				 getServer().getConsoleSender().sendMessage("[ " + ChatColor.DARK_AQUA + "skRayFall" + ChatColor.RESET + " ]" + ChatColor.RED + "An update for skRayFall is available!");
+			 }
+		 }
 		 getLogger().info("Bacon is ready!");
 	 }
 	 

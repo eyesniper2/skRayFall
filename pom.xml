@@ -19,10 +19,8 @@
 				<version>2.3</version>
 				<configuration>
 					<artifactSet>
-					<includes>
-                                    <include>net.gravitydevelopment.updater:updater</include>
-                                </includes>
 						<includes>
+							<include>net.gravitydevelopment.updater:updater</include>
 							<include>org.mcstats.*:*</include>
 						</includes>
 					</artifactSet>
@@ -31,10 +29,10 @@
 							<pattern>org.mcstats</pattern>
 							<shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
 						</relocation>
-<relocation>
-                                    <pattern>net.gravitydevelopment.updater</pattern>
-                                    <shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
-                                </relocation>
+						<relocation>
+							<pattern>net.gravitydevelopment.updater</pattern>
+							<shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
+						</relocation>
 					</relocations>
 				</configuration>
 				<executions>
@@ -185,6 +183,7 @@
             <groupId>net.gravitydevelopment.updater</groupId>
             <artifactId>updater</artifactId>
             <version>2.1</version>
+            <scope>compile</scope>
         </dependency>
 		<dependency>
 			<groupId>org.eclipse.jdt</groupId>
@@ -192,5 +191,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.6.3</version>
+	<version>1.6.4</version>
 </project>
