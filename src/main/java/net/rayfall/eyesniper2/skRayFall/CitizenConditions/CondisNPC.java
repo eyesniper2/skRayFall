@@ -30,7 +30,7 @@ public class CondisNPC extends Condition{
 
 	@Override
 	public boolean check(Event evt) {
-		if(ent.getSingle(evt).hasMetadata("NPC")){
+		if(ent.getSingle(evt) != null && ent.getSingle(evt).hasMetadata("NPC")){
 			return true;
 		}
 		else{

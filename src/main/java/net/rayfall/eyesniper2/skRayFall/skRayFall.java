@@ -107,10 +107,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
 import com.shampaggon.crackshot.events.WeaponDamageEntityEvent;
-import com.shampaggon.crackshot.events.WeaponExplodeEvent;
 import com.shampaggon.crackshot.events.WeaponShootEvent;
-import com.shampaggon.crackshot.events.WeaponTriggerEvent;
-
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.util.SimpleEvent;

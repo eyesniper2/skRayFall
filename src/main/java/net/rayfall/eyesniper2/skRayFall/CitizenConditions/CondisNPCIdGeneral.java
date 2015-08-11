@@ -35,7 +35,7 @@ public class CondisNPCIdGeneral extends Condition{
 
 	@Override
 	public boolean check(Event evt) {
-		if(test.getSingle(evt).hasMetadata("NPC")){
+		if(test.getSingle(evt) != null && test.getSingle(evt).hasMetadata("NPC")){
 			NPCRegistry registry = CitizensAPI.getNPCRegistry();
 			if (registry.getNPC(test.getSingle(evt)).getId() == id.getSingle(evt).intValue()){
 				return true;

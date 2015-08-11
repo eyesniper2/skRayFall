@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.rayfall.eyesniper2</groupId>
   <artifactId>skRayFall</artifactId>
-  <version>1.6</version>
+  <version>1.6.2</version>
   <build>
     <plugins>
       <plugin>
@@ -27,12 +27,19 @@
         <configuration>
           <artifactSet>
             <includes>
+              <include>net.gravitydevelopment.updater:updater</include>
+            </includes>
+            <includes>
               <include>org.mcstats.*:*</include>
             </includes>
           </artifactSet>
           <relocations>
             <relocation>
               <pattern>org.mcstats</pattern>
+              <shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
+            </relocation>
+            <relocation>
+              <pattern>net.gravitydevelopment.updater</pattern>
               <shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
             </relocation>
           </relocations>
@@ -60,6 +67,10 @@
     <repository>
       <id>central</id>
       <url>http://repo1.maven.org/maven2/</url>
+    </repository>
+    <repository>
+      <id>gravity-repo</id>
+      <url>http://repo.gravitydevelopment.net</url>
     </repository>
   </repositories>
   <dependencies>
@@ -98,70 +109,83 @@
       <artifactId>builder</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/Builder.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/Builder.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>net.citizensnpcs</groupId>
       <artifactId>citizensnpcs</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/citizens-2.0.15-SNAPSHOT.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/citizens-2.0.15-SNAPSHOT.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>ch.njol</groupId>
       <artifactId>skript</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/Skript.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/Skript.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.vexsoftware</groupId>
       <artifactId>votifier</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/Votifier.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/Votifier.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigotV1_8_3</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.3.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/spigot-1.8.3.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigotV1_8</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/spigot-1.8.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigotV1_8_4</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.4.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/spigot-1.8.4.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigotV1_8_6</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/spigot-1.8.6.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/spigot-1.8.6.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>net.aufdemrand</groupId>
       <artifactId>sentry</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/sentry.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/sentry.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>com.gmail.filoghost</groupId>
       <artifactId>holographicdisplays</artifactId>
       <version>1.0</version>
       <scope>system</scope>
-      <systemPath>D:\Java Workbench\skRayFall/libs/HolographicDisplaysAPI.jar</systemPath>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/HolographicDisplaysAPI.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.shampaggon</groupId>
+      <artifactId>crackshot</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>C:\Users\Nathan\Documents\Java Workbench\skRayFall-Dev/libs/CrackShot.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>net.gravitydevelopment.updater</groupId>
+      <artifactId>updater</artifactId>
+      <version>2.1</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jdt</groupId>
