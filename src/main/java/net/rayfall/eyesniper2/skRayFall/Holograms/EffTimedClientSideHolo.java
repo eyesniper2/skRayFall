@@ -14,6 +14,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -54,8 +55,31 @@ public class EffTimedClientSideHolo extends Effect{
 			core = core.substring(core.indexOf(";") + 1);
 			if (line.startsWith("ItemStack:")){
 				line = line.substring(line.indexOf(":") + 1);
-				Material mat = Material.valueOf(line.toUpperCase().replace(" ", "_"));
-				ItemStack stack = new ItemStack(mat, 1);
+				int meta = 0;
+				if (line.contains(":")){
+					try{
+						meta = Integer.parseInt(line.substring(line.indexOf(":") + 1));
+					}
+					catch(NumberFormatException e){
+						Skript.error("Meta data could not be parsed correctly!");
+						continue;
+					}
+					
+					line = line.substring(0, line.indexOf(":"));
+				}
+				ItemStack stack = new ItemStack(Material.AIR, 1);
+				try{
+					Material mat = Material.valueOf(line.toUpperCase().replace(" ", "_"));
+					stack = new ItemStack(mat, 1);
+					if(meta != 0){
+						stack = new ItemStack(mat, 1, (byte) meta);
+					}
+				}
+				catch(IllegalArgumentException e){
+					Skript.error("A item under that name does not exsist!");
+					continue;
+				}
+				
 				hologram.appendItemLine(stack);
 			}
 			else{

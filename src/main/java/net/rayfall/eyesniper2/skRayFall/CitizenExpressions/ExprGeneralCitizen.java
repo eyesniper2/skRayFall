@@ -54,8 +54,13 @@ public class ExprGeneralCitizen extends SimpleExpression<Entity>{
 	protected Entity[] get(org.bukkit.event.Event evt) {
 		
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-	    NPC npc = registry.getById(((Number)this.id.getSingle(evt)).intValue());
-	    return new Entity[] { npc.getEntity() };
+		try{
+			NPC npc = registry.getById(((Number)this.id.getSingle(evt)).intValue());
+			return new Entity[] { npc.getEntity() };
+		}
+		catch(NullPointerException e){
+			return null;
+		}
 
 	}
 	

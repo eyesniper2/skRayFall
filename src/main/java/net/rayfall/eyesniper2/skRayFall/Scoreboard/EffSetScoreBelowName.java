@@ -49,6 +49,9 @@ public class EffSetScoreBelowName extends Effect{
 				Objective objective = target.getSingle(evt).getScoreboard().getObjective(DisplaySlot.BELOW_NAME);
 				objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
 				Score score = objective.getScore(player.getSingle(evt).getName());
+				if(num.getSingle(evt).equals(null)){
+					return;
+				}
 				score.setScore(num.getSingle(evt).intValue());
 			}
 			else{
@@ -56,6 +59,9 @@ public class EffSetScoreBelowName extends Effect{
 				objectiveh.setDisplaySlot(DisplaySlot.BELOW_NAME);
 				objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
 				Score score = objectiveh.getScore(player.getSingle(evt).getName());
+				if(num.getSingle(evt).equals(null)){
+					return;
+				}
 				score.setScore(num.getSingle(evt).intValue());
 			}
 			

@@ -11,6 +11,14 @@
 enableFastScoreBoards: true
 
 #-------------------------------------------------------------------------------------------
+#Will alert you inconsol when there is a new version of skRayFall on bukkit! Can be
+#disabled by setting the value below to false.
+
+#Options: true or false      Recommended setting: true
+
+UpdateAlerts: true
+
+#-------------------------------------------------------------------------------------------
 
 #Documentation: http://www.skunity.com/SkRayFall
 #Github repo: https://github.com/eyesniper2/skRayFall

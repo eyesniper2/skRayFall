@@ -2,8 +2,6 @@ package net.rayfall.eyesniper2.skRayFall.utli;
 
 import org.bukkit.entity.EntityType;
 
-import ch.njol.skript.Skript;
-
 public class ScrubEntityType {
 	
 	public static EntityType getType(String exprs){
@@ -69,7 +67,6 @@ public class ScrubEntityType {
 		case "guardian":
 			return EntityType.GUARDIAN;
 		default:
-			Skript.error("Oh no! NPC type was invalid or unspecified, don't panic we got this! Making a Human instead.");
 			return EntityType.PLAYER;
 		}
 

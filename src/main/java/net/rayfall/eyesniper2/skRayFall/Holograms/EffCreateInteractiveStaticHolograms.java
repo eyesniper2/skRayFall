@@ -1,6 +1,9 @@
 package net.rayfall.eyesniper2.skRayFall.Holograms;
 
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -8,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.handler.PickupHandler;
 import com.gmail.filoghost.holographicdisplays.api.handler.TouchHandler;
 import com.gmail.filoghost.holographicdisplays.api.line.ItemLine;
@@ -19,40 +23,34 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EditHoloObject extends Effect{
+public class EffCreateInteractiveStaticHolograms extends Effect{
 	
-	//edit holo object %string% to %string% [and set interactivity to %boolean%];
+	//create interactive holo object %string% with id %string% at %location%
 	
-	private Expression<String> text;
-	private Expression<String> id;
-	private Expression<Boolean> interactive;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
-			ParseResult arg3) {
-		id = (Expression<String>) e[0];
-		text = (Expression<String>) e[1];
-		interactive = (Expression<Boolean>) e[2];
-		return true;
-	}
+		private Expression<String> text;
+		private Expression<String> id;
+		private Expression<Location> loc;
 
-	@Override
-	public String toString(@Nullable Event arg0, boolean arg1) {
-		return null;
-	}
+		@SuppressWarnings("unchecked")
+		@Override
+		public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
+				ParseResult arg3) {
+			id = (Expression<String>) e[1];
+			text = (Expression<String>) e[0];
+			loc = (Expression<Location>) e[2];
+			return true;
+		}
 
-	@Override
-	protected void execute(final Event evt) {
-		if (HoloManager.getFromHoloMap(id.getSingle(evt).replace("\"", "")) != null) {
-			Hologram hologram = HoloManager.getFromHoloMap(id.getSingle(evt).replace("\"", ""));
-			boolean check = false;
-			if (this.interactive != null && interactive.getSingle(evt) != null){
-				check = interactive.getSingle(evt).booleanValue();
-			}
-			hologram.clearLines();
-			int lineNumber = 1;
+		@Override
+		public String toString(@Nullable Event arg0, boolean arg1) {
+			return null;
+		}
+
+		@Override
+		protected void execute(final Event evt) {
+			final Hologram hologram = HologramsAPI.createHologram(skRayFall.plugin, loc.getSingle(evt));
 			String core = text.getSingle(evt).replace("\"", "");
+			int lineNumber = 1;
 			while (core.indexOf(";") != -1){
 				String line = core.substring(0, core.indexOf(";"));
 				core = core.substring(core.indexOf(";") + 1);
@@ -84,7 +82,6 @@ public class EditHoloObject extends Effect{
 					}
 					
 					ItemLine itemline = hologram.appendItemLine(stack);
-					if (check == true){
 					final int templine = lineNumber;
 					itemline.setTouchHandler(new TouchHandler() {
 						@Override
@@ -101,26 +98,23 @@ public class EditHoloObject extends Effect{
 						}
 						
 					});
-					}
+					
 					lineNumber++;
 				}
 				else{
-					TextLine textline = hologram.appendTextLine(line);
-					if (check == true){
-					final int templine = lineNumber;
-					textline.setTouchHandler(new TouchHandler() {
-						@Override
-						public void onTouch(Player player) {
-							HoloTouchEvent event = new HoloTouchEvent(player, id.getSingle(evt).replace("\"", "") ,templine);
-							Bukkit.getPluginManager().callEvent(event);
-						} 
-					});
-					}
-					lineNumber++;
+				TextLine textline = hologram.appendTextLine(line);
+				final int templine = lineNumber;
+				textline.setTouchHandler(new TouchHandler() {
+					@Override
+					public void onTouch(Player player) {
+						HoloTouchEvent event = new HoloTouchEvent(player, id.getSingle(evt).replace("\"", "") ,templine);
+						Bukkit.getPluginManager().callEvent(event);
+					} 
+				});
+				lineNumber++;
 				}
 			}
 			TextLine textline = hologram.appendTextLine(core);
-			if (check==true){
 			final int templine = lineNumber;
 			textline.setTouchHandler(new TouchHandler() {
 				@Override
@@ -129,11 +123,10 @@ public class EditHoloObject extends Effect{
 					Bukkit.getPluginManager().callEvent(event);
 				} 
 			});
+			if (HoloManager.addToHoloMap(id.getSingle(evt).replace("\"", ""), hologram) == false){
+				hologram.delete();
 			}
-			HoloManager.editHoloMap(id.getSingle(evt).replace("\"", ""), hologram);
+			
+		}
+
 	}
-	else{
-		Skript.error("That hologram does not exist!");
-	}
-	}
-}
