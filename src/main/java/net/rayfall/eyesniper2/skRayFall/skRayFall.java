@@ -43,9 +43,15 @@ import net.rayfall.eyesniper2.skRayFall.Commands.GeneralCommands;
 import net.rayfall.eyesniper2.skRayFall.CrackShotEffects.EffPlaceMine;
 import net.rayfall.eyesniper2.skRayFall.CrackShotExpressions.ExprCrackShotWeapon;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffDeleteEffect;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibAnimatedBallEffect;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibArc;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibAtom;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibBleed;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibCircle;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibLine;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibText;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibWave;
+import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectTornado;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.skRayFallEffectManager;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffFakeFakeLightning;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
@@ -73,18 +79,24 @@ import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedClientSideHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedHologram;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloPickupEvent;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloTouchEvent;
+import net.rayfall.eyesniper2.skRayFall.Particles.EffClientsideStaticParticles;
+import net.rayfall.eyesniper2.skRayFall.Particles.EffStaticParticles;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.CondisScoreboardSet;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteIdScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffEditIDScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreTab;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetIDBasedScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
 
 
 
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.IDScoreBoardManager;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffTabTitlesV1_8;
@@ -108,8 +120,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -138,6 +150,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	public static EffectManager effectManager;
 	public static Plugin plugin = null;
 	public static skRayFallEffectManager effLibManager;
+	public static IDScoreBoardManager sbManager;
 	public boolean enableFastScoreboards = true;
 	
 	 @Override
@@ -262,7 +275,15 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffEffectLibAtom.class, "(spawn|create|apply) (a|the|an) atom (effect|formation) (at|on|for|to) %entity/location% with id %string%");
 			 Skript.registerEffect(EffEffectLibBleed.class, "(spawn|create|apply) (a|the|an) bleed (effect|formation) (at|on|for|to) %entity/location% with id %string%");
 			 Skript.registerEffect(EffEffectLibText.class, "(spawn|create|apply) (a|the|an) text (effect|formation) with text %string% as %effectlibparticle% (at|on|for|to) %entities/location% with id %string%[(,| and) %number% large]");
-		// }
+			 Skript.registerEffect(EffEffectLibAnimatedBallEffect.class, "(spawn|create|apply) (a|the|an) animated ball (effect|formation) (at|on|for|to) %entity/location% with id %string% [with particle %-effectlibparticle%] [offset by %number%, %number%(,| and) %number%]");
+			 Skript.registerEffect(EffEffectLibArc.class, "(spawn|create|apply) (a|the|an) arc (effect|formation) from %entity/location% to %entity/location% with id %string% [with particle[s] %-effectlibparticle%] [%number% high] [and %number% particles]");
+			 Skript.registerEffect(EffEffectLibWave.class, "(spawn|create|apply) (a|the|an) wave (effect|formation) at %entity/location% with id %string% [with particle[s] %-effectlibparticle%]");
+			 Skript.registerEffect(EffEffectLibLine.class, "(spawn|create|apply) (a|the|an) line (effect|formation) from %entity/location% to %entity/location% with id %string% [with particle[s] %-effectlibparticle%]");
+			 Skript.registerEffect(EffEffectLibCircle.class, "(spawn|create|apply) (a|the|an) circle (effect|formation) (at|on|for) %entity/location% with id %string% [with particle[s] %-effectlibparticle%] [(and|with) radius %-number%]");
+			 Skript.registerEffect(EffStaticParticles.class, "(create|display|show) %number% [of] %effectlibparticle% particle[s] at %location% [(with data of %-itemstack%|with color %number%, %number%(,| and) %number%)] [offset by %number%, %number%(,| and) %number%] [(with|at) speed %number%]");
+			 Skript.registerEffect(EffClientsideStaticParticles.class, "(create|display|show) %number% [of] %effectlibparticle% particle[s] at %location% for %player% [with data of %-itemstack%] [offset by %number%, %number%(,| and) %number%] [(with|at) speed %number%]");
+			 Skript.registerEffect(EffEffectTornado.class, "(spawn|create|apply) (a|the|an) tornado (effect|formation) at %entity/location% with id %string% [with tornado particle[s] %-effectlibparticle% and cloud particle[s] %-effectlibparticle%] [(set|and) radius %number%] [(set|and) max height %number%]");
+		
 		//Votifier Stuff 
 		 if (getServer().getPluginManager().isPluginEnabled("Votifier")){
 			 getLogger().info("Getting more bacon for the Votifier runners!");
@@ -428,6 +449,13 @@ public class skRayFall extends JavaPlugin implements Listener {
 	            	return evt.getPlayer();
 	            }
 	        }, 0);
+		 EventValues.registerEventValue(StoreEvent.class, Inventory.class, new Getter<Inventory, StoreEvent>() {
+			    @Nullable
+	            @Override
+	            public Inventory get(StoreEvent evt) {
+	            	return evt.getInventory();
+	            }
+	        }, 0);
 		 EventValues.registerEventValue(UnstoreEvent.class, ItemStack.class, new Getter<ItemStack, UnstoreEvent>() {
 			    @Nullable
 	            @Override
@@ -442,37 +470,14 @@ public class skRayFall extends JavaPlugin implements Listener {
 	            	return evt.getPlayer();
 	            }
 	        }, 0);
-		 Skript.registerEvent("armorstand interact", SimpleEvent.class, PlayerArmorStandManipulateEvent.class, "armo[u]r stand interact");
-		 EventValues.registerEventValue(PlayerArmorStandManipulateEvent.class, Player.class, new Getter<Player,  PlayerArmorStandManipulateEvent>() {
+		 EventValues.registerEventValue(UnstoreEvent.class, Inventory.class, new Getter<Inventory, UnstoreEvent>() {
 			    @Nullable
 	            @Override
-	            public Player get(PlayerArmorStandManipulateEvent evt) {
-	            	return evt.getPlayer();
+	            public Inventory get(UnstoreEvent evt) {
+	            	return evt.getInventory();
 	            }
 	        }, 0);
-		 EventValues.registerEventValue(PlayerArmorStandManipulateEvent.class, ItemStack.class, new Getter<ItemStack,  PlayerArmorStandManipulateEvent>() {
-			    @Nullable
-	            @Override
-	            public ItemStack get(PlayerArmorStandManipulateEvent evt) {
-	            	return evt.getPlayerItem();
-	            }
-	        }, 0);
-		 new ArmorStandListener(this);
-		 Skript.registerEvent("armorstand damage", SimpleEvent.class, ArmorStandDamageEvent.class, "armo[u]r stand damage");
-		 EventValues.registerEventValue(ArmorStandDamageEvent.class, Entity.class, new Getter<Entity, ArmorStandDamageEvent>() {
-			    @Nullable
-	            @Override
-	            public Entity get(ArmorStandDamageEvent evt) {
-	            	return evt.getArmorStand();
-	            }
-	        }, 0);
-		 EventValues.registerEventValue(ArmorStandDamageEvent.class, Player.class, new Getter<Player, ArmorStandDamageEvent>() {
-			    @Nullable
-	            @Override
-	            public Player get(ArmorStandDamageEvent evt) {
-	            	return evt.getDamager();
-	            }
-	        }, 0);
+		 sbManager = new IDScoreBoardManager(this);
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
@@ -483,6 +488,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffRemoveScoreBelowName.class,"(wipe|erase) below score[s] for %player%");
 		 Skript.registerEffect(EffSetScoreTab.class,"set tab[list] score of %player% to %number% for %player%");
 		 Skript.registerEffect(EffRemoveScoreTab.class,"(wipe|erase|delete) %player%['s] tab[list]");
+		 Skript.registerEffect(EffSetIDBasedScore.class,"(set|create) id [based] score %string% in sidebar of %player% to %number% with id %string%");
+		 Skript.registerEffect(EffEditIDScore.class, "(edit|update) score [with] id %string% to %string% and %number%");
+		 Skript.registerEffect(EffDeleteIdScore.class, "(delete|remove) score [with] id %string%");
 		 Skript.registerEffect(EffFakeFakeLightning.class, "(create|strike) (fake|ultra|no sound) fake lightning at %location%");
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
 		 Skript.registerEffect(EffSetPlayerListName.class, "set %player% tab name to %string%");
@@ -491,7 +499,23 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 if (Bukkit.getVersion().contains("1.8")){
 			 getLogger().info("Enabling general 1.8 bacon!");
 			 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
-			 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt"); 
+			 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt");
+			 new ArmorStandListener(this);
+			 Skript.registerEvent("armorstand damage", SimpleEvent.class, ArmorStandDamageEvent.class, "armo[u]r stand damage");
+			 EventValues.registerEventValue(ArmorStandDamageEvent.class, Entity.class, new Getter<Entity, ArmorStandDamageEvent>() {
+				    @Nullable
+		            @Override
+		            public Entity get(ArmorStandDamageEvent evt) {
+		            	return evt.getArmorStand();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(ArmorStandDamageEvent.class, Player.class, new Getter<Player, ArmorStandDamageEvent>() {
+				    @Nullable
+		            @Override
+		            public Player get(ArmorStandDamageEvent evt) {
+		            	return evt.getDamager();
+		            }
+		        }, 0);
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8)")){
 			 getLogger().info("Getting all the special 1.8 bacon!");
@@ -528,6 +552,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	    public void onDisable(){
 		 getLogger().info("Bacon has been eaten. Make some more soon!");
 		 effLibManager.dumpData();
+		 sbManager.dumpData();
 	 }
 	 
 	 @EventHandler

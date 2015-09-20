@@ -45,7 +45,7 @@ public class EffSetScoreBelowName extends Effect{
 			Skript.error("The player is not online!");
 		}
 		else{
-			if (target.getSingle(evt).getScoreboard().getObjective("holdBottom") != null){
+			if (target.getSingle(evt).getScoreboard().getObjective("bottomHold") != null){
 				Objective objective = target.getSingle(evt).getScoreboard().getObjective(DisplaySlot.BELOW_NAME);
 				objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
 				Score score = objective.getScore(player.getSingle(evt).getName());
@@ -55,7 +55,7 @@ public class EffSetScoreBelowName extends Effect{
 				score.setScore(num.getSingle(evt).intValue());
 			}
 			else{
-				Objective objectiveh = target.getSingle(evt).getScoreboard().registerNewObjective("holdBottom", "dummy");
+				Objective objectiveh = target.getSingle(evt).getScoreboard().registerNewObjective("bottomHold", "dummy");
 				objectiveh.setDisplaySlot(DisplaySlot.BELOW_NAME);
 				objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
 				Score score = objectiveh.getScore(player.getSingle(evt).getName());

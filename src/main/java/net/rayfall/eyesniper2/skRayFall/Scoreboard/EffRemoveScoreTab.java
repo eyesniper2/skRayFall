@@ -35,7 +35,7 @@ public class EffRemoveScoreTab extends Effect{
 			Skript.error("The player is not online!");
 		}
 		else{
-			if (player.getSingle(evt).getScoreboard().getObjective("holdTab") != null){
+			if (player.getSingle(evt).getScoreboard().getObjective("tabHold") != null){
 				player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.PLAYER_LIST).unregister();
 			}
 			else{

@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class UnstoreEvent extends Event implements Cancellable{
@@ -11,6 +12,7 @@ public class UnstoreEvent extends Event implements Cancellable{
 	private Player player;
 	private boolean isCancelled;
 	private ItemStack item;
+	private Inventory inv;
 	@Override
 	public HandlerList getHandlers() {
 	    return handlers;
@@ -20,9 +22,10 @@ public class UnstoreEvent extends Event implements Cancellable{
 	    return handlers;
 	}
 	
-	public UnstoreEvent(Player player, ItemStack item) {
+	public UnstoreEvent(Player player, ItemStack item, Inventory inv) {
 	    this.player = player;
 	    this.item = item;
+	    this.inv = inv;
 	    this.isCancelled = false;
 	}
 	 
@@ -32,6 +35,10 @@ public class UnstoreEvent extends Event implements Cancellable{
 	
 	public ItemStack getItem(){
 		return this.item;
+	}
+	
+	public Inventory getInventory(){
+		return this.inv;
 	}
 	 
 	@Override

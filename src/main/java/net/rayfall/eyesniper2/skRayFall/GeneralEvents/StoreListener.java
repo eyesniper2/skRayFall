@@ -98,7 +98,7 @@ public class StoreListener implements Listener {
 						&& StorePossible.contains((Player) evt.getWhoClicked())) {
 					StoreEvent event = new StoreEvent(
 							(Player) evt.getWhoClicked(), evt.getCursor()
-									.clone());
+									.clone(), evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -111,7 +111,7 @@ public class StoreListener implements Listener {
 					ItemStack i = evt.getCursor().clone();
 					i.setAmount(1);
 					StoreEvent event = new StoreEvent(
-							(Player) evt.getWhoClicked(), i);
+							(Player) evt.getWhoClicked(), i, evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -130,7 +130,7 @@ public class StoreListener implements Listener {
 						&& evt.getView().getBottomInventory().getType() == InventoryType.PLAYER) {
 					StoreEvent event = new StoreEvent(
 							(Player) evt.getWhoClicked(), evt.getCurrentItem()
-									.clone());
+									.clone(), evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -171,7 +171,7 @@ public class StoreListener implements Listener {
 				return;
 			}
 			m.setAmount(num);
-			StoreEvent event = new StoreEvent((Player) evt.getWhoClicked(), m);
+			StoreEvent event = new StoreEvent((Player) evt.getWhoClicked(), m, evt.getInventory());
 			Bukkit.getPluginManager().callEvent(event);
 			if (event.isCancelled()) {
 				evt.setCancelled(true);
@@ -217,7 +217,7 @@ public class StoreListener implements Listener {
 					}
 					m.setAmount(num);
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), m);
+							(Player) evt.getWhoClicked(), m, evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -239,7 +239,7 @@ public class StoreListener implements Listener {
 						&& UnstorePossible.contains((Player) evt
 								.getWhoClicked())) {
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), evt.getCursor());
+							(Player) evt.getWhoClicked(), evt.getCursor(), evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -253,7 +253,7 @@ public class StoreListener implements Listener {
 					ItemStack i = evt.getCursor().clone();
 					i.setAmount(1);
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), i);
+							(Player) evt.getWhoClicked(), i, evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -275,7 +275,7 @@ public class StoreListener implements Listener {
 						&& UnstorePossible.contains((Player) evt
 								.getWhoClicked())) {
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), evt.getCursor());
+							(Player) evt.getWhoClicked(), evt.getCursor(), evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -289,7 +289,7 @@ public class StoreListener implements Listener {
 					ItemStack i = evt.getCursor().clone();
 					i.setAmount(1);
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), i);
+							(Player) evt.getWhoClicked(), i, evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);
@@ -312,7 +312,7 @@ public class StoreListener implements Listener {
 						.getView().getTopInventory().getType() == InventoryType.DROPPER)
 						&& evt.getView().getBottomInventory().getType() == InventoryType.PLAYER) {
 					UnstoreEvent event = new UnstoreEvent(
-							(Player) evt.getWhoClicked(), evt.getCurrentItem());
+							(Player) evt.getWhoClicked(), evt.getCurrentItem(), evt.getInventory());
 					Bukkit.getPluginManager().callEvent(event);
 					if (event.isCancelled()) {
 						evt.setCancelled(true);

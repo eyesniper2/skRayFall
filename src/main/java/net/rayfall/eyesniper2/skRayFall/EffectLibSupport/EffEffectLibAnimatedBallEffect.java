@@ -11,15 +11,19 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import de.slikey.effectlib.effect.BleedEffect;
+import de.slikey.effectlib.effect.AnimatedBallEffect;
+import de.slikey.effectlib.util.ParticleEffect;
 
-public class EffEffectLibBleed extends Effect{
+public class EffEffectLibAnimatedBallEffect extends Effect{
 	
-	//(spawn|create|apply) (a|the|an) bleed (effect|formation) (at|on|for|to) %entity/location% with id %string%
+	//(spawn|create|apply) (a|the|an) animated ball (effect|formation) (at|on|for|to) %entity/location% with id %string% [with particle %-effectlibparticle%][ off set by %number%, %number%(,| and) %number%]
 	
 	private Expression<?> target;
 	private Expression<String> id;
-	
+	private Expression<ParticleEffect> particle;
+	private Expression<Number> xOffSet;
+	private Expression<Number> yOffSet;
+	private Expression<Number> zOffSet;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -27,6 +31,10 @@ public class EffEffectLibBleed extends Effect{
 			ParseResult arg3) {
 		target = e[0];
 		id = (Expression<String>) e[1];
+		particle = (Expression<ParticleEffect>) e[2];
+		xOffSet = (Expression<Number>) e[3];
+		yOffSet = (Expression<Number>) e[4];
+		zOffSet = (Expression<Number>) e[5];
 		return true;
 	}
 
@@ -38,9 +46,17 @@ public class EffEffectLibBleed extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		Object tar = target.getSingle(evt);
-		BleedEffect effect = new BleedEffect(skRayFall.effectManager);
+		AnimatedBallEffect effect = new AnimatedBallEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
 			effect.setEntity((Entity) tar);
+			if(particle != null){
+				effect.particle = particle.getSingle(evt);
+			}
+			if(xOffSet != null && yOffSet != null && zOffSet != null){
+				effect.xOffset = xOffSet.getSingle(evt).floatValue();
+				effect.yOffset = yOffSet.getSingle(evt).floatValue();
+				effect.zOffset = zOffSet.getSingle(evt).floatValue();
+			}
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
@@ -49,6 +65,14 @@ public class EffEffectLibBleed extends Effect{
 			}
 		} else if (tar instanceof Location) {
 			effect.setLocation((Location) tar);
+			if(particle != null){
+				effect.particle = particle.getSingle(evt);
+			}
+			if(xOffSet != null && yOffSet != null && zOffSet != null){
+				effect.xOffset = xOffSet.getSingle(evt).floatValue();
+				effect.yOffset = yOffSet.getSingle(evt).floatValue();
+				effect.zOffset = zOffSet.getSingle(evt).floatValue();
+			}
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
@@ -59,8 +83,6 @@ public class EffEffectLibBleed extends Effect{
 			assert false;
 		}
 		
-		
 	}
-	
 
 }

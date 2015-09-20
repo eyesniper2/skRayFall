@@ -2,25 +2,26 @@ package net.rayfall.eyesniper2.skRayFall.EffectLibSupport;
 
 import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
-import org.bukkit.Location;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import de.slikey.effectlib.effect.AtomEffect;
+import de.slikey.effectlib.effect.CircleEffect;
+import de.slikey.effectlib.util.ParticleEffect;
 
-public class EffEffectLibAtom extends Effect{
+public class EffEffectLibCircle extends Effect{
 	
-	
-	//(spawn|create|apply) (a|the|an) atom (effect|formation) (at|on|for) %entity/location% with id %string%  
+	//(spawn|create|apply) (a|the|an) circle (effect|formation) (at|on|for) %entity/location% with id %string% [with particle[s] %-effectlibparticle%] [(and|with) radius %-number%]
 	
 	private Expression<?> target;
 	private Expression<String> id;
-	private Expression<Number> radius;
+	private Expression<ParticleEffect> particle;
+	private Expression<Number> rad;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -28,7 +29,8 @@ public class EffEffectLibAtom extends Effect{
 			ParseResult arg3) {
 		target = e[0];
 		id = (Expression<String>) e[1];
-		
+		particle = (Expression<ParticleEffect>) e[3];
+		rad = (Expression<Number>) e[4];
 		return true;
 	}
 
@@ -40,33 +42,27 @@ public class EffEffectLibAtom extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		Object tar = target.getSingle(evt);
-		AtomEffect effect = new AtomEffect(skRayFall.effectManager);
+		CircleEffect effect = new CircleEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
 			effect.setEntity((Entity) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
-			}
-			effect.infinite();
-			effect.start();
-			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
-			if (!check) {
-				effect.cancel();
-			}
 		} else if (tar instanceof Location) {
 			effect.setLocation((Location) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
-			}
-			effect.infinite();
-			effect.start();
-			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
-			if (!check) {
-				effect.cancel();
-			}
 		} else {
 			assert false;
 		}
+		if(particle != null){
+			effect.particle = particle.getSingle(evt);
+		}
+		if(rad != null){
+			effect.radius = rad.getSingle(evt).floatValue();
+		}
+		effect.infinite();
+		effect.start();
+		Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+		if (!check) {
+			effect.cancel();
+		}
+		
 	}
-}
-	
 
+}

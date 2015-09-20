@@ -38,12 +38,12 @@ public class EffNameOfScore extends Effect{
 		Skript.error("The player is not online!");
 	}
 	else{
-		if (player.getSingle(evt).getScoreboard().getObjective("sideHold") != null){
+		if (player.getSingle(evt).getScoreboard().getObjective("sidebarHold") != null){
 			Objective objective = player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR);
 			objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
 		}
 		else{
-			Objective objectiveh = player.getSingle(evt).getScoreboard().registerNewObjective("sideHold", "dummy");
+			Objective objectiveh = player.getSingle(evt).getScoreboard().registerNewObjective("sidebarHold", "dummy");
 			objectiveh.setDisplaySlot(DisplaySlot.SIDEBAR);
 			objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
 		}

@@ -2,25 +2,25 @@ package net.rayfall.eyesniper2.skRayFall.EffectLibSupport;
 
 import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
-import org.bukkit.Location;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import de.slikey.effectlib.effect.AtomEffect;
+import de.slikey.effectlib.effect.WaveEffect;
+import de.slikey.effectlib.util.ParticleEffect;
 
-public class EffEffectLibAtom extends Effect{
+public class EffEffectLibWave extends Effect{
 	
-	
-	//(spawn|create|apply) (a|the|an) atom (effect|formation) (at|on|for) %entity/location% with id %string%  
+	//(spawn|create|apply) (a|the|an) wave (effect|formation) at %entity/location% with id %string% [with particle[s] %-effectlibparticle%]
 	
 	private Expression<?> target;
 	private Expression<String> id;
-	private Expression<Number> radius;
+	private Expression<ParticleEffect> particle;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -28,7 +28,7 @@ public class EffEffectLibAtom extends Effect{
 			ParseResult arg3) {
 		target = e[0];
 		id = (Expression<String>) e[1];
-		
+		particle = (Expression<ParticleEffect>) e[2];
 		return true;
 	}
 
@@ -40,11 +40,11 @@ public class EffEffectLibAtom extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		Object tar = target.getSingle(evt);
-		AtomEffect effect = new AtomEffect(skRayFall.effectManager);
+		WaveEffect effect = new WaveEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
 			effect.setEntity((Entity) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
+			if(particle != null){
+				effect.particle = particle.getSingle(evt);
 			}
 			effect.infinite();
 			effect.start();
@@ -54,10 +54,10 @@ public class EffEffectLibAtom extends Effect{
 			}
 		} else if (tar instanceof Location) {
 			effect.setLocation((Location) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
-			}
 			effect.infinite();
+			if(particle != null){
+				effect.particle = particle.getSingle(evt);
+			}
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
 			if (!check) {
@@ -66,7 +66,7 @@ public class EffEffectLibAtom extends Effect{
 		} else {
 			assert false;
 		}
+		
 	}
-}
-	
 
+}

@@ -50,7 +50,6 @@ public class EffCreateCitizen extends Effect{
 		
 	}
 		
-		
-	}
+}
 
 

@@ -32,8 +32,16 @@ public class EffDespawnCitizen extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		NPC despawn = registry.getById(id.getSingle(evt).intValue());
-		despawn.despawn(null);
+		if(registry.getById(id.getSingle(evt).intValue()) != null){
+			try{
+			NPC despawn = registry.getById(id.getSingle(evt).intValue());
+			despawn.despawn(null);
+			}
+			catch(NullPointerException e){
+				return;
+			}
+		}
+		
 	}
 
 }

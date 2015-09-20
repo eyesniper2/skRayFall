@@ -35,7 +35,7 @@ public class EffRemoveScoreBelowName extends Effect{
 			Skript.error("The player is not online!");
 		}
 		else{
-			if (player.getSingle(evt).getScoreboard().getObjective("holdBottom") != null){
+			if (player.getSingle(evt).getScoreboard().getObjective("bottomHold") != null){
 				player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.BELOW_NAME).unregister();
 			}
 			else{

@@ -15,7 +15,7 @@ import de.slikey.effectlib.effect.TextEffect;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectLibText extends Effect{
-	//create a text (effect|formation) with text %string% as %particleeffect% (at|on|for) %% with id %string% [and %number% large]
+	//create a text (effect|formation) with text %string% as %effectlibparticle% (at|on|for) %% with id %string% [and %number% large]
 	
 	private Expression<?> target;
 	private Expression<String> dtext;

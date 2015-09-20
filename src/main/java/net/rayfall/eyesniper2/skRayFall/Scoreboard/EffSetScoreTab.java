@@ -44,13 +44,13 @@ public class EffSetScoreTab extends Effect{
 			Skript.error("The player is not online!");
 		}
 		else{
-			if (showing.getSingle(evt).getScoreboard().getObjective("holdTab") != null){
+			if (showing.getSingle(evt).getScoreboard().getObjective("tabHold") != null){
 				Objective objective = showing.getSingle(evt).getScoreboard().getObjective(DisplaySlot.PLAYER_LIST);
 				Score score = objective.getScore(player.getSingle(evt).getDisplayName());
 				score.setScore(num.getSingle(evt).intValue());
 			}
 			else{
-				Objective objectiveh = showing.getSingle(evt).getScoreboard().registerNewObjective("holdTab", "dummy");
+				Objective objectiveh = showing.getSingle(evt).getScoreboard().registerNewObjective("tabHold", "dummy");
 				objectiveh.setDisplaySlot(DisplaySlot.PLAYER_LIST);
 				Score score = objectiveh.getScore(player.getSingle(evt).getDisplayName());
 				score.setScore(num.getSingle(evt).intValue());
