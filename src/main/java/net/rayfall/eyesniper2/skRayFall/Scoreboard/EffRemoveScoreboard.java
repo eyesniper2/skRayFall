@@ -1,5 +1,7 @@
 package net.rayfall.eyesniper2.skRayFall.Scoreboard;
 
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -32,6 +34,7 @@ public class EffRemoveScoreboard extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		if (player.getSingle(evt).getScoreboard().getObjective("sidebarHold") != null){
+			skRayFall.sbManager.removeScoreFromPlayer(player.getSingle(evt));
 			player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR).unregister();
 		}
 		else{

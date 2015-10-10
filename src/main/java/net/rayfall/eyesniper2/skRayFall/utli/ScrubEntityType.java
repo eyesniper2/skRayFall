@@ -5,7 +5,7 @@ import org.bukkit.entity.EntityType;
 public class ScrubEntityType {
 	
 	public static EntityType getType(String exprs){
-		switch(exprs.replace("\"", "").toLowerCase().replace("_", " ")){
+		switch(exprs.replace("\"", "").toLowerCase().replace("_", " ").replaceFirst("the ", "")){
 		case "player": case "the player":
 			return EntityType.PLAYER;
 		case "pig":

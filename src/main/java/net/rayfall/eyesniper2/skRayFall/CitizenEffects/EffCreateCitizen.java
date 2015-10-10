@@ -18,9 +18,6 @@ import ch.njol.util.Kleenean;
 
 public class EffCreateCitizen extends Effect{
 
-	/**
-	 * 
-	 */
 	private Expression<Location> location;
 	private Expression<String> name;
 	private Expression<EntityType> type;

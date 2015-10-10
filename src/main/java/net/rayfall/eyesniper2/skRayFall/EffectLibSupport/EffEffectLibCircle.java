@@ -29,8 +29,8 @@ public class EffEffectLibCircle extends Effect{
 			ParseResult arg3) {
 		target = e[0];
 		id = (Expression<String>) e[1];
-		particle = (Expression<ParticleEffect>) e[3];
-		rad = (Expression<Number>) e[4];
+		particle = (Expression<ParticleEffect>) e[2];
+		rad = (Expression<Number>) e[3];
 		return true;
 	}
 

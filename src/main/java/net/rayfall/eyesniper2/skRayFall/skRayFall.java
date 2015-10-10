@@ -477,7 +477,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	            	return evt.getInventory();
 	            }
 	        }, 0);
-		 sbManager = new IDScoreBoardManager(this);
+		 sbManager = new IDScoreBoardManager();
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");

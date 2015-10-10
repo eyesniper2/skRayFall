@@ -1,5 +1,7 @@
 package net.rayfall.eyesniper2.skRayFall.Particles;
 
+import java.util.Random;
+
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -85,8 +87,22 @@ public class EffStaticParticles extends Effect{
 		else if((part.getSingle(evt).equals(ParticleEffect.REDSTONE)||part.getSingle(evt).equals(ParticleEffect.SPELL_MOB_AMBIENT) ||part.getSingle(evt).equals(ParticleEffect.SPELL_MOB))&& r.getSingle(evt) != null && g.getSingle(evt) != null && b.getSingle(evt) != null){
 			BlockData fdata = new BlockData(Material.GRASS, (byte) 0);
 			Color c = Color.fromRGB(r.getSingle(evt).intValue(), g.getSingle(evt).intValue(), b.getSingle(evt).intValue());
+			if(ox.getSingle(evt) != null && oy.getSingle(evt) != null && oz.getSingle(evt) != null){
+				Random rand = new Random();
+				double xmin = - (x / 2);
+				double xmax = (x / 2);
+				double ymin = -(y / 2);
+				double ymax = (y / 2);
+				double zmin = -(z / 2);
+				double zmax = (z / 2);
+				for(int i = 0; i <= num.getSingle(evt).intValue(); i++){
+					part.getSingle(evt).display(fdata, location.getSingle(evt).add(xmin + (xmax - xmin) * rand.nextDouble(), ymin + (ymax - ymin) * rand.nextDouble(), zmin + (zmax - zmin) * rand.nextDouble()), c, (double) 50,x,y,z, finalSpeed, num.getSingle(evt).intValue());
+				}
+			}
+			else{
 			for(int i = 0; i <= num.getSingle(evt).intValue(); i++){
 				part.getSingle(evt).display(fdata, location.getSingle(evt), c, (double) 50,x, y, z, finalSpeed, num.getSingle(evt).intValue());
+			}
 			}
 		}
 		else{

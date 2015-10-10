@@ -38,6 +38,7 @@ public class EffEditIDScore extends Effect{
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
 		String i = id.getSingle(evt).replace("\"", "");
@@ -48,7 +49,7 @@ public class EffEditIDScore extends Effect{
 			Score score = obj.getScore(newName.getSingle(evt).replace("\"", ""));
 			score.setScore(slot.getSingle(evt).intValue());
 			skRayFall.sbManager.deleteScoreID(i);
-			skRayFall.sbManager.setScoreID(i, score);
+			skRayFall.sbManager.setScoreID(i, score, s.getPlayer().getPlayer());
 		}
 		else{
 			Skript.error("The score id "+ i +" does not exist!");

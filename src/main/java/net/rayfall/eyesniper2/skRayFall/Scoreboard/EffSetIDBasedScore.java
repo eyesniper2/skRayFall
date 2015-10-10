@@ -48,15 +48,12 @@ public class EffSetIDBasedScore extends Effect{
 			Skript.error("This player is either not online or has yet to have a scoreboard set for them");
 			return;
 		}
-		else if(skRayFall.sbManager.isIdSet(id.getSingle(evt).replace("\"", ""))){
-			return;
-		}
 		else{
 		Scoreboard sb = player.getSingle(evt).getScoreboard();
 		Objective objective = sb.getObjective(DisplaySlot.SIDEBAR);
 		Score score = objective.getScore(name.getSingle(evt).replace("\"", ""));
 		score.setScore(num.getSingle(evt).intValue());
-		skRayFall.sbManager.setScoreID(id.getSingle(evt).replace("\"", ""), score);
+		skRayFall.sbManager.setScoreID(id.getSingle(evt).replace("\"", ""), score, player.getSingle(evt));
 	}
 	}
 }
