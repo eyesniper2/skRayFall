@@ -35,14 +35,14 @@ public class EffPlaySoundPacket extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if(Sound.valueOf(e[0].toString().replace("\"", "")) != null) {
+		if(Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()) != null) {
 			if (vol != null){
 				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
-						sound.getSingle(evt).replace("\"", "").toUpperCase(), (float) vol.getSingle(evt).doubleValue(), (float) 1.0D);
+						Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) vol.getSingle(evt).doubleValue(), (float) 1.0D);
 			}
 			else{
 				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
-						sound.getSingle(evt).replace("\"", "").toUpperCase(), (float) 1.0D, (float) 1.0D);
+						Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) 1.0D, (float) 1.0D);
 			}
 		}
 		else {
