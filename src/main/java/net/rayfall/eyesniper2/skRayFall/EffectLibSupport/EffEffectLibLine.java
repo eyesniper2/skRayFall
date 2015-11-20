@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.LineEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectLibLine extends Effect{
@@ -45,16 +46,16 @@ public class EffEffectLibLine extends Effect{
 		Object en = end.getSingle(evt);
 		LineEffect effect = new LineEffect(skRayFall.effectManager);
 		if (s instanceof Entity) {
-			effect.setEntity((Entity) s);
+			effect.setDynamicOrigin(new DynamicLocation((Entity) s));
 		} else if (s instanceof Location) {
-			effect.setLocation((Location) s);
+			effect.setDynamicOrigin(new DynamicLocation((Location) s));
 		} else {
 			assert false;
 		}
 		if (en instanceof Entity) {
-			effect.setTargetEntity((Entity) en);
+			effect.setDynamicTarget(new DynamicLocation((Entity) en));
 		} else if (en instanceof Location) {
-			effect.setTarget((Location) en);
+			effect.setDynamicTarget(new DynamicLocation((Location) en));
 		} else {
 			assert false;
 		}

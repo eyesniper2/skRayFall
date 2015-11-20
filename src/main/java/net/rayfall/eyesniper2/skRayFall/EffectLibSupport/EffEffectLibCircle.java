@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.CircleEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectLibCircle extends Effect{
@@ -44,9 +45,9 @@ public class EffEffectLibCircle extends Effect{
 		Object tar = target.getSingle(evt);
 		CircleEffect effect = new CircleEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			effect.setEntity((Entity) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
 		} else if (tar instanceof Location) {
-			effect.setLocation((Location) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Location) tar));
 		} else {
 			assert false;
 		}

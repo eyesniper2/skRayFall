@@ -20,6 +20,7 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenMove;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenNameVisable;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSetMaxHealth;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSetSkin;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSleep;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSpeak;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenVulnerablity;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCreateCitizen;
@@ -34,6 +35,7 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSetCitizenName;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffSpawnCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffStartBuilderBuild;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprBottomRightSchematic;
+import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprCitizenIDFromEntity;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprGeneralCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprLastCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
@@ -77,15 +79,20 @@ import net.rayfall.eyesniper2.skRayFall.Holograms.EffDeleteHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedBindedHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedClientSideHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedHologram;
+import net.rayfall.eyesniper2.skRayFall.Holograms.HoloManager;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloPickupEvent;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloTouchEvent;
 import net.rayfall.eyesniper2.skRayFall.Particles.EffClientsideStaticParticles;
 import net.rayfall.eyesniper2.skRayFall.Particles.EffStaticParticles;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.CondisScoreboardSet;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffAddPlayerToGroupID;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffCreateGroupIDScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteIdScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffDeleteScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffEditGroupIDScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffEditIDScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffNameOfScore;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemovePlayerFromIDScore;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreBelowName;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreTab;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffRemoveScoreboard;
@@ -96,7 +103,12 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.EffSetScoreTab;
 
 
 
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.ExprScoreNameFromGroupID;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.ExprScoreNameFromID;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.ExprScoreValueFromGroupID;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.ExprScoreValueFromID;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.IDScoreBoardManager;
+import net.rayfall.eyesniper2.skRayFall.Scoreboard.RemoveGroupIDScore;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffTabTitlesV1_8;
@@ -155,7 +167,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 	
 	 @Override
 	    public void onEnable() {
-		 getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!\nNathan and Lewis <3 you");
+		 getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!");
+		 getLogger().info("Nathan and Lewis <3 you.");
 		 getServer().getPluginManager().registerEvents(this, this);
 		 Skript.registerAddon(this);
 		 saveDefaultConfig();
@@ -197,8 +210,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
 			 Skript.registerEffect(EffGiveLookCloseTrait.class, "(give|set) npc %number% the look close trait");
 			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1¦invulnerable|0¦vulnerable)");
+			 Skript.registerEffect(EffCitizenSleep.class, "(make|force) (npc|citizen) with id %number% to sleep", "(make|force) (npc|citizen) with id %number% to wake up");
 			 Skript.registerExpression(ExprLastCitizen.class, Number.class, ExpressionType.SIMPLE, "last created citizen [id]");
 			 Skript.registerExpression(ExprNameOfCitizen.class, String.class, ExpressionType.SIMPLE, "name of citizen %number%");
+			 Skript.registerExpression(ExprCitizenIDFromEntity.class, Number.class, ExpressionType.SIMPLE, "citizen id of %entity%");
 			 Skript.registerExpression(ExprGeneralCitizen.class, Entity.class, ExpressionType.PROPERTY, "citizen %number%");
 			 Skript.registerExpression(ExprOwnerOfCitizen.class, String.class, ExpressionType.PROPERTY, "owner of (citizen|npc) %number%");
 			 Skript.registerEvent("NPC/Citizen Right Click", SimpleEvent.class, NPCRightClickEvent.class,"(NPC|Citizen) right click");
@@ -477,7 +492,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	            	return evt.getInventory();
 	            }
 	        }, 0);
-		 sbManager = new IDScoreBoardManager();
+		 sbManager = new IDScoreBoardManager(this);
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
 		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
@@ -491,6 +506,16 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffSetIDBasedScore.class,"(set|create) id [based] score %string% in sidebar of %player% to %number% with id %string%");
 		 Skript.registerEffect(EffEditIDScore.class, "(edit|update) score [with] id %string% to %string% and %number%");
 		 Skript.registerEffect(EffDeleteIdScore.class, "(delete|remove) score [with] id %string%");
+		 // Group ID Based scores
+		 Skript.registerEffect(EffCreateGroupIDScore.class, "(set|create) group id [based] score %string% in sidebar for %players% to %number% with id %string%");
+		 Skript.registerEffect(EffAddPlayerToGroupID.class, "add %player% to group score [with id] %string%");
+		 Skript.registerEffect(EffEditGroupIDScore.class, "(edit|update) score [with][in] group [id] %string% to %string% and %number%");
+		 Skript.registerEffect(EffRemovePlayerFromIDScore.class, "(delete|remove) %player% from group [id based] score %string%");
+		 Skript.registerEffect(RemoveGroupIDScore.class, "(delete|remove) score[s] [with] group id %string%");
+		 Skript.registerExpression(ExprScoreNameFromID.class, String.class, ExpressionType.SIMPLE, "score (name|title) (of|from) id %string%");
+		 Skript.registerExpression(ExprScoreNameFromGroupID.class, String.class, ExpressionType.SIMPLE, "group score (name|title) (of|from) id %string%");
+		 Skript.registerExpression(ExprScoreValueFromID.class, Number.class, ExpressionType.SIMPLE, "score (value|number) (of|from) id %string%");
+		 Skript.registerExpression(ExprScoreValueFromGroupID.class, Number.class, ExpressionType.SIMPLE, "group score (value|number) (of|from) id %string%");
 		 Skript.registerEffect(EffFakeFakeLightning.class, "(create|strike) (fake|ultra|no sound) fake lightning at %location%");
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
 		 Skript.registerEffect(EffSetPlayerListName.class, "set %player% tab name to %string%");
@@ -521,21 +546,21 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 getLogger().info("Getting all the special 1.8 bacon!");
 			 Skript.registerEffect(EffTitleV1_8.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffActionBarV1_8.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8.3)")){
 			 getLogger().info("Getting the extra special 1.8.3 bacon!");
 			 Skript.registerEffect(EffTitleV1_8_3.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_3.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_3.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8.4)") || Bukkit.getVersion().contains("(MC: 1.8.5)") || Bukkit.getVersion().contains("(MC: 1.8.6)") || Bukkit.getVersion().contains("(MC: 1.8.7)") || Bukkit.getVersion().contains("(MC: 1.8.8)")){
 			 getLogger().info("Getting the extra special 1.8.4 - 1.8.8 bacon!");
 			 Skript.registerEffect(EffTitleV1_8_4.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%");
+			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
@@ -551,6 +576,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	 @Override
 	    public void onDisable(){
 		 getLogger().info("Bacon has been eaten. Make some more soon!");
+		 HoloManager.dumpHoloMap();
 		 effLibManager.dumpData();
 		 sbManager.dumpData();
 	 }

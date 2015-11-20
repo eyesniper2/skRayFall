@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.AtomEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 
 public class EffEffectLibAtom extends Effect{
 	
@@ -20,7 +21,6 @@ public class EffEffectLibAtom extends Effect{
 	
 	private Expression<?> target;
 	private Expression<String> id;
-	private Expression<Number> radius;
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -28,7 +28,6 @@ public class EffEffectLibAtom extends Effect{
 			ParseResult arg3) {
 		target = e[0];
 		id = (Expression<String>) e[1];
-		
 		return true;
 	}
 
@@ -42,10 +41,7 @@ public class EffEffectLibAtom extends Effect{
 		Object tar = target.getSingle(evt);
 		AtomEffect effect = new AtomEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			effect.setEntity((Entity) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
-			}
+			effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
@@ -53,10 +49,7 @@ public class EffEffectLibAtom extends Effect{
 				effect.cancel();
 			}
 		} else if (tar instanceof Location) {
-			effect.setLocation((Location) tar);
-			if (radius.getSingle(evt) != null){
-				effect.radius = radius.getSingle(evt).intValue();
-			}
+			effect.setDynamicOrigin(new DynamicLocation((Location) tar));
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));

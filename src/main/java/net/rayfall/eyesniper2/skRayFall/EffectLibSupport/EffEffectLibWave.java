@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.WaveEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectLibWave extends Effect{
@@ -42,7 +43,7 @@ public class EffEffectLibWave extends Effect{
 		Object tar = target.getSingle(evt);
 		WaveEffect effect = new WaveEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			effect.setEntity((Entity) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
 			if(particle != null){
 				effect.particle = particle.getSingle(evt);
 			}
@@ -53,7 +54,7 @@ public class EffEffectLibWave extends Effect{
 				effect.cancel();
 			}
 		} else if (tar instanceof Location) {
-			effect.setLocation((Location) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Location) tar));
 			effect.infinite();
 			if(particle != null){
 				effect.particle = particle.getSingle(evt);

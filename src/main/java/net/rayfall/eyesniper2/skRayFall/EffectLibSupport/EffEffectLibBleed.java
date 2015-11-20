@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.BleedEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 
 public class EffEffectLibBleed extends Effect{
 	
@@ -40,7 +41,7 @@ public class EffEffectLibBleed extends Effect{
 		Object tar = target.getSingle(evt);
 		BleedEffect effect = new BleedEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			effect.setEntity((Entity) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
@@ -48,7 +49,7 @@ public class EffEffectLibBleed extends Effect{
 				effect.cancel();
 			}
 		} else if (tar instanceof Location) {
-			effect.setLocation((Location) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Location) tar));
 			effect.infinite();
 			effect.start();
 			Boolean check = skRayFall.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));

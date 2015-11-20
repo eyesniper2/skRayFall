@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.TornadoEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectTornado extends Effect{
@@ -48,7 +49,7 @@ public class EffEffectTornado extends Effect{
 		Object tar = target.getSingle(evt);
 		TornadoEffect effect = new TornadoEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			effect.setEntity((Entity) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
 			if(torParticle != null){
 				effect.tornadoParticle = torParticle.getSingle(evt);
 			}
@@ -68,7 +69,7 @@ public class EffEffectTornado extends Effect{
 				effect.cancel();
 			}
 		} else if (tar instanceof Location) {
-			effect.setLocation((Location) tar);
+			effect.setDynamicOrigin(new DynamicLocation((Location) tar));
 			if(torParticle != null){
 				effect.tornadoParticle = torParticle.getSingle(evt);
 			}

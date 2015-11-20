@@ -33,7 +33,8 @@ public class StoreListener implements Listener {
 				|| evt.getAction() == InventoryAction.PICKUP_HALF
 				|| evt.getAction() == InventoryAction.PICKUP_ALL
 				|| evt.getAction() == InventoryAction.PICKUP_ONE) {
-			if (evt.getView().getBottomInventory().getType() == InventoryType.PLAYER
+			if (evt.getClickedInventory().getType() != null 
+					&& evt.getView().getBottomInventory().getType() == InventoryType.PLAYER
 					&& (evt.getView().getTopInventory().getType() == InventoryType.CHEST
 							|| evt.getView().getTopInventory().getType() == InventoryType.ENDER_CHEST
 							|| evt.getView().getTopInventory().getType() == InventoryType.HOPPER
@@ -46,7 +47,7 @@ public class StoreListener implements Listener {
 					UnstorePossible.remove((Player) evt.getWhoClicked());
 				}
 			}
-			if (evt.getView().getBottomInventory().getType() == InventoryType.PLAYER
+			if (evt.getClickedInventory().getType() != null && evt.getView().getBottomInventory().getType() == InventoryType.PLAYER
 					&& (evt.getView().getTopInventory().getType() == InventoryType.CHEST
 							|| evt.getView().getTopInventory().getType() == InventoryType.ENDER_CHEST
 							|| evt.getView().getTopInventory().getType() == InventoryType.HOPPER

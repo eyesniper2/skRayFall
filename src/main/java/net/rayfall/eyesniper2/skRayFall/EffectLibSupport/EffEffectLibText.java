@@ -12,6 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import de.slikey.effectlib.effect.TextEffect;
+import de.slikey.effectlib.util.DynamicLocation;
 import de.slikey.effectlib.util.ParticleEffect;
 
 public class EffEffectLibText extends Effect{
@@ -45,7 +46,7 @@ public class EffEffectLibText extends Effect{
 		Object tar = target.getSingle(evt);
 		TextEffect text = new TextEffect(skRayFall.effectManager);
 		if (tar instanceof Entity) {
-			text.setEntity((Entity) tar);
+			text.setDynamicOrigin(new DynamicLocation((Entity) tar));
 			text.particle = part.getSingle(evt);
 			text.text = dtext.getSingle(evt).replace("\"", "");
 			if (size.getSingle(evt) != null){
@@ -58,7 +59,7 @@ public class EffEffectLibText extends Effect{
 				text.cancel();
 			}
 		} else if (tar instanceof Location) {
-			text.setLocation((Location) tar);
+			text.setDynamicOrigin(new DynamicLocation((Location) tar));
 			text.particle = part.getSingle(evt);
 			text.text = dtext.getSingle(evt).replace("\"", "");
 			if (size.getSingle(evt) != null){

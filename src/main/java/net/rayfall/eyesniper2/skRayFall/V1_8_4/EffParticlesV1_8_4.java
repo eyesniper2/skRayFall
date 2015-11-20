@@ -2,7 +2,6 @@ package net.rayfall.eyesniper2.skRayFall.V1_8_4;
 
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldParticles;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -74,7 +73,6 @@ public class EffParticlesV1_8_4 extends Effect{
 			}
 			core = core.substring(0, index);
 			array = new int[1];
-			Bukkit.broadcastMessage("id: "+ id + "core: " + core);
 		}
 		EnumParticle part = PacketParticleGetterV1_8_4.get(core);
 

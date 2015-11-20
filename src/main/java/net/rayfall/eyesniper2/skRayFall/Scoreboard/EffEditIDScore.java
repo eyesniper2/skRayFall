@@ -3,8 +3,6 @@ package net.rayfall.eyesniper2.skRayFall.Scoreboard;
 import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
 import org.bukkit.event.Event;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
 import org.eclipse.jdt.annotation.Nullable;
 
 import ch.njol.skript.Skript;
@@ -38,18 +36,11 @@ public class EffEditIDScore extends Effect{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
 		String i = id.getSingle(evt).replace("\"", "");
 		if(skRayFall.sbManager.getScore(i) != null){
-			Score s = skRayFall.sbManager.getScore(i);
-			Objective obj = s.getObjective();
-			obj.getScoreboard().resetScores(s.getEntry());
-			Score score = obj.getScore(newName.getSingle(evt).replace("\"", ""));
-			score.setScore(slot.getSingle(evt).intValue());
-			skRayFall.sbManager.deleteScoreID(i);
-			skRayFall.sbManager.setScoreID(i, score, s.getPlayer().getPlayer());
+			skRayFall.sbManager.updateSingleScore(i, newName.getSingle(evt).replace("\"", ""), slot.getSingle(evt).intValue());
 		}
 		else{
 			Skript.error("The score id "+ i +" does not exist!");
