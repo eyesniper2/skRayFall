@@ -21,20 +21,8 @@ public class EffPlaySoundPacket extends Effect{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
-			ParseResult arg3) {
-		try{
-			Sound.valueOf(e[0].toString().replace("\"", ""));
-			sound = (Expression<String>) e[0];
-		}
-		catch(IllegalArgumentException t){
-			Skript.error(e[0].toString().replace("\"", "") + " is not a valid sound type");
-			return false;
-		}
-		catch(NullPointerException t){
-			Skript.error(e[0].toString().replace("\"", "") + " is not a valid sound type");
-			return false;
-		}
+	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2, ParseResult arg3) {
+		sound = (Expression<String>) e[0];
 		player = (Expression<Player>) e[1];
 		vol = (Expression<Number>) e[2];
 		return true;
@@ -47,15 +35,25 @@ public class EffPlaySoundPacket extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if (vol != null){
-			player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
-					Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) vol.getSingle(evt).doubleValue(), (float) 1.0D);
+		if(Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()) != null) {
+			if (vol != null){
+				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
+						Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) vol.getSingle(evt).doubleValue(), (float) 1.0D);
+			}
+			else{
+				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
+						Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) 1.0D, (float) 1.0D);
+			}
 		}
-		else{
-			player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
-					Sound.valueOf(sound.getSingle(evt).replace("\"", "").toUpperCase()), (float) 1.0D, (float) 1.0D);
+		else {
+			if (vol != null){
+				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
+						sound.getSingle(evt), (float) vol.getSingle(evt).doubleValue(), (float) 1.0D);
+			}
+			else{
+				player.getSingle(evt).playSound(player.getSingle(evt).getLocation(),			
+						sound.getSingle(evt), (float) 1.0D, (float) 1.0D);
+			}
 		}
-		
 	}
-
 }
