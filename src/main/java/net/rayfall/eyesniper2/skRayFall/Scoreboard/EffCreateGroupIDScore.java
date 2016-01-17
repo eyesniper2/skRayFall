@@ -40,7 +40,9 @@ public class EffCreateGroupIDScore extends Effect{
 		String finalID = id.getSingle(evt).replace("\"", "");
 		skRayFall.sbManager.adjustGroupIDScore(finalID, score.getSingle(evt).replace("\"", ""), value.getSingle(evt).intValue());
 		for(Player p : players.getArray(evt)){
-			skRayFall.sbManager.addPlayerToGroupID(finalID, p);
+			if(p != null && finalID != null){
+				skRayFall.sbManager.addPlayerToGroupID(finalID, p);
+			}
 		}
 		
 	}

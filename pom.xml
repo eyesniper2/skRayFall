@@ -191,10 +191,24 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.inventivetalent.bossbar</groupId>
+			<artifactId>bossbar</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/BossBarAPI_v1.0.6.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>tfw.Capes.General</groupId>
+			<artifactId>Capes</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/Capes.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.jdt</groupId>
 			<artifactId>org.eclipse.jdt.annotation</artifactId>
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.7.3</version>
+	<version>1.7.4</version>
 </project>

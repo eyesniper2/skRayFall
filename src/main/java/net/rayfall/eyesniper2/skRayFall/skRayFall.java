@@ -9,6 +9,12 @@ import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.gravitydevelopment.updater.Updater;
 import net.gravitydevelopment.updater.Updater.UpdateResult;
+import net.rayfall.eyesniper2.skRayFall.BossBar.EffCreateBossBar;
+import net.rayfall.eyesniper2.skRayFall.BossBar.EffDeleteBossBar;
+import net.rayfall.eyesniper2.skRayFall.BossBar.EffTimedBossBar;
+import net.rayfall.eyesniper2.skRayFall.BossBar.ExprBaseBossBar;
+import net.rayfall.eyesniper2.skRayFall.Capes.EffRemoveCape;
+import net.rayfall.eyesniper2.skRayFall.Capes.EffWearCape;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPC;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCIdGeneral;
 import net.rayfall.eyesniper2.skRayFall.CitizenConditions.CondisNPCNamed;
@@ -57,6 +63,7 @@ import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectTornado;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.skRayFallEffectManager;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffFakeFakeLightning;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffMaxHealth;
+import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlayResourcePackSound;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffPlaySoundPacket;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetMetaData;
 import net.rayfall.eyesniper2.skRayFall.GeneralEffects.EffSetPlayerListName;
@@ -66,19 +73,26 @@ import net.rayfall.eyesniper2.skRayFall.GeneralEvents.EvtCraftClick;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.StoreEvent;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.StoreListener;
 import net.rayfall.eyesniper2.skRayFall.GeneralEvents.UnstoreEvent;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprAbsoluteInventoryCount;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprArmorValue;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprMetaData;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNoNBT;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNumberOfEnchants;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
-import net.rayfall.eyesniper2.skRayFall.Holograms.EditHoloObject;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprSpecificEnchantIndex;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateInteractiveStaticClientSideHolograms;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateInteractiveStaticHolograms;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticClientHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateStaticHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffDeleteHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffDeleteHoloObjectLine;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffEditHoloObject;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffEditHoloObjectLine;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedBindedHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedClientSideHolo;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffTimedHologram;
+import net.rayfall.eyesniper2.skRayFall.Holograms.ExprGetHoloLine;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloManager;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloPickupEvent;
 import net.rayfall.eyesniper2.skRayFall.Holograms.HoloTouchEvent;
@@ -298,6 +312,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffStaticParticles.class, "(create|display|show) %number% [of] %effectlibparticle% particle[s] at %location% [(with data of %-itemstack%|with color %number%, %number%(,| and) %number%)] [offset by %number%, %number%(,| and) %number%] [(with|at) speed %number%]");
 			 Skript.registerEffect(EffClientsideStaticParticles.class, "(create|display|show) %number% [of] %effectlibparticle% particle[s] at %location% for %player% [with data of %-itemstack%] [offset by %number%, %number%(,| and) %number%] [(with|at) speed %number%]");
 			 Skript.registerEffect(EffEffectTornado.class, "(spawn|create|apply) (a|the|an) tornado (effect|formation) at %entity/location% with id %string% [with tornado particle[s] %-effectlibparticle% and cloud particle[s] %-effectlibparticle%] [(set|and) radius %number%] [(set|and) max height %number%]");
+			 //Skript.registerEffect(EffEffectLibUpwardsSpiral.class, "(spawn|create|apply) (a|the|an) upward[s] spiral (effect|formation) (at|on|for|to) %entity/location% with id %string%");
 		
 		//Votifier Stuff 
 		 if (getServer().getPluginManager().isPluginEnabled("Votifier")){
@@ -331,9 +346,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
 				Skript.registerEffect(EffCreateInteractiveStaticHolograms.class, "create interactive holo object %string% with id %string% at %location%");
 				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
-				Skript.registerEffect(EditHoloObject.class, "edit holo object %string% to %string% [and set interactivity to %-boolean%]");
+				Skript.registerEffect(EffEditHoloObject.class, "edit holo object %string% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffBoundHoloObject.class, "create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]");
+				Skript.registerEffect(EffEditHoloObjectLine.class, "edit holo object %string% [with] line [number] %number% to %string% [and set interactivity to %-boolean%]");
+				Skript.registerEffect(EffDeleteHoloObjectLine.class, "(delete|remove) line %number% in holo object %string%");
 				Skript.registerEvent("hologram (touch|click)", SimpleEvent.class, HoloTouchEvent.class, "hologram (touch|click)");
+				Skript.registerExpression(ExprGetHoloLine.class, String.class, ExpressionType.SIMPLE, "text in line %number% of holo[gram] [object] %string%");
 				EventValues.registerEventValue(HoloTouchEvent.class, String.class, new Getter<String, HoloTouchEvent>() {
 				    @Nullable
 		            @Override
@@ -443,9 +461,22 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 //Skript.registerEvent("weapon explosion", SimpleEvent.class, WeaponExplodeEvent.class,"(crackshot|weapon) (explode|explosion)");
 			 //Skript.registerEvent("landmine explode", SimpleEvent.class, WeaponTriggerEvent.class,"[crackshot] landmine explode");
 		 }
+		 // BossBar API additions
+		 if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")){
+				getLogger().info("Making BossBar Bacon.");
+				Skript.registerEffect(EffTimedBossBar.class, "display bossbar with %string% to %player% for %timespan%");
+				Skript.registerEffect(EffCreateBossBar.class, "set bossbar named %string% for %player% to %number%");
+				Skript.registerEffect(EffDeleteBossBar.class, "delete bossbar of %player%");
+				Skript.registerExpression(ExprBaseBossBar.class, Number.class, ExpressionType.PROPERTY, "bossbar of %player%");
+		 }
+		 // Capes
+		 if (getServer().getPluginManager().isPluginEnabled("Capes")){
+				getLogger().info("Getting heroic cape bacon.");
+				Skript.registerEffect(EffRemoveCape.class, "remove cape of %player%");
+				Skript.registerEffect(EffWearCape.class, "make %player% wear cape %itemstack%");
+		 }
 		 
-
-		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %player% [at volume %number%]");
+		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %players% [at volume %number%]");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
 		 Skript.registerEvent("On Store", SimpleEvent.class, StoreEvent.class,"(store|chest add)");
 		 Skript.registerEvent("On Unstore", SimpleEvent.class, UnstoreEvent.class,"(unstore|chest remove)");
@@ -516,10 +547,15 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerExpression(ExprScoreNameFromGroupID.class, String.class, ExpressionType.SIMPLE, "group score (name|title) (of|from) id %string%");
 		 Skript.registerExpression(ExprScoreValueFromID.class, Number.class, ExpressionType.SIMPLE, "score (value|number) (of|from) id %string%");
 		 Skript.registerExpression(ExprScoreValueFromGroupID.class, Number.class, ExpressionType.SIMPLE, "group score (value|number) (of|from) id %string%");
+		 Skript.registerEffect(EffPlayResourcePackSound.class, "play (resource|[custom ]sound) [sound] pack %string% to %player% [at %-location%] [(and|with) volume %number%] [(and|with) pitch %number%]");
 		 Skript.registerEffect(EffFakeFakeLightning.class, "(create|strike) (fake|ultra|no sound) fake lightning at %location%");
 		 Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
 		 Skript.registerEffect(EffSetPlayerListName.class, "set %player% tab name to %string%");
 		 Skript.registerEffect(EffSetMetaData.class, "set meta %string% for %entity% to %string%");
+		 Skript.registerExpression(ExprArmorValue.class, Number.class, ExpressionType.PROPERTY, "%player%['s] armo[u]r value");
+		 Skript.registerExpression(ExprNumberOfEnchants.class, Number.class, ExpressionType.SIMPLE, "number of enchant[ment]s on %itemstack%");
+		 Skript.registerExpression(ExprSpecificEnchantIndex.class, String.class, ExpressionType.SIMPLE, "info of enchant[ment] %number% (of|on) %itemstack%");
+		 Skript.registerExpression(ExprAbsoluteInventoryCount.class, Number.class, ExpressionType.SIMPLE, "(absolute|complex|abs) number of %itemstack% in %player%['s] (inventory|inv)");
 		 Skript.registerExpression(ExprMetaData.class, String.class, ExpressionType.SIMPLE, "meta %string% for %entity%");
 		 if (Bukkit.getVersion().contains("1.8")){
 			 getLogger().info("Enabling general 1.8 bacon!");

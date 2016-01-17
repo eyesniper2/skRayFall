@@ -32,7 +32,6 @@ public class EffCitizenAttack extends Effect{
 		return "NPC id: " + id.getSingle(evt).intValue() + " is attacking " + toBeAttacked.getSingle(evt).toString();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();

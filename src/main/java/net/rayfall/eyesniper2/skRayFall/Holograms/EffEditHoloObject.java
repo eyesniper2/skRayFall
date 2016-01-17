@@ -19,7 +19,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EditHoloObject extends Effect{
+public class EffEditHoloObject extends Effect{
 	
 	//edit holo object %string% to %string% [and set interactivity to %boolean%];
 	

@@ -38,7 +38,7 @@ public class EffSetScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if (player.getSingle(evt).getScoreboard() == null){
+		if (player == null || num == null ||  player.getSingle(evt).getScoreboard() == null){
 			Skript.error("This player is either not online or has yet to have a scoreboard set for them");
 		}
 		else{

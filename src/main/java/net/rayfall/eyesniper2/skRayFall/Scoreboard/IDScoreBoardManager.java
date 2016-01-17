@@ -40,7 +40,7 @@ public class IDScoreBoardManager implements Listener{
 
 	
 	public void addPlayerToGroupID(String id, Player p){
-		if(groupScoreMap.containsKey(id)){
+		if(groupScoreMap.containsKey(id) && p != null){
 			groupMap.get(id).add(p);
 			GroupScore s = groupScoreMap.get(id);
 			Score newScore = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR).getScore(s.getName());
@@ -55,6 +55,7 @@ public class IDScoreBoardManager implements Listener{
 			if(groupMap.get(id).contains(p)){
 				GroupScore s = groupScoreMap.get(id);
 				p.getScoreboard().resetScores(s.getName());
+				groupMap.get(id).remove(p);
 			}
 		}
 	}
