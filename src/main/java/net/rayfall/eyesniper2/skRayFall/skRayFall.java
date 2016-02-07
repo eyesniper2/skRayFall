@@ -7,6 +7,8 @@ import net.citizensnpcs.api.event.NPCDeathEvent;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
+import net.coreprotect.CoreProtect;
+import net.coreprotect.CoreProtectAPI;
 import net.gravitydevelopment.updater.Updater;
 import net.gravitydevelopment.updater.Updater.UpdateResult;
 import net.rayfall.eyesniper2.skRayFall.BossBar.EffCreateBossBar;
@@ -48,7 +50,11 @@ import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprNameOfCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprOwnerOfCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenExpressions.ExprTopLeftSchematic;
 import net.rayfall.eyesniper2.skRayFall.Commands.GeneralCommands;
+import net.rayfall.eyesniper2.skRayFall.CoreProtect.CondIsNOTNaturalCP;
+import net.rayfall.eyesniper2.skRayFall.CoreProtect.CondIsNaturalCP;
 import net.rayfall.eyesniper2.skRayFall.CrackShotEffects.EffPlaceMine;
+import net.rayfall.eyesniper2.skRayFall.CrackShotEvents.EvtScope;
+import net.rayfall.eyesniper2.skRayFall.CrackShotEvents.EvtUnscope;
 import net.rayfall.eyesniper2.skRayFall.CrackShotExpressions.ExprCrackShotWeapon;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffDeleteEffect;
 import net.rayfall.eyesniper2.skRayFall.EffectLibSupport.EffEffectLibAnimatedBallEffect;
@@ -157,6 +163,9 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
 import com.shampaggon.crackshot.events.WeaponDamageEntityEvent;
+import com.shampaggon.crackshot.events.WeaponReloadCompleteEvent;
+import com.shampaggon.crackshot.events.WeaponReloadEvent;
+import com.shampaggon.crackshot.events.WeaponScopeEvent;
 import com.shampaggon.crackshot.events.WeaponShootEvent;
 
 import ch.njol.skript.Skript;
@@ -178,6 +187,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 	public static skRayFallEffectManager effLibManager;
 	public static IDScoreBoardManager sbManager;
 	public boolean enableFastScoreboards = true;
+	public static CoreProtectAPI skCoreProtect = null;
 	
 	 @Override
 	    public void onEnable() {
@@ -219,7 +229,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 //doesn't work
 			 Skript.registerEffect(EffCitizenNameVisable.class,"(set|make) citizen[s] %number% nametag (1¦invisible|0¦visible)");
 			 Skript.registerEffect(EffCitizenLookTarget.class,"make citizen %number% look at %location%");
-			 Skript.registerEffect(EffCitizenAttack.class,"make citizen %number% (attack|fight) %livingentities%");
+			 Skript.registerEffect(EffCitizenAttack.class,"make citizen %number% (attack|fight) %entity%");
 			 //buggy
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
 			 Skript.registerEffect(EffGiveLookCloseTrait.class, "(give|set) npc %number% the look close trait");
@@ -458,8 +468,61 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            	return evt.getWeaponTitle();
 				 }
 			 }, 0);
-			 //Skript.registerEvent("weapon explosion", SimpleEvent.class, WeaponExplodeEvent.class,"(crackshot|weapon) (explode|explosion)");
-			 //Skript.registerEvent("landmine explode", SimpleEvent.class, WeaponTriggerEvent.class,"[crackshot] landmine explode");
+			 Skript.registerEvent("Scope", EvtScope.class, WeaponScopeEvent.class,"[crackshot|gun|weapon] scope [in]");
+			 Skript.registerEvent("Unscope", EvtUnscope.class, WeaponScopeEvent.class,"[crackshot|gun|weapon] unscope");
+			 EventValues.registerEventValue(WeaponScopeEvent.class, String.class, new Getter<String, WeaponScopeEvent>(){
+				 @Nullable
+		           @Override
+		            public String get(WeaponScopeEvent evt) {
+		            	return evt.getWeaponTitle();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponScopeEvent.class, Player.class, new Getter<Player, WeaponScopeEvent>(){
+				 @Nullable
+		           @Override
+		            public Player get(WeaponScopeEvent evt) {
+		            	return evt.getPlayer();
+				 }
+			 }, 0);
+			 Skript.registerEvent("(crackshot|weapon|gun) reload", SimpleEvent.class, WeaponReloadEvent.class,"(crackshot|weapon|gun) reload");
+			 EventValues.registerEventValue(WeaponReloadEvent.class, Player.class, new Getter<Player, WeaponReloadEvent>(){
+				 @Nullable
+		           @Override
+		            public Player get(WeaponReloadEvent evt) {
+		            	return evt.getPlayer();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponReloadEvent.class, String.class, new Getter<String, WeaponReloadEvent>(){
+				 @Nullable
+		           @Override
+		            public String get(WeaponReloadEvent evt) {
+		            	return evt.getWeaponTitle();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponReloadEvent.class, Number.class, new Getter<Number, WeaponReloadEvent>(){
+				 @Nullable
+		           @Override
+		            public Number get(WeaponReloadEvent evt) {
+		            	return evt.getReloadDuration();
+				 }
+			 }, 0);
+			 Skript.registerEvent("(crackshot|weapon|gun) reload (finish|complete)", SimpleEvent.class, WeaponReloadCompleteEvent.class,"(crackshot|weapon|gun) reload (finish|complete)");
+			 EventValues.registerEventValue(WeaponReloadCompleteEvent.class, Player.class, new Getter<Player, WeaponReloadCompleteEvent>(){
+				 @Nullable
+		           @Override
+		            public Player get(WeaponReloadCompleteEvent evt) {
+		            	return evt.getPlayer();
+				 }
+			 }, 0);
+			 EventValues.registerEventValue(WeaponReloadCompleteEvent.class, String.class, new Getter<String, WeaponReloadCompleteEvent>(){
+				 @Nullable
+		           @Override
+		            public String get(WeaponReloadCompleteEvent evt) {
+		            	return evt.getWeaponTitle();
+				 }
+			 }, 0);
+			//Skript.registerEvent("weapon explosion", SimpleEvent.class, WeaponExplodeEvent.class,"(crackshot|weapon) (explode|explosion)");
+			//Skript.registerEvent("landmine explode", SimpleEvent.class, WeaponTriggerEvent.class,"[crackshot] landmine explode");
 		 }
 		 // BossBar API additions
 		 if (getServer().getPluginManager().isPluginEnabled("BossBarAPI")){
@@ -475,6 +538,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffRemoveCape.class, "remove cape of %player%");
 				Skript.registerEffect(EffWearCape.class, "make %player% wear cape %itemstack%");
 		 }
+		 
+		 //CoreProtect
+		if (getServer().getPluginManager().isPluginEnabled("CoreProtect")) {
+			CoreProtectAPI CoreProtect = ((CoreProtect)getServer().getPluginManager().getPlugin("CoreProtect")).getAPI();
+				if(CoreProtect.APIVersion() < 4){
+					skCoreProtect = CoreProtect;
+					getLogger().info("Cooking bacon for the CoreProtect loggers.");
+					Skript.registerCondition(CondIsNaturalCP.class, "%block% is natural");
+					Skript.registerCondition(CondIsNOTNaturalCP.class, "%block% is not natural");
+				}
+		}
 		 
 		 Skript.registerEffect(EffPlaySoundPacket.class,"play %string% to %players% [at volume %number%]");
 		 Skript.registerEvent("Crafting Click", EvtCraftClick.class, InventoryClickEvent.class,"crafting click in slot %number%");
@@ -526,7 +600,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 sbManager = new IDScoreBoardManager(this);
 		 //Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
 		 Skript.registerEffect(EffMaxHealth.class, "set rf max[imum] h(p|ealth) of %livingentities% to %number%");
-		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar of %player% to %string%");
+		 Skript.registerEffect(EffNameOfScore.class,"set name of sidebar (of|for) %players% to %string%");
 		 Skript.registerEffect(EffSetScore.class,"set score %string% in sidebar of %player% to %number%");
 		 Skript.registerEffect(EffDeleteScore.class,"delete score %string% in sidebar of %player%");
 		 Skript.registerEffect(EffRemoveScoreboard.class,"(wipe|erase|delete) %player%['s] sidebar");
@@ -580,23 +654,23 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8)")){
 			 getLogger().info("Getting all the special 1.8 bacon!");
-			 Skript.registerEffect(EffTitleV1_8.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffTitleV1_8.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffActionBarV1_8.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8.3)")){
 			 getLogger().info("Getting the extra special 1.8.3 bacon!");
-			 Skript.registerEffect(EffTitleV1_8_3.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffTitleV1_8_3.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_3.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffActionBarV1_8_3.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_3.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 if(Bukkit.getVersion().contains("(MC: 1.8.4)") || Bukkit.getVersion().contains("(MC: 1.8.5)") || Bukkit.getVersion().contains("(MC: 1.8.6)") || Bukkit.getVersion().contains("(MC: 1.8.7)") || Bukkit.getVersion().contains("(MC: 1.8.8)")){
 			 getLogger().info("Getting the extra special 1.8.4 - 1.8.8 bacon!");
-			 Skript.registerEffect(EffTitleV1_8_4.class,"send %player% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffTitleV1_8_4.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
 			 Skript.registerEffect(EffParticlesV1_8_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %player% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
@@ -656,9 +730,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 			}	 
 		 }));
 		 
-		 
 	 }
 	 
 	 
-	 }
+	 
+}
 

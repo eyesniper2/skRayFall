@@ -15,14 +15,14 @@ import ch.njol.util.Kleenean;
 public class EffNameOfScore extends Effect{
 	
 	//set name of sidebar of %player% to %string%
-	private Expression<Player> player;
+	private Expression<Player> players;
 	private Expression<String> name;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[0];
+		players = (Expression<Player>) e[0];
 		name = (Expression<String>) e[1];
 		return true;
 	}
@@ -34,18 +34,21 @@ public class EffNameOfScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-	if (!(player.getSingle(evt).isOnline())){
-		Skript.error("The player is not online!");
-	}
-	else{
-		if (player.getSingle(evt).getScoreboard().getObjective("sidebarHold") != null){
-			Objective objective = player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-			objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
+	
+	for(Player p : players.getArray(evt)){
+		if (!(p.isOnline())){
+			Skript.error("The player is not online!");
 		}
 		else{
-			Objective objectiveh = player.getSingle(evt).getScoreboard().registerNewObjective("sidebarHold", "dummy");
-			objectiveh.setDisplaySlot(DisplaySlot.SIDEBAR);
-			objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
+			if (p.getScoreboard().getObjective("sidebarHold") != null){
+				Objective objective = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+				objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
+			}
+			else{
+				Objective objectiveh = p.getScoreboard().registerNewObjective("sidebarHold", "dummy");
+				objectiveh.setDisplaySlot(DisplaySlot.SIDEBAR);
+				objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
+			}
 		}
 	}
 	

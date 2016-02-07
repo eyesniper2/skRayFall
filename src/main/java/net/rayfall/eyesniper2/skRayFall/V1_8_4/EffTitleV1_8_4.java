@@ -50,45 +50,42 @@ public class EffTitleV1_8_4 extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		PlayerConnection connection = ((CraftPlayer) player.getSingle(evt).getPlayer()).getHandle().playerConnection;
 		int timeTick = 60;
 		if(time != null){
 			timeTick = time.getSingle(evt).getTicks();
 		}
-
-		if (fadeIn != null && fadeOut != null){
-			PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, fadeIn.getSingle(evt).getTicks(), timeTick, fadeOut.getSingle(evt).getTicks());
-	        connection.sendPacket(packetPlayOutTimes);
-		}
-		else if(fadeIn == null && fadeOut != null){
-			PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, 5, timeTick, fadeOut.getSingle(evt).getTicks());
-	        connection.sendPacket(packetPlayOutTimes);
-		}
-		else if(fadeIn != null && fadeOut == null){
-			PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, fadeIn.getSingle(evt).getTicks(), timeTick, 5);
-	        connection.sendPacket(packetPlayOutTimes);
-		}
-		else{
-			PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, 5, timeTick, 5);
-	        connection.sendPacket(packetPlayOutTimes);
-		}
 		
-		
-		if (subTitle != null) {
-            IChatBaseComponent finalSub = ChatSerializer.a("{\"text\": \"" + subTitle.getSingle(evt).toString() + "\"}");
-            PacketPlayOutTitle packetPlayOutSubTitle = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, finalSub);
-            connection.sendPacket(packetPlayOutSubTitle);
-        }
+		for(Player p : player.getAll(evt)){
+			PlayerConnection connection = ((CraftPlayer) p.getPlayer()).getHandle().playerConnection;
+	
+			if (fadeIn != null && fadeOut != null){
+				PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, fadeIn.getSingle(evt).getTicks(), timeTick, fadeOut.getSingle(evt).getTicks());
+		        connection.sendPacket(packetPlayOutTimes);
+			}
+			else if(fadeIn == null && fadeOut != null){
+				PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, 5, timeTick, fadeOut.getSingle(evt).getTicks());
+		        connection.sendPacket(packetPlayOutTimes);
+			}
+			else if(fadeIn != null && fadeOut == null){
+				PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, fadeIn.getSingle(evt).getTicks(), timeTick, 5);
+		        connection.sendPacket(packetPlayOutTimes);
+			}
+			else{
+				PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(EnumTitleAction.TIMES, null, 5, timeTick, 5);
+		        connection.sendPacket(packetPlayOutTimes);
+			}
+			
+			if (subTitle != null) {
+	            IChatBaseComponent finalSub = ChatSerializer.a("{\"text\": \"" + subTitle.getSingle(evt).toString() + "\"}");
+	            PacketPlayOutTitle packetPlayOutSubTitle = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, finalSub);
+	            connection.sendPacket(packetPlayOutSubTitle);
+	        }
 
-   
-
-        if (title != null) {
-            IChatBaseComponent finalTitle = ChatSerializer.a("{\"text\": \"" + title.getSingle(evt).toString() + "\"}");
-            PacketPlayOutTitle packetPlayOutTitle = new PacketPlayOutTitle(EnumTitleAction.TITLE, finalTitle);
-            connection.sendPacket(packetPlayOutTitle);
-            
-            
-  
+	        if (title != null) {
+	            IChatBaseComponent finalTitle = ChatSerializer.a("{\"text\": \"" + title.getSingle(evt).toString() + "\"}");
+	            PacketPlayOutTitle packetPlayOutTitle = new PacketPlayOutTitle(EnumTitleAction.TITLE, finalTitle);
+	            connection.sendPacket(packetPlayOutTitle);
+	        }
         }
     }
 	  

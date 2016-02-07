@@ -4,7 +4,7 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -16,14 +16,14 @@ import ch.njol.util.Kleenean;
 public class EffCitizenAttack extends Effect{
 	
 	private Expression<Number> id;
-	private Expression<LivingEntity> toBeAttacked;
+	private Expression<Entity> toBeAttacked;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
 		id = (Expression<Number>) e[0];
-		toBeAttacked = (Expression<LivingEntity>) e[1];
+		toBeAttacked = (Expression<Entity>) e[1];
 		return true;
 	}
 
@@ -36,8 +36,7 @@ public class EffCitizenAttack extends Effect{
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 		NPC attacker = registry.getById(id.getSingle(evt).intValue());
-		attacker.getNavigator().setTarget(toBeAttacked.getSingle(evt), true);
-		
+		attacker.getNavigator().setTarget(toBeAttacked.getSingle(evt), true);	
 	}
 
 }

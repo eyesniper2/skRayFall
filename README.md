@@ -3,6 +3,9 @@ skRayFall
 
 ![logo](https://puu.sh/j9sy5/066b81b74f.png "")
 
+## Download
+skRayFall is officially hosted on bukkit and can be downloaded [here](http://dev.bukkit.org/bukkit-plugins/skrayfall/).
+
 ## Documentation
 All documentation for using skRayFall can be found [here](http://www.skunity.com/SkRayFall).
 
@@ -20,6 +23,7 @@ Currently skRayFall adds over 50 extremely powerful syntax elements to the skrip
 * [Votifier](http://dev.bukkit.org/bukkit-plugins/votifier/)
 * [BossBarAPI](https://www.spigotmc.org/resources/api-bossbarapi-1-7-1-8.7504/)
 * [Capes](https://www.spigotmc.org/resources/capes.9068/)
+* [CoreProtect](http://dev.bukkit.org/bukkit-plugins/coreprotect/)
 
 It adds many new possibilities like being able to control the path finding of NPC's, changing the sidebar, tablist, undername of players and even contains many features for RPG servers like events for when a certain slot is clicked on the player's crafting inventory.
 
@@ -38,3 +42,6 @@ Legacy Versions of skRayFall can be found [here](http://dev.bukkit.org/bukkit-pl
 
 ## Updater
 This plugin checks Bukkit Dev for updates when it starts up and will let you know about them. This feature can be disabled in the config by setting "UpdateAlerts" to false. If you do not see an option for it please delete your config and restart the server to allow it to reload. Then adjust the settings and restart the server once more.
+
+## Metrics
+Usage metrics for skRayFall can be found [here](http://mcstats.org/plugin/skRayFall).

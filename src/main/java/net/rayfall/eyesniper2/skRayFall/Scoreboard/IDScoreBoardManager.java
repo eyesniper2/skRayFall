@@ -65,13 +65,13 @@ public class IDScoreBoardManager implements Listener{
 		if(groupScoreMap.containsKey(id) && groupMap.get(id) != null){
 			ArrayList<Player> ls = groupMap.get(id);
 			GroupScore old = groupScoreMap.get(id);
-			groupScoreMap.put(id, new GroupScore(newName, newValue));
 			for(Player p : ls){
 				Objective obj = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
 				obj.getScoreboard().resetScores(old.getName());
 				Score newScore = obj.getScore(newName);
 				newScore.setScore(newValue);
 			}
+			groupScoreMap.put(id, new GroupScore(newName, newValue));
 		}	
 	}
 	
@@ -127,7 +127,7 @@ public class IDScoreBoardManager implements Listener{
 		while(i.hasNext()){
 			String id = (String) i.next();
 			if(groupMap.get(id).contains(p)){
-				i.remove();
+				groupMap.get(id).remove(p);
 			}
 		}
 	}

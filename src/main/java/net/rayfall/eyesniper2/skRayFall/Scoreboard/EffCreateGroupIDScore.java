@@ -44,7 +44,6 @@ public class EffCreateGroupIDScore extends Effect{
 				skRayFall.sbManager.addPlayerToGroupID(finalID, p);
 			}
 		}
-		
 	}
 
 }

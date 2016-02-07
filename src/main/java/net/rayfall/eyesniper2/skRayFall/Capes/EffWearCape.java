@@ -34,7 +34,7 @@ public class EffWearCape extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if(player != null && item != null && item.getSingle(evt).getData().getItemType().equals(Material.BANNER)){
+		if(player != null && item != null && item.getSingle(evt).getType().equals(Material.BANNER)){
 			CapeAPI.equipCapeFromItemstack(player.getSingle(evt), item.getSingle(evt));
 		}
 	}

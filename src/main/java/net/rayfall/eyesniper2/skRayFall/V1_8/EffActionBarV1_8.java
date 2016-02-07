@@ -38,9 +38,11 @@ public class EffActionBarV1_8 extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-        IChatBaseComponent c = ChatSerializer.a("{\"text\": \"" + text.getSingle(evt).replace("\"", "") + "\"}");
-        PacketPlayOutChat packet = new PacketPlayOutChat(c,(byte) 2);
-        ((CraftPlayer) player.getSingle(evt)).getHandle().playerConnection.sendPacket(packet);
+		for(Player p : player.getAll(evt)){
+	        IChatBaseComponent c = ChatSerializer.a("{\"text\": \"" + text.getSingle(evt).replace("\"", "") + "\"}");
+	        PacketPlayOutChat packet = new PacketPlayOutChat(c,(byte) 2);
+	        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+		}
 	}
 
 }
