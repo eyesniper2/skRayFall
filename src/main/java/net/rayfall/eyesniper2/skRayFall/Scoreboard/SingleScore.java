@@ -20,12 +20,7 @@ public class SingleScore {
 	}
 	
 	public boolean isPlayer(Player p){
-		if(p == this.player){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return (p == this.player);
 	}
 	
 }

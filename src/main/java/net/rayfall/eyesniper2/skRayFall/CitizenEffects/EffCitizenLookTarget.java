@@ -35,7 +35,9 @@ public class EffCitizenLookTarget extends Effect{
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 		NPC npcLook = registry.getById(id.getSingle(evt).intValue());
-		npcLook.faceLocation(targetLoc.getSingle(evt));
+		if(npcLook != null){
+			npcLook.faceLocation(targetLoc.getSingle(evt));
+		}
 	}
 
 }

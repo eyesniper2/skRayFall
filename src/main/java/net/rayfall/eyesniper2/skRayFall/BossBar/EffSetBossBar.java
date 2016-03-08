@@ -1,29 +1,30 @@
 package net.rayfall.eyesniper2.skRayFall.BossBar;
 
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
-import org.inventivetalent.bossbar.BossBarAPI;
 
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
-import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 
-public class EffTimedBossBar extends Effect{
-	//display bossbar with "text" to player for %timespan%
-	private Expression<Player> player;
-	private Expression<String> text;
-	private Expression<Timespan> t;
+public class EffSetBossBar extends Effect{
+	
+	//(add|set) bossbar %string% for %player% 
+	
+	private Expression<String> id;
+	private Expression<Player> players;
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[1];
-		text = (Expression<String>) e[0];
-		t = (Expression<Timespan>) e[2];
+		id = (Expression<String>) e[0];
+		players = (Expression<Player>) e[1];
 		return true;
 	}
 
@@ -32,10 +33,11 @@ public class EffTimedBossBar extends Effect{
 		return null;
 	}
 
+
 	@Override
 	protected void execute(Event evt) {
-		BossBarAPI.setMessage(player.getSingle(evt), text.getSingle(evt).toString().replace("\"", ""), 100, t.getSingle(evt).getTicks()/20);
-		
+		skRayFall.bossbarManager.addPlayers(id.getSingle(evt).replace("\"", ""), players.getAll(evt));
 	}
+	
 
 }

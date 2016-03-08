@@ -36,7 +36,9 @@ public class EffEditGroupIDScore extends Effect{
 
 	@Override
 	protected void execute(Event evt){
-		skRayFall.sbManager.groupUpdateScore(id.getSingle(evt).replace("\"", ""), newName.getSingle(evt).replace("\"", ""), newScore.getSingle(evt).intValue());
+		if(id != null && newName != null && newScore != null){
+			skRayFall.sbManager.groupUpdateScore(id.getSingle(evt).replace("\"", ""), newName.getSingle(evt).replace("\"", ""), newScore.getSingle(evt).intValue());
+		}
 	}
 
 }

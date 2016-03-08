@@ -1,28 +1,29 @@
 package net.rayfall.eyesniper2.skRayFall.BossBar;
 
-import org.bukkit.entity.Player;
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
+import org.bukkit.boss.BarColor;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
-import org.inventivetalent.bossbar.BossBarAPI;
 
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffCreateBossBar extends Effect{
-	//set bossbar named %string% for %player% to %number% 
-	private Expression<String> t;
-	private Expression<Player> player;
-	private Expression<Number> per;
+public class EffChangeBossBarColor extends Effect{
+	
+	//(set|edit) bossbar %string% colo[u]r to %bossbarcolor% 
+	
+	private Expression<String> id;
+	private Expression<BarColor> c;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		t = (Expression<String>) e[0];
-		player = (Expression<Player>) e[1];
-		per = (Expression<Number>) e[2];
+		id = (Expression<String>) e[0];
+		c = (Expression<BarColor>) e[1];
 		return true;
 	}
 
@@ -33,7 +34,7 @@ public class EffCreateBossBar extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		BossBarAPI.setMessage(player.getSingle(evt), t.getSingle(evt).toString().replace("\"", ""), per.getSingle(evt).floatValue());
+		skRayFall.bossbarManager.changeColor(id.getSingle(evt).replace("\"", ""), c.getSingle(evt));
 	}
 
 }

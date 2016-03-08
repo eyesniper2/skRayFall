@@ -24,7 +24,7 @@ public class EffPlaySoundPacket extends Effect {
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
 		try {
-			Sound.valueOf(e[0].toString().replace("\"", ""));
+			Sound.valueOf(e[0].toString().replace("\"", "").trim().replace(" ", "_").toUpperCase());
 			sound = (Expression<String>) e[0];
 		} catch (IllegalArgumentException t) {
 			Skript.error(e[0].toString().replace("\"", "")
@@ -47,19 +47,16 @@ public class EffPlaySoundPacket extends Effect {
 
 	@Override
 	protected void execute(Event evt) {
+		Sound s = Sound.valueOf(sound.getSingle(evt).replace("\"", "").trim()
+				.replace(" ", "_").toUpperCase());
 		if (vol != null) {
 			for (Player p : player.getAll(evt)) {
-				p.playSound(player.getSingle(evt).getLocation(), Sound
-						.valueOf(sound.getSingle(evt).replace("\"", "")
-								.toUpperCase()), (float) vol.getSingle(evt)
+				p.playSound(p.getLocation(), s, (float) vol.getSingle(evt)
 						.doubleValue(), (float) 1.0D);
 			}
 		} else {
 			for (Player p : player.getAll(evt)) {
-				p.playSound(
-						player.getSingle(evt).getLocation(),
-						Sound.valueOf(sound.getSingle(evt).replace("\"", "")
-								.toUpperCase()), (float) 1.0D, (float) 1.0D);
+				p.playSound(p.getLocation(), s, (float) 1.0D, (float) 1.0D);
 			}
 		}
 	}

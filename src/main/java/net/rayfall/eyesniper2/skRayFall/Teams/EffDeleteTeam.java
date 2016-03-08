@@ -1,25 +1,26 @@
-package net.rayfall.eyesniper2.skRayFall.Capes;
+package net.rayfall.eyesniper2.skRayFall.Teams;
 
-import org.bukkit.entity.Player;
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
-import tfw.Capes.General.Capes;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffRemoveCape extends Effect{
+public class EffDeleteTeam extends Effect{
 	
-	private Expression<Player> player;
+	//(delete|remove) [a] team named %string%
+	
+	private Expression<String> team;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[0];
+		team = (Expression<String>) e[0];
 		return true;
 	}
 
@@ -28,15 +29,10 @@ public class EffRemoveCape extends Effect{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
-		if(player != null){
-			Player p = player.getSingle(evt);
-			ItemStack i = p.getItemInHand();
-			p.setItemInHand(null);
-			Capes.capeInHand(p);
-			p.setItemInHand(i);
+		if(team != null){
+			skRayFall.teamManager.removeTeam(team.getSingle(evt).replace("\"", ""));
 		}
 		
 	}

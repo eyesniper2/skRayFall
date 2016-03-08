@@ -89,12 +89,7 @@ public class IDScoreBoardManager implements Listener{
 	}
 	
 	public boolean isIdSet(String id){
-		if(singleScoreMap.containsKey(id)){
-			return true;
-		}
-		else{
-			return false;
-		}
+		return singleScoreMap.containsKey(id);
 	}
 	
 	public Score getScore(String id){

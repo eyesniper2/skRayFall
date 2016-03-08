@@ -38,7 +38,6 @@ public class EffPlayResourcePackSound extends Effect{
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(Event evt) {
 		if(player != null){

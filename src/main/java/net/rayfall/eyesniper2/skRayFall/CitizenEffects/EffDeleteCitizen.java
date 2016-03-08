@@ -26,14 +26,17 @@ public class EffDeleteCitizen extends Effect{
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		return "Destroy NPC with ID: " + id.getSingle(arg0).intValue();
+		return null;
 	}
 
 	@Override
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
-		NPC delete = registry.getById(id.getSingle(evt).intValue());
-		delete.destroy();
+		if (id != null && registry.getById(id.getSingle(evt).intValue()) != null) {
+			NPC delete = registry.getById(id.getSingle(evt).intValue());
+			if(delete != null && delete.getOwningRegistry() != null){
+				delete.destroy();
+			}
+		}
 	}
-
 }

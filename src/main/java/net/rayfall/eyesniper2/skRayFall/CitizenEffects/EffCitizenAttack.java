@@ -29,14 +29,16 @@ public class EffCitizenAttack extends Effect{
 
 	@Override
 	public String toString(@Nullable Event evt, boolean arg1) {
-		return "NPC id: " + id.getSingle(evt).intValue() + " is attacking " + toBeAttacked.getSingle(evt).toString();
+		return null;
 	}
 
 	@Override
 	protected void execute(Event evt) {
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 		NPC attacker = registry.getById(id.getSingle(evt).intValue());
-		attacker.getNavigator().setTarget(toBeAttacked.getSingle(evt), true);	
+		if(attacker != null){
+			attacker.getNavigator().setTarget(toBeAttacked.getSingle(evt), true);	
+		}
 	}
 
 }

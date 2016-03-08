@@ -29,7 +29,7 @@ public class EffCitizenMove extends Effect{
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		return "Citizens move, Id Number: " + idNum.getSingle(arg0).intValue() + " To loaction: " + location.toString();
+		return null;
 	}
 
 	@Override
@@ -37,10 +37,12 @@ public class EffCitizenMove extends Effect{
 		NPCRegistry registry = CitizensAPI.getNPCRegistry();
 		NPC npc = registry.getById(idNum.getSingle(evt).intValue());
 		Location moveTo = location.getSingle(evt);
-		if (speed != null){
-			npc.getNavigator().getDefaultParameters().baseSpeed(speed.getSingle(evt).floatValue());
+		if (npc != null) {
+			if (speed != null) {
+				npc.getNavigator().getDefaultParameters()
+						.baseSpeed(speed.getSingle(evt).floatValue());
+			}
+			npc.getNavigator().setTarget(moveTo);
 		}
-		npc.getNavigator().setTarget(moveTo);
 	}
-
 }

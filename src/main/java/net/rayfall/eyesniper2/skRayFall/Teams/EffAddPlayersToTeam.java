@@ -1,29 +1,29 @@
-package net.rayfall.eyesniper2.skRayFall.Capes;
+package net.rayfall.eyesniper2.skRayFall.Teams;
 
-import org.bukkit.Material;
+import net.rayfall.eyesniper2.skRayFall.skRayFall;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
-import tfw.Capes.General.Capes;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffWearCape extends Effect{
-	//make %player% wear cape %itemstack%
+public class EffAddPlayersToTeam extends Effect{
 	
-	private Expression<ItemStack> item;
-	private Expression<Player> player;
+	//(add|place) %players% on [to] team %string%
+	
+	private Expression<Player> players;
+	private Expression<String> team;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[0];
-		item = (Expression<ItemStack>) e[1];
+		players = (Expression<Player>) e[0];
+		team = (Expression<String>) e[1];
 		return true;
 	}
 
@@ -34,9 +34,10 @@ public class EffWearCape extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if(player != null && item != null && item.getSingle(evt).getData().getItemType().equals(Material.BANNER)){
-			Capes.equipCape(player.getSingle(evt), item.getSingle(evt));
+		if(players != null && team != null){
+			skRayFall.teamManager.addPlayesrToTeam(team.getSingle(evt).replace("\"", ""), players.getAll(evt));
 		}
+		
 	}
 
 }

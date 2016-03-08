@@ -81,7 +81,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.8.3-R0.1-SNAPSHOT</version>
+			<version>1.9-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -93,13 +93,13 @@
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
-			<version>R7</version>
+			<version>R8-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.slikey</groupId>
 			<artifactId>effectlib</artifactId>
-			<version>3.7</version>
+			<version>4.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -164,6 +164,13 @@
 			<systemPath>${project.basedir}/libs/spigot-1.8.6.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_9</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.9.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>net.aufdemrand</groupId>
 			<artifactId>sentry</artifactId>
 			<version>1.0</version>
@@ -217,5 +224,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.8</version>
+	<version>1.9.1</version>
 </project>

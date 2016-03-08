@@ -18,7 +18,7 @@ import com.vexsoftware.votifier.model.VotifierEvent;
 
 public class RayFallVoteListener implements Listener{
 	
-	public static Multimap<String, String> voteMap = HashMultimap.create();;
+	private static Multimap<String, OfflineVote> voteMap = HashMultimap.create();;
 	
 	public RayFallVoteListener(skRayFall core) {
 		core.getServer().getPluginManager().registerEvents(this, core);
@@ -33,7 +33,7 @@ public class RayFallVoteListener implements Listener{
     	}
     	else{
     		//Store things in the hashMap
-    		voteMap.put(h, VotifierEvent.getVote().getServiceName());
+    		voteMap.put(h, new OfflineVote(VotifierEvent.getVote().getServiceName(),VotifierEvent.getVote().getTimeStamp()));
     		Skript.error("Player is not online, saving vote for the next time they are online");
     	}
 	}
@@ -42,9 +42,9 @@ public class RayFallVoteListener implements Listener{
 	public void TriggerVoteOnJoin(PlayerJoinEvent evt){
 		Player p = evt.getPlayer();
 		if (voteMap.containsKey(p.getName())){
-			Collection<String> s = voteMap.get(p.getName());
-			for(String name : s){
-				RayFallVoteEvent event = new RayFallVoteEvent(p, name);
+			Collection<OfflineVote> s = voteMap.get(p.getName());
+			for(OfflineVote vote : s){
+				RayFallVoteEvent event = new RayFallVoteEvent(p, vote.getSite());
 				Bukkit.getPluginManager().callEvent(event);
 			}
 			voteMap.removeAll(p.getName());

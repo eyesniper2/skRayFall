@@ -1,4 +1,4 @@
-package net.rayfall.eyesniper2.skRayFall.BossBar;
+package net.rayfall.eyesniper2.skRayFall.BossBarAPI;
 
 import org.bukkit.entity.Player;
 import org.eclipse.jdt.annotation.Nullable;

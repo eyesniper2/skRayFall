@@ -1,29 +1,29 @@
-package net.rayfall.eyesniper2.skRayFall.Capes;
+package net.rayfall.eyesniper2.skRayFall.BossBarAPI;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
+import org.inventivetalent.bossbar.BossBarAPI;
 
-import tfw.Capes.General.Capes;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 
-public class EffWearCape extends Effect{
-	//make %player% wear cape %itemstack%
-	
-	private Expression<ItemStack> item;
+public class EffTimedBossBar extends Effect{
+	//display bossbar with "text" to player for %timespan%
 	private Expression<Player> player;
+	private Expression<String> text;
+	private Expression<Timespan> t;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[0];
-		item = (Expression<ItemStack>) e[1];
+		player = (Expression<Player>) e[1];
+		text = (Expression<String>) e[0];
+		t = (Expression<Timespan>) e[2];
 		return true;
 	}
 
@@ -34,9 +34,8 @@ public class EffWearCape extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if(player != null && item != null && item.getSingle(evt).getData().getItemType().equals(Material.BANNER)){
-			Capes.equipCape(player.getSingle(evt), item.getSingle(evt));
-		}
+		BossBarAPI.setMessage(player.getSingle(evt), text.getSingle(evt).toString().replace("\"", ""), 100, t.getSingle(evt).getTicks()/20);
+		
 	}
 
 }
