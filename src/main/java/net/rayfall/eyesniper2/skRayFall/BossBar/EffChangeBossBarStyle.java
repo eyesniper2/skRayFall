@@ -2,7 +2,6 @@ package net.rayfall.eyesniper2.skRayFall.BossBar;
 
 import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
-import org.bukkit.boss.BarStyle;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -15,7 +14,7 @@ public class EffChangeBossBarStyle extends Effect{
 	
 	//(set|edit) bossbar %string% style to %bossbarstyle%
 	
-	private Expression<BarStyle> style;
+	private Expression<skRayFallBarStyle> style;
 	private Expression<String> id;
 
 	@SuppressWarnings("unchecked")
@@ -23,7 +22,7 @@ public class EffChangeBossBarStyle extends Effect{
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
 		id = (Expression<String>) e[0];
-		style = (Expression<BarStyle>) e[1];
+		style = (Expression<skRayFallBarStyle>) e[1];
 		return true;
 	}
 
@@ -34,7 +33,7 @@ public class EffChangeBossBarStyle extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		skRayFall.bossbarManager.changeStyle(id.getSingle(evt).replace("\"", ""), style.getSingle(evt));
+		skRayFall.bossbarManager.changeStyle(id.getSingle(evt).replace("\"", ""), style.getSingle(evt).getKey());
 	}
 
 }

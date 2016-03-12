@@ -26,6 +26,9 @@ import net.rayfall.eyesniper2.skRayFall.BossBar.EffRemovePlayerFromBossBar;
 import net.rayfall.eyesniper2.skRayFall.BossBar.EffSetBossBar;
 import net.rayfall.eyesniper2.skRayFall.BossBar.ExprBossBarTitle;
 import net.rayfall.eyesniper2.skRayFall.BossBar.ExprBossBarValue;
+import net.rayfall.eyesniper2.skRayFall.BossBar.skRayFallBarColor;
+import net.rayfall.eyesniper2.skRayFall.BossBar.skRayFallBarFlag;
+import net.rayfall.eyesniper2.skRayFall.BossBar.skRayFallBarStyle;
 import net.rayfall.eyesniper2.skRayFall.BossBarAPI.EffCreateBossBar;
 import net.rayfall.eyesniper2.skRayFall.BossBarAPI.EffDeleteBossBar;
 import net.rayfall.eyesniper2.skRayFall.BossBarAPI.EffTimedBossBar;
@@ -826,8 +829,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 	}
 
 	private void regesterV1_9Elements() {
-		Classes.registerClass(new ClassInfo<BarColor>(BarColor.class,
-				"bossbarcolor").parser(new Parser<BarColor>() {
+		Classes.registerClass(new ClassInfo<skRayFallBarColor>(skRayFallBarColor.class,
+				"bossbarcolor").parser(new Parser<skRayFallBarColor>() {
 			@Override
 			public String getVariableNamePattern() {
 				return ".+";
@@ -835,9 +838,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 
 			@Override
 			@Nullable
-			public BarColor parse(String s, ParseContext cont) {
+			public skRayFallBarColor parse(String s, ParseContext cont) {
 				try {
-					return BarColor.valueOf(s.replace(" ", "_").trim()
+					return skRayFallBarColor.valueOf(s.replace(" ", "_").trim()
 							.toUpperCase());
 				} catch (IllegalArgumentException e) {
 					return null;
@@ -845,17 +848,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 			}
 
 			@Override
-			public String toString(BarColor eff, int i) {
+			public String toString(skRayFallBarColor eff, int i) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 
 			@Override
-			public String toVariableNameString(BarColor eff) {
+			public String toVariableNameString(skRayFallBarColor eff) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 		}));
-		Classes.registerClass(new ClassInfo<BarFlag>(BarFlag.class,
-				"bossbarflag").parser(new Parser<BarFlag>() {
+		Classes.registerClass(new ClassInfo<skRayFallBarFlag>(skRayFallBarFlag.class,
+				"bossbarflag").parser(new Parser<skRayFallBarFlag>() {
 			@Override
 			public String getVariableNamePattern() {
 				return ".+";
@@ -863,9 +866,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 
 			@Override
 			@Nullable
-			public BarFlag parse(String s, ParseContext cont) {
+			public skRayFallBarFlag parse(String s, ParseContext cont) {
 				try {
-					return BarFlag.valueOf(s.replace(" ", "_").trim()
+					return skRayFallBarFlag.valueOf(s.replace(" ", "_").trim()
 							.toUpperCase());
 				} catch (IllegalArgumentException e) {
 					return null;
@@ -873,17 +876,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 			}
 
 			@Override
-			public String toString(BarFlag eff, int i) {
+			public String toString(skRayFallBarFlag eff, int i) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 
 			@Override
-			public String toVariableNameString(BarFlag eff) {
+			public String toVariableNameString(skRayFallBarFlag eff) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 		}));
-		Classes.registerClass(new ClassInfo<BarStyle>(BarStyle.class,
-				"bossbarstyle").parser(new Parser<BarStyle>() {
+		Classes.registerClass(new ClassInfo<skRayFallBarStyle>(skRayFallBarStyle.class,
+				"bossbarstyle").parser(new Parser<skRayFallBarStyle>() {
 			@Override
 			public String getVariableNamePattern() {
 				return ".+";
@@ -891,9 +894,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 
 			@Override
 			@Nullable
-			public BarStyle parse(String s, ParseContext cont) {
+			public skRayFallBarStyle parse(String s, ParseContext cont) {
 				try {
-					return BarStyle.valueOf(s.replace(" ", "_").trim()
+					return skRayFallBarStyle.valueOf(s.replace(" ", "_").trim()
 							.toUpperCase());
 				} catch (IllegalArgumentException e) {
 					return null;
@@ -901,12 +904,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 			}
 
 			@Override
-			public String toString(BarStyle eff, int i) {
+			public String toString(skRayFallBarStyle eff, int i) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 
 			@Override
-			public String toVariableNameString(BarStyle eff) {
+			public String toVariableNameString(skRayFallBarStyle eff) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 		}));

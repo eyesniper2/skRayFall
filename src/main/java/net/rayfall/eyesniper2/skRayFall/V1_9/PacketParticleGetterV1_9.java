@@ -90,7 +90,6 @@ public class PacketParticleGetterV1_9 {
 			return EnumParticle.WATER_SPLASH;
 		case "WATER_WAKE":
 			return EnumParticle.WATER_WAKE;
-
 		default:
 			Skript.error("Invalid particle type selected! Using a Crit instead.");
 			return EnumParticle.CRIT;

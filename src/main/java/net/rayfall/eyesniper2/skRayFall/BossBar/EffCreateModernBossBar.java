@@ -4,7 +4,6 @@ import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
@@ -23,9 +22,9 @@ public class EffCreateModernBossBar extends Effect{
 	private Expression<String> id;
 	private Expression<String> title;
 	private Expression<Number> value;
-	private Expression<BarColor> color;
-	private Expression<BarFlag> flag;
-	private Expression<BarStyle> style;
+	private Expression<skRayFallBarColor> color;
+	private Expression<skRayFallBarFlag> flag;
+	private Expression<skRayFallBarStyle> style;
 	private Expression<Player> players;
 
 
@@ -37,9 +36,9 @@ public class EffCreateModernBossBar extends Effect{
 		value = (Expression<Number>) e[3];
 		id = (Expression<String>) e[1];
 		players = (Expression<Player>) e[2];
-		color = (Expression<BarColor>) e[4];
-		style = (Expression<BarStyle>) e[5];
-		flag = (Expression<BarFlag>) e[6];
+		color = (Expression<skRayFallBarColor>) e[4];
+		style = (Expression<skRayFallBarStyle>) e[5];
+		flag = (Expression<skRayFallBarFlag>) e[6];
 		return true;
 	}
 
@@ -53,14 +52,14 @@ public class EffCreateModernBossBar extends Effect{
 		BarStyle s = BarStyle.SOLID;
 		BarColor c = BarColor.PURPLE;
 		if (style != null) {
-			s = style.getSingle(evt);
+			s = style.getSingle(evt).getKey();
 		}
 		if (color != null) {
-			c = color.getSingle(evt);
+			c = color.getSingle(evt).getKey();
 		}
 		BossBar bar = null;
 		if (flag != null) {
-			bar = Bukkit.createBossBar(title.getSingle(evt).replace("\"", ""), c, s, flag.getSingle(evt));
+			bar = Bukkit.createBossBar(title.getSingle(evt).replace("\"", ""), c, s, flag.getSingle(evt).getKey());
 		}
 		else{
 			bar = Bukkit.createBossBar(title.getSingle(evt).replace("\"", ""), c, s);

@@ -2,7 +2,6 @@ package net.rayfall.eyesniper2.skRayFall.BossBar;
 
 import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
-import org.bukkit.boss.BarFlag;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -13,14 +12,14 @@ import ch.njol.util.Kleenean;
 
 public class EffBossBarRemoveFlag extends Effect{
 	
-	private Expression<BarFlag> flag;
+	private Expression<skRayFallBarFlag> flag;
 	private Expression<String> id;
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		flag = (Expression<BarFlag>) e[0];
+		flag = (Expression<skRayFallBarFlag>) e[0];
 		id = (Expression<String>) e[1];
 		return true;
 	}
@@ -32,7 +31,7 @@ public class EffBossBarRemoveFlag extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		skRayFall.bossbarManager.removeFlag(id.getSingle(evt).replace("\"", ""), flag.getSingle(evt));
+		skRayFall.bossbarManager.removeFlag(id.getSingle(evt).replace("\"", ""), flag.getSingle(evt).getKey());
 	}
 
 }

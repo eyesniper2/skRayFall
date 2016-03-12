@@ -33,7 +33,6 @@ public class EffUnglowPlayer extends Effect{
 		if(player != null){
 			player.getSingle(evt).setGlowing(false);
 		}
-		
 	}
 
 }
