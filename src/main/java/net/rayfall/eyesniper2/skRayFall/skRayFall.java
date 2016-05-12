@@ -418,7 +418,6 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
 				Skript.registerEffect(EffEditHoloObject.class, "edit holo object %string% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffBoundHoloObject.class, "create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]");
-				Skript.registerEffect(EffBoundClientSideHoloObject.class, "create client side bound holo object %string% with id %string% to %entity% for %player% [offset by %number%, %number%( and|,) %number%]");
 				Skript.registerEffect(EffEditHoloObjectLine.class, "edit holo object %string% [with] line [number] %number% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffDeleteHoloObjectLine.class, "(delete|remove) line %number% in holo object %string%");
 				Skript.registerEvent("hologram (touch|click)", SimpleEvent.class, HoloTouchEvent.class, "hologram (touch|click)");
@@ -471,6 +470,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 					Skript.registerEffect(EffCreateInteractiveStaticClientSideHolograms.class, "create interactive client side holo object %string% with id %string% at %location% to %player%");
 					Skript.registerEffect(EffTimedClientSideHolo.class, "display hologram %string% at %location% to %player% for %timespan%");
 					Skript.registerEffect(EffCreateStaticClientHoloObject.class, "create client side holo object %string% with id %string% at %location% to %player%");
+					Skript.registerEffect(EffBoundClientSideHoloObject.class, "create client side bound holo object %string% with id %string% to %entity% for %player% [offset by %number%, %number%( and|,) %number%]");
 				}
 		}
 		 //CrackShot Stuff
