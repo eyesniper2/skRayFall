@@ -17,6 +17,10 @@ public class ExprBaseBossBar extends SimplePropertyExpression<Player, Number>{
 	@Nullable
 	public Number convert(Player evt) {
 		return BossBarAPI.getBossBar(evt).getMaxHealth();
+		/*for(BossBar bar : BossBarAPI.getBossBars(evt)){
+			return ((bar.getProgress()-1) * 100);
+		}
+		return null; */
 	}
 
 	@Override

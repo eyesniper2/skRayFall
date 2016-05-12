@@ -1,5 +1,7 @@
 package net.rayfall.eyesniper2.skRayFall.BossBarAPI;
 
+import net.md_5.bungee.api.chat.TextComponent;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
@@ -21,8 +23,8 @@ public class EffTimedBossBar extends Effect{
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		player = (Expression<Player>) e[1];
 		text = (Expression<String>) e[0];
+		player = (Expression<Player>) e[1];
 		t = (Expression<Timespan>) e[2];
 		return true;
 	}
@@ -35,7 +37,7 @@ public class EffTimedBossBar extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		BossBarAPI.setMessage(player.getSingle(evt), text.getSingle(evt).toString().replace("\"", ""), 100, t.getSingle(evt).getTicks()/20);
-		
+		//BossBarAPI.addBar(player.getSingle(evt), new TextComponent(text.getSingle(evt).replace("\"", "")),null,null, 1, t.getSingle(evt).getTicks()/20,5);
 	}
 
 }

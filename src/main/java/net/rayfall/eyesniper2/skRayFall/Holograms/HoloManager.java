@@ -20,7 +20,7 @@ public class HoloManager {
 	
 	public static boolean addToHoloMap(String id, Hologram holo){
 		if (holomap.containsKey(id)){
-			Skript.error("A hologram by the id " + id + " Already exsists!");
+			Skript.error("A hologram with the id " + id + " already exists!");
 			return false;
 		}
 		else{

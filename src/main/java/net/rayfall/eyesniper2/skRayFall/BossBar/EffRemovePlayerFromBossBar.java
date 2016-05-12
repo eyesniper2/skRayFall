@@ -18,10 +18,13 @@ public class EffRemovePlayerFromBossBar extends Effect{
 	private Expression<String> id;
 	private Expression<Player> player;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
-		return false;
+		player = (Expression<Player>) e[0];
+		id = (Expression<String>) e[1];
+		return true;
 	}
 
 	@Override

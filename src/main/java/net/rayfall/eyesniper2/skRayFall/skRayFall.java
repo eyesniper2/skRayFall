@@ -107,6 +107,8 @@ import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprNumberOfEnchants;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprPlayerGlowing;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprSpecificEnchantIndex;
+import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprTextToLocation;
+import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundClientSideHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateInteractiveStaticClientSideHolograms;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateInteractiveStaticHolograms;
@@ -149,6 +151,9 @@ import net.rayfall.eyesniper2.skRayFall.Scoreboard.ExprScoreValueFromID;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.IDScoreBoardManager;
 import net.rayfall.eyesniper2.skRayFall.Scoreboard.RemoveGroupIDScore;
 import net.rayfall.eyesniper2.skRayFall.Teams.TeamManager;
+import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9MessageOnDeathRule;
+import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9NameTagVisibility;
+import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9TeamCollisionRule;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffTabTitlesV1_8;
@@ -165,15 +170,17 @@ import net.rayfall.eyesniper2.skRayFall.V1_9.EffActionBarV1_9;
 import net.rayfall.eyesniper2.skRayFall.V1_9.EffParticlesV1_9;
 import net.rayfall.eyesniper2.skRayFall.V1_9.EffTabTitlesV1_9;
 import net.rayfall.eyesniper2.skRayFall.V1_9.EffTitleV1_9;
+import net.rayfall.eyesniper2.skRayFall.V1_9_4.EffActionBarV1_9_4;
+import net.rayfall.eyesniper2.skRayFall.V1_9_4.EffParticlesV1_9_4;
+import net.rayfall.eyesniper2.skRayFall.V1_9_4.EffTabTitlesV1_9_4;
+import net.rayfall.eyesniper2.skRayFall.V1_9_4.EffTitleV1_9_4;
+import net.rayfall.eyesniper2.skRayFall.Voting.RayFallOfflineVoteEvent;
 import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteEvent;
 import net.rayfall.eyesniper2.skRayFall.Voting.RayFallVoteListener;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -187,6 +194,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
+import org.bukkit.scoreboard.Team.OptionStatus;
 import org.eclipse.jdt.annotation.Nullable;
 import org.mcstats.Metrics;
 
@@ -208,6 +216,7 @@ import ch.njol.skript.util.Getter;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.util.ParticleEffect;
 
+@SuppressWarnings("deprecation")
 public class skRayFall extends JavaPlugin implements Listener {
 	
 	public static EffectManager effectManager;
@@ -239,6 +248,12 @@ public class skRayFall extends JavaPlugin implements Listener {
 		    }
 		 if(Skript.isAcceptRegistrations()){
 			 regesterElements();
+			 if (Bukkit.getVersion().contains("1.9")){
+				 regesterV1_9Elements();
+			 }
+			 else{
+				 regesterNon1_9TeamElements();
+			 }
 		 }
 		 else{
 			 getLogger().info("skRayFall was unable to register some extra types.");
@@ -373,6 +388,21 @@ public class skRayFall extends JavaPlugin implements Listener {
 		            	return evt.getSite();
 		            }
 		        }, 0);
+			 Skript.registerEvent("On Offline Vote", SimpleEvent.class, RayFallOfflineVoteEvent.class, "offline vote[ing]");
+			 EventValues.registerEventValue(RayFallOfflineVoteEvent.class, Player.class, new Getter<Player, RayFallOfflineVoteEvent>() {
+				    @Nullable
+		            @Override
+		            public Player get(RayFallOfflineVoteEvent evt) {
+		            	return evt.getPlayer();
+		            }
+		        }, 0);
+			 EventValues.registerEventValue(RayFallOfflineVoteEvent.class, String.class, new Getter<String, RayFallOfflineVoteEvent>() {
+				    @Nullable
+		            @Override
+		            public String get(RayFallOfflineVoteEvent evt) {
+		            	return evt.getSite();
+		            }
+		        }, 0);
 		 }
 		 else{
 			 getLogger().info("No Votifier Found! *Checks oven for finished bacon*");
@@ -388,6 +418,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffDeleteHoloObject.class, "delete holo object %string%");
 				Skript.registerEffect(EffEditHoloObject.class, "edit holo object %string% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffBoundHoloObject.class, "create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]");
+				Skript.registerEffect(EffBoundClientSideHoloObject.class, "create client side bound holo object %string% with id %string% to %entity% for %player% [offset by %number%, %number%( and|,) %number%]");
 				Skript.registerEffect(EffEditHoloObjectLine.class, "edit holo object %string% [with] line [number] %number% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffDeleteHoloObjectLine.class, "(delete|remove) line %number% in holo object %string%");
 				Skript.registerEvent("hologram (touch|click)", SimpleEvent.class, HoloTouchEvent.class, "hologram (touch|click)");
@@ -663,6 +694,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerEffect(EffSetMetaData.class, "set meta %string% for %entity% to %string%");
 		 Skript.registerExpression(ExprArmorValue.class, Number.class, ExpressionType.PROPERTY, "%player%['s] armo[u]r value");
 		 Skript.registerExpression(ExprNumberOfEnchants.class, Number.class, ExpressionType.SIMPLE, "number of enchant[ment]s on %itemstack%");
+		 Skript.registerExpression(ExprTextToLocation.class, Location.class, ExpressionType.SIMPLE, "%string% converted to location");
 		 Skript.registerExpression(ExprSpecificEnchantIndex.class, String.class, ExpressionType.SIMPLE, "info of enchant[ment] %number% (of|on) %itemstack%");
 		 Skript.registerExpression(ExprAbsoluteInventoryCount.class, Number.class, ExpressionType.SIMPLE, "(absolute|complex|abs) number of %itemstack% in %player%['s] (inventory|inv)");
 		 Skript.registerExpression(ExprMetaData.class, String.class, ExpressionType.SIMPLE, "meta %string% for %entity%");
@@ -709,12 +741,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 if(Bukkit.getVersion().contains("1.9")){
-			 getLogger().info("Getting the extra special 1.9 bacon!");
-			 regesterV1_9Elements();
-			 Skript.registerEffect(EffTitleV1_9.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
-			 Skript.registerEffect(EffParticlesV1_9.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
-			 Skript.registerEffect(EffActionBarV1_9.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
-			 Skript.registerEffect(EffTabTitlesV1_9.class, "set tab header to %string% and footer to %string% for %player%");
+			 getLogger().info("Getting the general 1.9 bacon!");
 			 //New bossbar content
 			 bossbarManager = new BossBarManager();
 			 Skript.registerEffect(EffCreateModernBossBar.class, "create (bossbar|boss bar) title[d] %string% and id %string% for %players% [with (value|progress) %number%] [with colors %-bossbarcolor%] [with style %-bossbarstyle%] [with flags %-bossbarflag%]");
@@ -735,6 +762,24 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffMakePlayerGlow.class, "make %player% glow");
 			 Skript.registerEffect(EffUnglowPlayer.class, "make %player% (unglow|stop glowing)");
 			 Skript.registerExpression(ExprPlayerGlowing.class, Boolean.class, ExpressionType.SIMPLE, "%player% glowing");
+			 //1.9 Team stuff
+			 //Skript.registerEffect(Eff1_9MessageOnDeathRule.class, "(show|display) death message[s] %teamoptionstatus% for team %string%");
+			 //Skript.registerEffect(Eff1_9NameTagVisibility.class, "(show|display) (name tags|nametags) %teamoptionstatus% for team %string%");
+			 //Skript.registerEffect(Eff1_9TeamCollisionRule.class, "(set|define) team collision [rule] as %teamoptionstatus% for team %string%");
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.9)") || Bukkit.getVersion().contains("(MC: 1.9.1)")|| Bukkit.getVersion().contains("(MC: 1.9.2)")|| Bukkit.getVersion().contains("(MC: 1.9.3)")){
+			 getLogger().info("Getting the extra special 1.9 - 1.9.3 bacon!");
+			 Skript.registerEffect(EffTitleV1_9.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_9.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_9.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_9.class, "set tab header to %string% and footer to %string% for %player%");
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.9.4)")){
+			 getLogger().info("Getting the extra special 1.9.4 bacon!");
+			 Skript.registerEffect(EffTitleV1_9_4.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_9_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_9_4.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_9_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
 		 if(this.getConfig().getBoolean("UpdateAlerts", false)){
@@ -752,7 +797,9 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 HoloManager.dumpHoloMap();
 		 effLibManager.dumpData();
 		 sbManager.dumpData();
-		 bossbarManager.dumpData();
+		 if(bossbarManager != null){
+			 bossbarManager.dumpData();
+		 }
 	 }
 	 
 	 @EventHandler
@@ -765,7 +812,6 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 }
 	 }
 	 
-	@SuppressWarnings("deprecation")
 	private void regesterElements() {
 		Classes.registerClass(new ClassInfo<ParticleEffect>(
 				ParticleEffect.class, "effectlibparticle")
@@ -796,6 +842,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 						return eff.getName().replace("_", " ").toLowerCase();
 					}
 				}));
+		
+	}
+	
+	private void regesterNon1_9TeamElements(){
 		Classes.registerClass(new ClassInfo<NameTagVisibility>(
 				NameTagVisibility.class, "nametagvisibility")
 				.parser(new Parser<NameTagVisibility>() {
@@ -825,8 +875,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 						return name.name().replace("_", " ").toLowerCase();
 					}
 				}));
-
 	}
+	
 
 	private void regesterV1_9Elements() {
 		Classes.registerClass(new ClassInfo<skRayFallBarColor>(skRayFallBarColor.class,
@@ -910,6 +960,36 @@ public class skRayFall extends JavaPlugin implements Listener {
 
 			@Override
 			public String toVariableNameString(skRayFallBarStyle eff) {
+				return eff.name().replace("_", " ").toLowerCase();
+			}
+		}));
+		
+		//TODO: Test 1.9 Team stuff
+		Classes.registerClass(new ClassInfo<OptionStatus>(OptionStatus.class,
+				"teamoptionstatus").parser(new Parser<OptionStatus>() {
+			@Override
+			public String getVariableNamePattern() {
+				return ".+";
+			}
+
+			@Override
+			@Nullable
+			public OptionStatus parse(String s, ParseContext cont) {
+				try {
+					return OptionStatus.valueOf(s.replace(" ", "_").trim()
+							.toUpperCase());
+				} catch (IllegalArgumentException e) {
+					return null;
+				}
+			}
+
+			@Override
+			public String toString(OptionStatus eff, int i) {
+				return eff.name().replace("_", " ").toLowerCase();
+			}
+
+			@Override
+			public String toVariableNameString(OptionStatus eff) {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 		}));

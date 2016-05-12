@@ -32,9 +32,14 @@ public class RayFallVoteListener implements Listener{
 			Bukkit.getPluginManager().callEvent(event); 
     	}
     	else{
-    		//Store things in the hashMap
+    		//Store player and vote in the hashMap
     		voteMap.put(h, new OfflineVote(VotifierEvent.getVote().getServiceName(),VotifierEvent.getVote().getTimeStamp()));
+    		if (Bukkit.getPlayer(h) != null && !Bukkit.getPlayer(h).isOnline()){
+    			RayFallOfflineVoteEvent offlineEvent = new RayFallOfflineVoteEvent(Bukkit.getPlayer(h), VotifierEvent.getVote().getServiceName());
+    			Bukkit.getPluginManager().callEvent(offlineEvent);
+    		}
     		Skript.error("Player is not online, saving vote for the next time they are online");
+    		
     	}
 	}
 	

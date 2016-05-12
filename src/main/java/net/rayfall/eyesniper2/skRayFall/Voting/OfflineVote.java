@@ -17,6 +17,7 @@ public class OfflineVote {
 	public String getTime(){
 		return this.time;
 	}
+
 	
 
 }

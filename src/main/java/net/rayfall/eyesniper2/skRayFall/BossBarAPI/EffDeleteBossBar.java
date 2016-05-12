@@ -30,7 +30,7 @@ public class EffDeleteBossBar extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		BossBarAPI.removeBar(player.getSingle(evt));
-		
+		//BossBarAPI.removeAllBars(player.getSingle(evt));
 	}
 
 }

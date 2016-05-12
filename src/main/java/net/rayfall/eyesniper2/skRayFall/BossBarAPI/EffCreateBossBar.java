@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 import org.inventivetalent.bossbar.BossBarAPI;
-
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -34,6 +33,7 @@ public class EffCreateBossBar extends Effect{
 	@Override
 	protected void execute(Event evt) {
 		BossBarAPI.setMessage(player.getSingle(evt), t.getSingle(evt).toString().replace("\"", ""), per.getSingle(evt).floatValue());
+		//BossBarAPI.addBar(player.getSingle(evt), new TextComponent(t.getSingle(evt).replace("\"", "")),null,null, per.getSingle(evt).floatValue()/100);
 	}
 
 }

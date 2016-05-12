@@ -77,8 +77,8 @@
 			<url>http://repo.gravitydevelopment.net</url>
 		</repository>
 		<repository>
-			<id>inventive-repo</id>
-			<url>https://repo.inventivetalent.org/content/groups/public/</url>
+		    <id>inventive-repo</id>
+		    <url>https://repo.inventivetalent.org/content/groups/public/</url>
 		</repository>
 	</repositories>
 	<dependencies>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>net.citizensnpcs</groupId>
 			<artifactId>citizensapi</artifactId>
-			<version>2.0.16-SNAPSHOT</version>
+			<version>2.0.17-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -175,6 +175,13 @@
 			<systemPath>${project.basedir}/libs/spigot-1.9.jar</systemPath>
 		</dependency>
 		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_9_2</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.9.4.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>net.aufdemrand</groupId>
 			<artifactId>sentry</artifactId>
 			<version>1.0</version>
@@ -202,9 +209,9 @@
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.inventivetalent</groupId>
-			<artifactId>bossbarapi</artifactId>
-			<version>2.0.0</version>
+		    <groupId>org.inventivetalent</groupId>
+		    <artifactId>bossbarapi</artifactId>
+		    <version>2.3.8</version>
 		</dependency>
 		<dependency>
 			<groupId>tfw.Capes.General</groupId>
@@ -226,5 +233,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.9.2</version>
+	<version>1.9.3</version>
 </project>

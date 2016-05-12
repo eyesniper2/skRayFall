@@ -4,12 +4,14 @@ import net.rayfall.eyesniper2.skRayFall.skRayFall;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.VisibilityManager;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
@@ -17,13 +19,14 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffBoundHoloObject extends Effect{
+public class EffBoundClientSideHoloObject extends Effect{
 	
-	//create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]
+	//create client side bound holo object %string% with id %string% to %entity% for %player% [offset by %number%, %number%( and|,) %number%]
 	
 	private Expression<String> text;
 	private Expression<String> id;
 	private Expression<Entity> tar;
+	private Expression<Player> player;
 	private Expression<Number> x;
 	private Expression<Number> y;
 	private Expression<Number> z;
@@ -33,21 +36,22 @@ public class EffBoundHoloObject extends Effect{
 	public boolean init(Expression<?>[] e, int arg1, Kleenean arg2,
 			ParseResult arg3) {
 		text = (Expression<String>) e[0];
-		tar = (Expression<Entity>) e[2];
 		id = (Expression<String>) e[1];
-		x = (Expression<Number>) e[3];
-		y = (Expression<Number>) e[4];
-		z = (Expression<Number>) e[5];
+		tar = (Expression<Entity>) e[2];
+		player = (Expression<Player>) e[3];
+		x = (Expression<Number>) e[4];
+		y = (Expression<Number>) e[5];
+		z = (Expression<Number>) e[6];
 		return true;
 	}
-
+	
 	@Override
-	public String toString(@Nullable Event evt, boolean arg1) {
+	public String toString(@Nullable Event arg0, boolean arg1) {
 		return null;
 	}
-
+	
 	@Override
-	protected void execute(final Event evt) {
+	protected void execute(Event evt) {
 		double hx = 0;
 		double hy = 0;
 		double hz = 0;
@@ -61,6 +65,9 @@ public class EffBoundHoloObject extends Effect{
 			hz = z.getSingle(evt).doubleValue();
 		}
 		final Hologram hologram = HologramsAPI.createHologram(skRayFall.plugin, tar.getSingle(evt).getLocation());
+		VisibilityManager vM = hologram.getVisibilityManager();
+		vM.showTo(player.getSingle(evt));
+		vM.setVisibleByDefault(false);
 		String core = text.getSingle(evt).replace("\"", "");
 		while (core.indexOf(";") != -1){
 			String line = core.substring(0, core.indexOf(";"));
@@ -107,10 +114,6 @@ public class EffBoundHoloObject extends Effect{
 			HoloManager.followEntity(tar.getSingle(evt), tid, hx, hy, hz);
 		}
 		
-		
-	}
-		
-		
 	}
 
-
+}

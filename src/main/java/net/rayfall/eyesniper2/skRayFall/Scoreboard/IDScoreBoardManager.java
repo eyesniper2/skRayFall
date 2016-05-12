@@ -80,8 +80,8 @@ public class IDScoreBoardManager implements Listener{
 			SingleScore old = singleScoreMap.get(id);
 			Player p = old.getPlayer();
 			Objective obj = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-			obj.getScoreboard().resetScores(old.getScore().getEntry());
 			Score newScore = obj.getScore(newName);
+			obj.getScoreboard().resetScores(old.getScore().getEntry());
 			newScore.setScore(newValue);
 			singleScoreMap.put(id, new SingleScore(newScore,p));
 		}

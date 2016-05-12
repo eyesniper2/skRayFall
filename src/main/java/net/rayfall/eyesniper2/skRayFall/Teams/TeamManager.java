@@ -8,6 +8,8 @@ import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.Team.Option;
+import org.bukkit.scoreboard.Team.OptionStatus;
 
 @SuppressWarnings("deprecation")
 public class TeamManager {
@@ -169,13 +171,24 @@ public class TeamManager {
 	}
 	
 	
-	public void setTeamNameTag(String team, NameTagVisibility nameTag){
+	public void setTeamNameTagVisibility(String team, NameTagVisibility vis){
 		if(teamMap.containsKey(team)){
 			teamMap.get(team).setNameTagVisibility(NameTagVisibility.ALWAYS);
 			for(Object p : Bukkit.getServer().getOnlinePlayers().toArray()){
 				//Debug
 				Bukkit.broadcastMessage("Friendly Invisibles set!");
 				((Player) p).getScoreboard().getTeam(team).setNameTagVisibility(NameTagVisibility.ALWAYS);
+			}
+		}
+	}
+	
+	public void setTeamOption(String team, Option option, OptionStatus status){
+		if(teamMap.containsKey(team)){
+			teamMap.get(team).setOption(option, status);
+			for(Object p : Bukkit.getServer().getOnlinePlayers().toArray()){
+				//Debug
+				Bukkit.broadcastMessage("Team option set!");
+				((Player) p).getScoreboard().getTeam(team).setOption(option, status);
 			}
 		}
 	}

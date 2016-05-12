@@ -31,7 +31,9 @@ public class EffBossBarShow extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		skRayFall.bossbarManager.showBar(id.getSingle(evt).replace("\"", ""));
+		if(id != null){
+			skRayFall.bossbarManager.showBar(id.getSingle(evt).replace("\"", ""));
+		}
 	}
 
 }

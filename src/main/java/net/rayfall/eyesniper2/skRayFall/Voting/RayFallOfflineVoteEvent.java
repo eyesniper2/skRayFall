@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class RayFallVoteEvent extends Event{
+public class RayFallOfflineVoteEvent extends Event{
 	private static final HandlerList handlers = new HandlerList();
 	private Player player;
 	private String site;
@@ -17,7 +17,7 @@ public class RayFallVoteEvent extends Event{
 	    return handlers;
 	}
 	
-	public RayFallVoteEvent(Player player, String site) {
+	public RayFallOfflineVoteEvent(Player player, String site) {
 	    this.player = player;
 	    this.site = site;
 	}
@@ -30,5 +30,4 @@ public class RayFallVoteEvent extends Event{
 	}
 
 }
-
 

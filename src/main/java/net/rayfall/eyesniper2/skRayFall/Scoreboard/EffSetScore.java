@@ -14,12 +14,13 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-public class EffSetScore extends Effect{
-	
+public class EffSetScore extends Effect {
+
 	private Expression<String> name;
 	private Expression<Player> player;
 	private Expression<Number> num;
-	//set score %string% in sidebar of %player% to %number%
+
+	// set score %string% in sidebar of %player% to %number%
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -38,15 +39,14 @@ public class EffSetScore extends Effect{
 
 	@Override
 	protected void execute(Event evt) {
-		if (player == null || num == null ||  player.getSingle(evt).getScoreboard() == null){
+		if (player == null || num == null || player.getSingle(evt).getScoreboard() == null) {
 			Skript.error("This player is either not online or has yet to have a scoreboard set for them");
+		} else {
+			Scoreboard sb = player.getSingle(evt).getScoreboard();
+			Objective objective = sb.getObjective(DisplaySlot.SIDEBAR);
+			Score score = objective.getScore(name.getSingle(evt).replace("\"", ""));
+			score.setScore(num.getSingle(evt).intValue());
 		}
-		else{
-		Scoreboard sb = player.getSingle(evt).getScoreboard();
-		Objective objective = sb.getObjective(DisplaySlot.SIDEBAR);
-		Score score = objective.getScore(name.getSingle(evt).replace("\"", ""));
-		score.setScore(num.getSingle(evt).intValue());
-	}
 	}
 
 }
