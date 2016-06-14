@@ -32,18 +32,20 @@ public class ExprLastCitizen extends SimpleExpression<Number>{
 	}
 
 	@Override
-	public String toString(@Nullable Event arg0,
-			boolean arg1) {
+	public String toString(@Nullable Event arg0, boolean arg1) {
 		return "Last NPC grabed was ";
 	}
 
 	@Override
 	@Nullable
 	protected Number[] get(final Event e) {
-		if (lastNPC == null){
-			Skript.error("You have yet to create a NPC!");
-		}
+		if (lastNPC != null){
 			return new Number[] {lastNPC.getId()};
+		}
+		else{
+			Skript.error("You have yet to create a NPC!");
+			return null;
+		}
 		
 	}
 	

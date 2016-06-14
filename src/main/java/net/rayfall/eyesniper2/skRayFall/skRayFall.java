@@ -44,10 +44,13 @@ import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenHold;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenLookTarget;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenMove;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenNameVisable;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSetCrouch;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSetMaxHealth;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSetSkin;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSleep;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSpeak;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenSwing;
+import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenToggleCrouch;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCitizenVulnerablity;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffCreateCitizen;
 import net.rayfall.eyesniper2.skRayFall.CitizenEffects.EffDeleteCitizen;
@@ -108,6 +111,7 @@ import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprPlayerGlowing;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprShinyItem;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprSpecificEnchantIndex;
 import net.rayfall.eyesniper2.skRayFall.GeneralExpressions.ExprTextToLocation;
+import net.rayfall.eyesniper2.skRayFall.Holograms.CondHologramExists;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundClientSideHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffBoundHoloObject;
 import net.rayfall.eyesniper2.skRayFall.Holograms.EffCreateInteractiveStaticClientSideHolograms;
@@ -154,6 +158,10 @@ import net.rayfall.eyesniper2.skRayFall.Teams.TeamManager;
 import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9MessageOnDeathRule;
 import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9NameTagVisibility;
 import net.rayfall.eyesniper2.skRayFall.Teams.V1_9.Eff1_9TeamCollisionRule;
+import net.rayfall.eyesniper2.skRayFall.V1_10.EffActionBarV1_10;
+import net.rayfall.eyesniper2.skRayFall.V1_10.EffParticlesV1_10;
+import net.rayfall.eyesniper2.skRayFall.V1_10.EffTabTitlesV1_10;
+import net.rayfall.eyesniper2.skRayFall.V1_10.EffTitleV1_10;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skRayFall.V1_8.EffTabTitlesV1_8;
@@ -248,11 +256,17 @@ public class skRayFall extends JavaPlugin implements Listener {
 		    }
 		 if(Skript.isAcceptRegistrations()){
 			 regesterElements();
-			 if (Bukkit.getVersion().contains("1.9")){
+			 if (Bukkit.getVersion().contains("1.9")||Bukkit.getVersion().contains("1.10")){
 				 regesterV1_9Elements();
+				 if(!(Bukkit.getVersion().contains("(MC: 1.9)") || Bukkit.getVersion().contains("(MC: 1.9.1)"))){
+					 regesterV1_9_2Elements();
+				 }
+				 else{
+					 regesterNon1_9_2TeamElements();
+				 }
 			 }
 			 else{
-				 regesterNon1_9TeamElements();
+				 regesterNon1_9_2TeamElements();
 			 }
 		 }
 		 else{
@@ -279,7 +293,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffCitizenSetSkin.class,"change citizen %number% skin to %string%");
 			 Skript.registerEffect(EffGiveLookCloseTrait.class, "(give|set) npc %number% the look close trait");
 			 Skript.registerEffect(EffCitizenVulnerablity.class,"make citizen %number% (1¦invulnerable|0¦vulnerable)");
-			 Skript.registerEffect(EffCitizenSleep.class, "(make|force) (npc|citizen) with id %number% to sleep", "(make|force) (npc|citizen) with id %number% to wake up");
+			 Skript.registerEffect(EffCitizenSleep.class, "(make|force) (npc|citizen) with id %number% to sleep", "(make|force) (npc|citizen) with id %number% to wake [up]");
+			 Skript.registerEffect(EffCitizenSetCrouch.class, "(set|make) citizen %number% [to] [be] crouch[ed]", "(set|make) citizen %number% [to] [be] uncrouch[ed]");
+			 Skript.registerEffect(EffCitizenToggleCrouch.class, "toggle citizen %number%['s] crouch");
+			 Skript.registerEffect(EffCitizenSwing.class, "make citizen %number% swing [arm]");
 			 Skript.registerExpression(ExprLastCitizen.class, Number.class, ExpressionType.SIMPLE, "last created citizen [id]");
 			 Skript.registerExpression(ExprNameOfCitizen.class, String.class, ExpressionType.SIMPLE, "name of citizen %number%");
 			 Skript.registerExpression(ExprCitizenIDFromEntity.class, Number.class, ExpressionType.SIMPLE, "citizen id of %entity%");
@@ -420,6 +437,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 				Skript.registerEffect(EffBoundHoloObject.class, "create bound holo object %string% with id %string% to %entity% [offset by %number%, %number%( and|,) %number%]");
 				Skript.registerEffect(EffEditHoloObjectLine.class, "edit holo object %string% [with] line [number] %number% to %string% [and set interactivity to %-boolean%]");
 				Skript.registerEffect(EffDeleteHoloObjectLine.class, "(delete|remove) line %number% in holo object %string%");
+				Skript.registerCondition(CondHologramExists.class, "(holo object|hologram) %string% exists");
 				Skript.registerEvent("hologram (touch|click)", SimpleEvent.class, HoloTouchEvent.class, "hologram (touch|click)");
 				Skript.registerExpression(ExprGetHoloLine.class, String.class, ExpressionType.SIMPLE, "text in line %number% of holo[gram] [object] %string%");
 				EventValues.registerEventValue(HoloTouchEvent.class, String.class, new Getter<String, HoloTouchEvent>() {
@@ -698,8 +716,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 		 Skript.registerExpression(ExprSpecificEnchantIndex.class, String.class, ExpressionType.SIMPLE, "info of enchant[ment] %number% (of|on) %itemstack%");
 		 Skript.registerExpression(ExprAbsoluteInventoryCount.class, Number.class, ExpressionType.SIMPLE, "(absolute|complex|abs) number of %itemstack% in %player%['s] (inventory|inv)");
 		 Skript.registerExpression(ExprMetaData.class, String.class, ExpressionType.SIMPLE, "meta %string% for %entity%");
-		 if (Bukkit.getVersion().contains("1.8") || Bukkit.getVersion().contains("1.9")){
-			 getLogger().info("Enabling general 1.8/1.9 bacon!");
+		 if (Bukkit.getVersion().contains("1.8") || Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")){
+			 getLogger().info("Enabling general 1.8/1.9/1.10 bacon!");
 			 Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY, "shiny %itemstacks%");
 			 Skript.registerExpression(ExprNoNBT.class, ItemStack.class, ExpressionType.PROPERTY, "%itemstacks% with no nbt");
 			 new ArmorStandListener(this);
@@ -740,8 +758,8 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffActionBarV1_8_4.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_8_4.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
-		 if(Bukkit.getVersion().contains("1.9")){
-			 getLogger().info("Getting the general 1.9 bacon!");
+		 if(Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")){
+			 getLogger().info("Getting the general 1.9/1.10 bacon!");
 			 //New bossbar content
 			 bossbarManager = new BossBarManager();
 			 Skript.registerEffect(EffCreateModernBossBar.class, "create (bossbar|boss bar) title[d] %string% and id %string% for %players% [with (value|progress) %number%] [with colors %-bossbarcolor%] [with style %-bossbarstyle%] [with flags %-bossbarflag%]");
@@ -762,7 +780,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffMakePlayerGlow.class, "make %player% glow");
 			 Skript.registerEffect(EffUnglowPlayer.class, "make %player% (unglow|stop glowing)");
 			 Skript.registerExpression(ExprPlayerGlowing.class, Boolean.class, ExpressionType.SIMPLE, "%player% glowing");
-			 //1.9 Team stuff
+			 //1.9.2 Team stuff
 			 //Skript.registerEffect(Eff1_9MessageOnDeathRule.class, "(show|display) death message[s] %teamoptionstatus% for team %string%");
 			 //Skript.registerEffect(Eff1_9NameTagVisibility.class, "(show|display) (name tags|nametags) %teamoptionstatus% for team %string%");
 			 //Skript.registerEffect(Eff1_9TeamCollisionRule.class, "(set|define) team collision [rule] as %teamoptionstatus% for team %string%");
@@ -780,6 +798,13 @@ public class skRayFall extends JavaPlugin implements Listener {
 			 Skript.registerEffect(EffParticlesV1_9_4.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
 			 Skript.registerEffect(EffActionBarV1_9_4.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
 			 Skript.registerEffect(EffTabTitlesV1_9_4.class, "set tab header to %string% and footer to %string% for %player%");
+		 }
+		 if(Bukkit.getVersion().contains("(MC: 1.10)")){
+			 getLogger().info("Getting the extra special 1.10 bacon!");
+			 Skript.registerEffect(EffTitleV1_10.class,"send %players% title %string% [with subtitle %-string%] [for %-timespan%] [with %-timespan% fade in and %-timespan% fade out]");
+			 Skript.registerEffect(EffParticlesV1_10.class, "show %number% %string% particle[s] at %location% for %player% [offset by %number%, %number%( and|,) %number%]");
+			 Skript.registerEffect(EffActionBarV1_10.class, "set action bar of %players% to %string%", "set %player%['s] action bar to %string%");
+			 Skript.registerEffect(EffTabTitlesV1_10.class, "set tab header to %string% and footer to %string% for %player%");
 		 }
 		 enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
 		 if(this.getConfig().getBoolean("UpdateAlerts", false)){
@@ -845,7 +870,7 @@ public class skRayFall extends JavaPlugin implements Listener {
 		
 	}
 	
-	private void regesterNon1_9TeamElements(){
+	private void regesterNon1_9_2TeamElements(){
 		Classes.registerClass(new ClassInfo<NameTagVisibility>(
 				NameTagVisibility.class, "nametagvisibility")
 				.parser(new Parser<NameTagVisibility>() {
@@ -964,7 +989,10 @@ public class skRayFall extends JavaPlugin implements Listener {
 			}
 		}));
 		
-		//TODO: Test 1.9 Team stuff
+	}
+	private void regesterV1_9_2Elements() {
+		
+		//TODO: Test 1.9.2 Team stuff
 		Classes.registerClass(new ClassInfo<OptionStatus>(OptionStatus.class,
 				"teamoptionstatus").parser(new Parser<OptionStatus>() {
 			@Override
@@ -993,9 +1021,6 @@ public class skRayFall extends JavaPlugin implements Listener {
 				return eff.name().replace("_", " ").toLowerCase();
 			}
 		}));
-		
-		
-		
 	}
 
 }

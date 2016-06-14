@@ -29,7 +29,6 @@ public class HoloManager {
 		}
 	}
 	
-	
 	public static boolean isInHoloMap(String id){
 		if (holomap.containsKey(id)){
 			return true;
