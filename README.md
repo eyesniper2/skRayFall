@@ -1,11 +1,10 @@
-skRayFall Developer Branch
+skRayFall
 =========
 
 ![logo](https://puu.sh/j9sy5/066b81b74f.png "")
 
-This is the dev branch.
-
-Current build status:![Build Status](https://magnum.travis-ci.com/eyesniper2/skRayFall-Dev.svg?token=yeNyVrMkJwtxsC6Ek6E4&branch=master)
+## Download
+skRayFall is officially hosted on bukkit and can be downloaded [here](http://dev.bukkit.org/bukkit-plugins/skrayfall/).
 
 ## Documentation
 All documentation for using skRayFall can be found [here](http://www.skunity.com/SkRayFall).
@@ -22,6 +21,9 @@ Currently skRayFall adds over 50 extremely powerful syntax elements to the skrip
 * [EffectLib](http://dev.bukkit.org/bukkit-plugins/effectlib/)
 * [Holographic Displays](http://dev.bukkit.org/bukkit-plugins/holographic-displays/)
 * [Votifier](http://dev.bukkit.org/bukkit-plugins/votifier/)
+* [BossBarAPI](https://www.spigotmc.org/resources/api-bossbarapi-1-7-1-8.7504/)
+* [Capes](https://www.spigotmc.org/resources/capes.9068/)
+* [CoreProtect](http://dev.bukkit.org/bukkit-plugins/coreprotect/)
 
 It adds many new possibilities like being able to control the path finding of NPC's, changing the sidebar, tablist, undername of players and even contains many features for RPG servers like events for when a certain slot is clicked on the player's crafting inventory.
 
@@ -46,3 +48,6 @@ A detailed wiki guide will be coming soon on how to set up and build skRayFall i
 
 ## Updater
 This plugin checks Bukkit Dev for updates when it starts up and will let you know about them. This feature can be disabled in the config by setting "UpdateAlerts" to false. If you do not see an option for it please delete your config and restart the server to allow it to reload. Then adjust the settings and restart the server once more.
+
+## Metrics
+Usage metrics for skRayFall can be found [here](http://mcstats.org/plugin/skRayFall).
