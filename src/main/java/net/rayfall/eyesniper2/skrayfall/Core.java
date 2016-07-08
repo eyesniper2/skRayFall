@@ -1020,8 +1020,9 @@ public class Core extends JavaPlugin implements Listener {
       Skript.registerEffect(EffTabTitlesV1_9_4.class,
           "set tab header to %string% and footer to %string% for %player%");
     }
-    if (Bukkit.getVersion().contains("(MC: 1.10)")) {
-      getLogger().info("Getting the extra special 1.10 bacon!");
+    if (Bukkit.getVersion().contains("(MC: 1.10)") || Bukkit.getVersion().contains("(MC: 1.10.1)")
+        || Bukkit.getVersion().contains("(MC: 1.10.2)")) {
+      getLogger().info("Getting the extra special 1.10 - 1.10.2 bacon!");
       Skript.registerEffect(EffTitleV1_10.class,
           "send %players% title %string% [with subtitle %-string%] [for %-timespan%] "
               + "[with %-timespan% fade in and %-timespan% fade out]");
