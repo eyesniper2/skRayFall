@@ -259,7 +259,8 @@ public class Core extends JavaPlugin implements Listener {
     }
     if (Skript.isAcceptRegistrations()) {
       regesterElements();
-      if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
+      if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")
+          || Bukkit.getVersion().contains("1.11")) {
         regesterV1_9Elements();
         if (!(Bukkit.getVersion().contains("(MC: 1.9)")
             || Bukkit.getVersion().contains("(MC: 1.9.1)"))) {
@@ -904,8 +905,8 @@ public class Core extends JavaPlugin implements Listener {
     Skript.registerExpression(ExprMetaData.class, String.class, ExpressionType.SIMPLE,
         "meta %string% for %entity%");
     if (Bukkit.getVersion().contains("1.8") || Bukkit.getVersion().contains("1.9")
-        || Bukkit.getVersion().contains("1.10")) {
-      getLogger().info("Enabling general 1.8/1.9/1.10 bacon!");
+        || Bukkit.getVersion().contains("1.10") || Bukkit.getVersion().contains("1.11")) {
+      getLogger().info("Enabling general 1.8/1.9/1.10/1.11 bacon!");
       Skript.registerExpression(ExprShinyItem.class, ItemStack.class, ExpressionType.PROPERTY,
           "shiny %itemstacks%");
       Skript.registerExpression(ExprNoNbt.class, ItemStack.class, ExpressionType.PROPERTY,
@@ -972,8 +973,9 @@ public class Core extends JavaPlugin implements Listener {
       Skript.registerEffect(EffTabTitlesV1_8_4.class,
           "set tab header to %string% and footer to %string% for %player%");
     }
-    if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")) {
-      getLogger().info("Getting the general 1.9/1.10 bacon!");
+    if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")
+        || Bukkit.getVersion().contains("1.11")) {
+      getLogger().info("Getting the general 1.9-1.11 bacon!");
       // New bossbar content
       bossbarManager = new BossBarManager();
       Skript.registerEffect(EffCreateModernBossBar.class,
