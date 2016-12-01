@@ -93,7 +93,8 @@ public class TeamManager {
    * @param player The player to check.
    */
   public boolean isPlayerOnTeam(String teamName, Player player) {
-    if (teamMap.containsKey(teamName) && teamMap.get(teamName).getPlayers().contains(player)) {
+    if (teamMap.containsKey(teamName)
+        && teamMap.get(teamName).getEntries().contains(player.getName())) {
       return true;
     } else {
       return false;
@@ -110,14 +111,14 @@ public class TeamManager {
   public void addPlayesrToTeam(String teamName, Player[] players) {
     if (teamMap.containsKey(teamName)) {
       for (Player player : players) {
-        teamMap.get(teamName).addPlayer(player);
+        teamMap.get(teamName).addEntry(player.getName());
       }
       for (Object e : Bukkit.getServer().getOnlinePlayers().toArray()) {
         Player tempPlayer = (Player) e;
         // Debug
         Bukkit.broadcastMessage("Player set!");
         for (Player player : players) {
-          tempPlayer.getScoreboard().getTeam(teamName).addPlayer(player);
+          tempPlayer.getScoreboard().getTeam(teamName).addEntry(player.getName());
         }
       }
     }
@@ -132,13 +133,13 @@ public class TeamManager {
   public void removePlayersFromTeam(String teamName, Player[] players) {
     if (teamMap.containsKey(teamName)) {
       for (Player player : players) {
-        teamMap.get(teamName).removePlayer(player);
+        teamMap.get(teamName).removeEntry(player.getName());
       }
       for (Object e : Bukkit.getServer().getOnlinePlayers().toArray()) {
         // Debug
         Bukkit.broadcastMessage("Removed!");
         for (Player player : players) {
-          ((Player) e).getScoreboard().getTeam(teamName).removePlayer(player);
+          ((Player) e).getScoreboard().getTeam(teamName).removeEntry(player.getName());
         }
       }
     }
@@ -152,6 +153,7 @@ public class TeamManager {
   public void removeTeam(String teamName) {
     if (teamMap.containsKey(teamName)) {
       teamMap.remove(teamName);
+      teamBoard.getTeam(teamName).unregister();
       for (Object e : Bukkit.getServer().getOnlinePlayers().toArray()) {
         Player tempPlayer = (Player) e;
         if (tempPlayer.getScoreboard().getTeam(teamName) != null) {
@@ -228,6 +230,23 @@ public class TeamManager {
       }
     }
   }
+  
+  /**
+   * Set the display name of a team by team name.
+   * 
+   * @param team The reference name of the team.
+   * @param newTeamName New name to be displayed
+   */
+  public void setDisplayName(String team, String newTeamName) {
+    if (teamMap.containsKey(team)) {
+      teamMap.get(team).setDisplayName(newTeamName);
+      for (Object p : Bukkit.getServer().getOnlinePlayers().toArray()) {
+        // Debug
+        Bukkit.broadcastMessage("Team display name set!");
+        ((Player) p).getScoreboard().getTeam(team).setDisplayName(newTeamName);
+      }
+    }
+  }
 
   /**
    * Set the team name tag visibility of a team by team name.
@@ -237,11 +256,11 @@ public class TeamManager {
    */
   public void setTeamNameTagVisibility(String team, NameTagVisibility vis) {
     if (teamMap.containsKey(team)) {
-      teamMap.get(team).setNameTagVisibility(NameTagVisibility.ALWAYS);
+      teamMap.get(team).setNameTagVisibility(vis);
       for (Object p : Bukkit.getServer().getOnlinePlayers().toArray()) {
         // Debug
         Bukkit.broadcastMessage("Friendly Invisibles set!");
-        ((Player) p).getScoreboard().getTeam(team).setNameTagVisibility(NameTagVisibility.ALWAYS);
+        ((Player) p).getScoreboard().getTeam(team).setNameTagVisibility(vis);
       }
     }
   }

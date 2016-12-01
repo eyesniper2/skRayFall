@@ -34,6 +34,9 @@ public class RayFallVoteListener implements Listener {
   @EventHandler
   public void onVote(VotifierEvent votifierEvent) {
     String name = votifierEvent.getVote().getUsername();
+    RayFallVoteReceivedEvent voteReceivedEvent = new RayFallVoteReceivedEvent(name,
+        votifierEvent.getVote().getServiceName());
+    Bukkit.getPluginManager().callEvent(voteReceivedEvent);
     if (Bukkit.getPlayer(name) != null && Bukkit.getPlayer(name).isOnline()) {
       RayFallVoteEvent event =
           new RayFallVoteEvent(Bukkit.getPlayer(name), votifierEvent.getVote().getServiceName());

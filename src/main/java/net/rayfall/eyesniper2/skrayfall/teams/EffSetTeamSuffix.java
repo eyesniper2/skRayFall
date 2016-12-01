@@ -35,7 +35,7 @@ public class EffSetTeamSuffix extends Effect {
   protected void execute(Event evt) {
     if (team != null && suffix != null) {
       String finalSuffix = suffix.getSingle(evt).replace("\"", "");
-      if (finalSuffix.length() <= 16) {
+      if (finalSuffix.length() < 16) {
         Core.teamManager.setSuffix(team.getSingle(evt).replace("\"", ""), finalSuffix);
       } else {
         Skript.error(

@@ -1,6 +1,5 @@
 package net.rayfall.eyesniper2.skrayfall.teams;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -11,18 +10,18 @@ import net.rayfall.eyesniper2.skrayfall.Core;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-public class EffSetTeamPrefix extends Effect {
+public class EffSetTeamDisplayName extends Effect {
 
-  // set prefix of team %string% to %string%
+  //set team display names for %string% to %string%
 
-  private Expression<String> team;
-  private Expression<String> pre;
+  private Expression<String> teamName;
+  private Expression<String> newName;
 
   @SuppressWarnings("unchecked")
   @Override
   public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    team = (Expression<String>) exp[0];
-    pre = (Expression<String>) exp[1];
+    teamName = (Expression<String>) exp[0];
+    newName = (Expression<String>) exp[1];
     return true;
   }
 
@@ -33,16 +32,10 @@ public class EffSetTeamPrefix extends Effect {
 
   @Override
   protected void execute(Event evt) {
-    if (team != null && pre != null) {
-      String prefix = pre.getSingle(evt).replace("\"", "");
-      if (prefix.length() < 16) {
-        Core.teamManager.setPrefix(team.getSingle(evt).replace("\"", ""), prefix);
-      } else {
-        Skript.error(
-            "Prefix can not be greater than 16 characters. It's currently " + prefix.length());
-      }
+    TeamManager tm = Core.teamManager;
+    if (teamName != null && newName != null) {
+      tm.setDisplayName(teamName.getSingle(evt).replace("\"", ""),
+          newName.getSingle(evt).replace("\"", ""));
     }
-
   }
-
 }

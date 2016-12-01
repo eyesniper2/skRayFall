@@ -18,7 +18,6 @@ import com.shampaggon.crackshot.events.WeaponShootEvent;
 
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.util.ParticleEffect;
-
 import net.citizensnpcs.api.event.NPCDeathEvent;
 import net.citizensnpcs.api.event.NPCLeftClickEvent;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
@@ -124,6 +123,7 @@ import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprMetaData;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprNoNbt;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprNumberOfEnchants;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprPlayerGlowing;
+import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprRayfallOffhand;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprShinyItem;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprSpecificEnchantIndex;
 import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprTextToLocation;
@@ -175,6 +175,10 @@ import net.rayfall.eyesniper2.skrayfall.v1_10.EffActionBarV1_10;
 import net.rayfall.eyesniper2.skrayfall.v1_10.EffParticlesV1_10;
 import net.rayfall.eyesniper2.skrayfall.v1_10.EffTabTitlesV1_10;
 import net.rayfall.eyesniper2.skrayfall.v1_10.EffTitleV1_10;
+import net.rayfall.eyesniper2.skrayfall.v1_11.EffActionBarV1_11;
+import net.rayfall.eyesniper2.skrayfall.v1_11.EffParticlesV1_11;
+import net.rayfall.eyesniper2.skrayfall.v1_11.EffTabTitlesV1_11;
+import net.rayfall.eyesniper2.skrayfall.v1_11.EffTitleV1_11;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffTabTitlesV1_8;
@@ -198,6 +202,7 @@ import net.rayfall.eyesniper2.skrayfall.v1_9_4.EffTitleV1_9_4;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallOfflineVoteEvent;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteEvent;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteListener;
+import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteReceivedEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -262,7 +267,7 @@ public class Core extends JavaPlugin implements Listener {
         } else {
           regesterNon1_9_2TeamElements();
         }
-      } else {
+      } else if (Bukkit.getVersion().contains("1.8")) {
         regesterNon1_9_2TeamElements();
       }
     } else {
@@ -488,6 +493,16 @@ public class Core extends JavaPlugin implements Listener {
             @Override
             public String get(RayFallOfflineVoteEvent evt) {
               return evt.getSite();
+            }
+          }, 0);
+      Skript.registerEvent("On Vote Received", SimpleEvent.class, RayFallVoteReceivedEvent.class,
+          "[raw ]vote receiv(e|ed)");
+      EventValues.registerEventValue(RayFallVoteReceivedEvent.class, String.class,
+          new Getter<String, RayFallVoteReceivedEvent>() {
+            @Nullable
+            @Override
+            public String get(RayFallVoteReceivedEvent evt) {
+              return evt.getVotersName();
             }
           }, 0);
     } else {
@@ -855,10 +870,20 @@ public class Core extends JavaPlugin implements Listener {
         "sidebar (title|name) for %player%");
     Skript.registerCondition(CondisScoreboardSet.class, "side bar is set for %player%");
     // Team Support
-    // teamManager = new TeamManager();
-    // Skript.registerEffect(EffSetTeamPrefix.class, "set prefix of team %string% to %string%");
-    // Skript.registerEffect(EffCreateTeam.class,
-    // "(create|make) [a] team named %string% [with %-players%]");
+    //teamManager = new TeamManager();
+    //Skript.registerEffect(EffCreateTeam.class,
+    //    "(create|make) [a] team named %string% [with %-players%]");
+    //Skript.registerEffect(EffDeleteTeam.class, "(delete|remove) [a] team named %string%");
+    //Skript.registerEffect(EffSetTeamPrefix.class, "set prefix of team %string% to %string%");
+    //Skript.registerEffect(EffSetTeamSuffix.class, "set suffix of team %string% to %string%");
+    //Skript.registerEffect(EffSetTeamDisplayName.class,
+    //    "set team display names for %string% to %string%");
+    
+    
+    
+    
+    
+   
     Skript.registerEffect(EffPlayResourcePackSound.class,
         "play (resource|[custom ]sound) [sound] pack %string% to %player% [at %-location%] "
             + "[(and|with) volume %number%] [(and|with) pitch %number%]");
@@ -991,6 +1016,8 @@ public class Core extends JavaPlugin implements Listener {
       // "(show|display) (name tags|nametags) %teamoptionstatus% for team %string%");
       // Skript.registerEffect(Eff1_9TeamCollisionRule.class,
       // "(set|define) team collision [rule] as %teamoptionstatus% for team %string%");
+      Skript.registerExpression(ExprRayfallOffhand.class, ItemStack.class, ExpressionType.SIMPLE,
+          new String[] {"%player%['s] offhand", "item in %player%['s] offhand"});
     }
     if (Bukkit.getVersion().contains("(MC: 1.9)") || Bukkit.getVersion().contains("(MC: 1.9.1)")
         || Bukkit.getVersion().contains("(MC: 1.9.2)")
@@ -1032,6 +1059,19 @@ public class Core extends JavaPlugin implements Listener {
       Skript.registerEffect(EffActionBarV1_10.class, "set action bar of %players% to %string%",
           "set %player%['s] action bar to %string%");
       Skript.registerEffect(EffTabTitlesV1_10.class,
+          "set tab header to %string% and footer to %string% for %player%");
+    }
+    if (Bukkit.getVersion().contains("MC: 1.11")) {
+      getLogger().info("Getting the extra special 1.11 bacon!");
+      Skript.registerEffect(EffTitleV1_11.class,
+          "send %players% title %string% [with subtitle %-string%] [for %-timespan%] "
+              + "[with %-timespan% fade in and %-timespan% fade out]");
+      Skript.registerEffect(EffParticlesV1_11.class,
+          "show %number% %string% particle[s] at %location% for %player% "
+              + "[offset by %number%, %number%( and|,) %number%]");
+      Skript.registerEffect(EffActionBarV1_11.class, "set action bar of %players% to %string%",
+          "set %player%['s] action bar to %string%");
+      Skript.registerEffect(EffTabTitlesV1_11.class,
           "set tab header to %string% and footer to %string% for %player%");
     }
     enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");

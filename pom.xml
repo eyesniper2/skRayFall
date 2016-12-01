@@ -190,10 +190,10 @@
 		</dependency>
 		<dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigotV1_10_2</artifactId>
+            <artifactId>spigotV1_11</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/spigot-1.10.2.jar</systemPath>
+            <systemPath>${project.basedir}/libs/spigot-1.11.jar</systemPath>
         </dependency>
 		<dependency>
 			<groupId>net.aufdemrand</groupId>
@@ -247,5 +247,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.9.5</version>
+	<version>1.9.6</version>
 </project>
