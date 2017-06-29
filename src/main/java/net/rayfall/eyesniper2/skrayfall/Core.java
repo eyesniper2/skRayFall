@@ -9,13 +9,7 @@ import ch.njol.skript.lang.util.SimpleEvent;
 import ch.njol.skript.registrations.Classes;
 import ch.njol.skript.registrations.EventValues;
 import ch.njol.skript.util.Getter;
-
-import com.shampaggon.crackshot.events.WeaponDamageEntityEvent;
-import com.shampaggon.crackshot.events.WeaponReloadCompleteEvent;
-import com.shampaggon.crackshot.events.WeaponReloadEvent;
-import com.shampaggon.crackshot.events.WeaponScopeEvent;
-import com.shampaggon.crackshot.events.WeaponShootEvent;
-
+import com.shampaggon.crackshot.events.*;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.util.ParticleEffect;
 import net.citizensnpcs.api.event.NPCDeathEvent;
@@ -26,24 +20,7 @@ import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
 import net.gravitydevelopment.updater.Updater;
 import net.gravitydevelopment.updater.Updater.UpdateResult;
-import net.rayfall.eyesniper2.skrayfall.bossbar.BossBarManager;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffBossBarAddFlag;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffBossBarHide;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffBossBarRemoveFlag;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffBossBarShow;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffChangeBossBarColor;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffChangeBossBarStyle;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffChangeBossBarTitle;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffChangeBossBarValue;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffCreateModernBossBar;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffDeleteModernBossBar;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffRemovePlayerFromBossBar;
-import net.rayfall.eyesniper2.skrayfall.bossbar.EffSetBossBar;
-import net.rayfall.eyesniper2.skrayfall.bossbar.ExprBossBarTitle;
-import net.rayfall.eyesniper2.skrayfall.bossbar.ExprBossBarValue;
-import net.rayfall.eyesniper2.skrayfall.bossbar.RayFallBarColor;
-import net.rayfall.eyesniper2.skrayfall.bossbar.RayFallBarFlag;
-import net.rayfall.eyesniper2.skrayfall.bossbar.RayFallBarStyle;
+import net.rayfall.eyesniper2.skrayfall.bossbar.*;
 import net.rayfall.eyesniper2.skrayfall.bossbarapi.EffCreateBossBar;
 import net.rayfall.eyesniper2.skrayfall.bossbarapi.EffDeleteBossBar;
 import net.rayfall.eyesniper2.skrayfall.bossbarapi.EffTimedBossBar;
@@ -54,37 +31,8 @@ import net.rayfall.eyesniper2.skrayfall.citizenconditions.CondIsNpc;
 import net.rayfall.eyesniper2.skrayfall.citizenconditions.CondIsNpcId;
 import net.rayfall.eyesniper2.skrayfall.citizenconditions.CondIsNpcIdGeneral;
 import net.rayfall.eyesniper2.skrayfall.citizenconditions.CondIsNpcNamed;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenAttack;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenHold;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenLookTarget;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenMove;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenNameVisable;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSetCrouch;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSetMaxHealth;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSetSkin;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSleep;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSpeak;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenSwing;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenToggleCrouch;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCitizenVulnerablity;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffCreateCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffDeleteCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffDespawnCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffEquipCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffGiveLookCloseTrait;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffSentryFollowDistance;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffSentryProtect;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffSentryStopFollow;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffSetCitizenName;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffSpawnCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizeneffects.EffStartBuilderBuild;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprBottomRightSchematic;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprCitizenIdFromEntity;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprGeneralCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprLastCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprNameOfCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprOwnerOfCitizen;
-import net.rayfall.eyesniper2.skrayfall.citizenexpressions.ExprTopLeftSchematic;
+import net.rayfall.eyesniper2.skrayfall.citizeneffects.*;
+import net.rayfall.eyesniper2.skrayfall.citizenexpressions.*;
 import net.rayfall.eyesniper2.skrayfall.commands.GeneralCommands;
 import net.rayfall.eyesniper2.skrayfall.coreprotect.CondIsNaturalCoreProtect;
 import net.rayfall.eyesniper2.skrayfall.coreprotect.CondIsNotNaturalCoreProtect;
@@ -92,84 +40,14 @@ import net.rayfall.eyesniper2.skrayfall.crackshoteffects.EffPlaceMine;
 import net.rayfall.eyesniper2.skrayfall.crackshotevents.EvtScope;
 import net.rayfall.eyesniper2.skrayfall.crackshotevents.EvtUnscope;
 import net.rayfall.eyesniper2.skrayfall.crackshotexpressions.ExprCrackShotWeapon;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffDeleteEffect;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibAnimatedBallEffect;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibArc;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibAtom;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibBleed;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibCircle;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibLine;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibText;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectLibWave;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.EffEffectTornado;
-import net.rayfall.eyesniper2.skrayfall.effectlibsupport.RayFallEffectManager;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffFakeFakeLightning;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffMakePlayerGlow;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffMaxHealth;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffPlayResourcePackSound;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffPlaySoundPacket;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffSetMetaData;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffSetPlayerListName;
-import net.rayfall.eyesniper2.skrayfall.generaleffects.EffUnglowPlayer;
-import net.rayfall.eyesniper2.skrayfall.generalevents.ArmorStandDamageEvent;
-import net.rayfall.eyesniper2.skrayfall.generalevents.ArmorStandListener;
-import net.rayfall.eyesniper2.skrayfall.generalevents.EvtCraftClick;
-import net.rayfall.eyesniper2.skrayfall.generalevents.StoreEvent;
-import net.rayfall.eyesniper2.skrayfall.generalevents.StoreListener;
-import net.rayfall.eyesniper2.skrayfall.generalevents.UnstoreEvent;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprAbsoluteInventoryCount;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprArmorValue;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprMetaData;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprNoNbt;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprNumberOfEnchants;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprPlayerGlowing;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprRayfallOffhand;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprShinyItem;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprSpecificEnchantIndex;
-import net.rayfall.eyesniper2.skrayfall.generalexpressions.ExprTextToLocation;
-import net.rayfall.eyesniper2.skrayfall.holograms.CondHologramExists;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffBoundClientSideHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffBoundHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffCreateInteractiveStaticClientSideHolograms;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffCreateInteractiveStaticHolograms;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffCreateStaticClientHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffCreateStaticHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffDeleteHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffDeleteHoloObjectLine;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffEditHoloObject;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffEditHoloObjectLine;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffTimedBindedHolo;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffTimedClientSideHolo;
-import net.rayfall.eyesniper2.skrayfall.holograms.EffTimedHologram;
-import net.rayfall.eyesniper2.skrayfall.holograms.ExprGetHoloLine;
-import net.rayfall.eyesniper2.skrayfall.holograms.HoloManager;
-import net.rayfall.eyesniper2.skrayfall.holograms.HoloPickupEvent;
-import net.rayfall.eyesniper2.skrayfall.holograms.HoloTouchEvent;
+import net.rayfall.eyesniper2.skrayfall.effectlibsupport.*;
+import net.rayfall.eyesniper2.skrayfall.generaleffects.*;
+import net.rayfall.eyesniper2.skrayfall.generalevents.*;
+import net.rayfall.eyesniper2.skrayfall.generalexpressions.*;
+import net.rayfall.eyesniper2.skrayfall.holograms.*;
 import net.rayfall.eyesniper2.skrayfall.particles.EffClientsideStaticParticles;
 import net.rayfall.eyesniper2.skrayfall.particles.EffStaticParticles;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.CondisScoreboardSet;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffAddPlayerToGroupId;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffCreateGroupIdScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffDeleteIdScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffDeleteScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffEditGroupIdScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffEditIdScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffNameOfScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffRemovePlayerFromIdScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffRemoveScoreBelowName;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffRemoveScoreTab;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffRemoveScoreboard;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffSetIdBasedScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffSetScore;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffSetScoreBelowName;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.EffSetScoreTab;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.ExprScoreBoardTitle;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.ExprScoreNameFromGroupId;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.ExprScoreNameFromId;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.ExprScoreValueFromGroupId;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.ExprScoreValueFromId;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.IdScoreBoardManager;
-import net.rayfall.eyesniper2.skrayfall.scoreboard.RemoveGroupIdScore;
+import net.rayfall.eyesniper2.skrayfall.scoreboard.*;
 import net.rayfall.eyesniper2.skrayfall.teams.TeamManager;
 import net.rayfall.eyesniper2.skrayfall.v1_10.EffActionBarV1_10;
 import net.rayfall.eyesniper2.skrayfall.v1_10.EffParticlesV1_10;
@@ -179,6 +57,10 @@ import net.rayfall.eyesniper2.skrayfall.v1_11.EffActionBarV1_11;
 import net.rayfall.eyesniper2.skrayfall.v1_11.EffParticlesV1_11;
 import net.rayfall.eyesniper2.skrayfall.v1_11.EffTabTitlesV1_11;
 import net.rayfall.eyesniper2.skrayfall.v1_11.EffTitleV1_11;
+import net.rayfall.eyesniper2.skrayfall.v1_12.EffActionBarV1_12;
+import net.rayfall.eyesniper2.skrayfall.v1_12.EffParticlesV1_12;
+import net.rayfall.eyesniper2.skrayfall.v1_12.EffTabTitlesV1_12;
+import net.rayfall.eyesniper2.skrayfall.v1_12.EffTitleV1_12;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffActionBarV1_8;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffParticlesV1_8;
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffTabTitlesV1_8;
@@ -203,7 +85,7 @@ import net.rayfall.eyesniper2.skrayfall.voting.RayFallOfflineVoteEvent;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteEvent;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteListener;
 import net.rayfall.eyesniper2.skrayfall.voting.RayFallVoteReceivedEvent;
-
+import org.bstats.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -222,9 +104,6 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team.OptionStatus;
 import org.eclipse.jdt.annotation.Nullable;
-import org.mcstats.Metrics;
-
-import java.io.IOException;
 
 @SuppressWarnings("deprecation")
 public class Core extends JavaPlugin implements Listener {
@@ -250,13 +129,9 @@ public class Core extends JavaPlugin implements Listener {
       plugin = this;
     }
     getLogger().info("Cooking Bacon...");
-    try {
-      Metrics metrics = new Metrics(this);
-      metrics.start();
-    } catch (IOException exception) {
-      getLogger().info("MCStats had an issue :/ " + exception.getMessage()
-          + "This will not affect anything. *Server gets moar bacon*");
-    }
+
+    Metrics metrics = new Metrics(this);
+
     if (Skript.isAcceptRegistrations()) {
       regesterElements();
       if (Bukkit.getVersion().contains("1.9") || Bukkit.getVersion().contains("1.10")
@@ -296,7 +171,7 @@ public class Core extends JavaPlugin implements Listener {
           "(set|make) citizen[s] %number% max health [to] %number%");
       // doesn't work
       Skript.registerEffect(EffCitizenNameVisable.class,
-          "(set|make) citizen[s] %number% nametag (1¦invisible|0¦visible)");
+          "(set|make) citizen[s] %number% nametag (1ï¿½invisible|0ï¿½visible)");
       Skript.registerEffect(EffCitizenLookTarget.class, "make citizen %number% look at %location%");
       Skript.registerEffect(EffCitizenAttack.class,
           "make citizen %number% (attack|fight) %entity%");
@@ -305,7 +180,7 @@ public class Core extends JavaPlugin implements Listener {
       Skript.registerEffect(EffGiveLookCloseTrait.class,
           "(give|set) npc %number% the look close trait");
       Skript.registerEffect(EffCitizenVulnerablity.class,
-          "make citizen %number% (1¦invulnerable|0¦vulnerable)");
+          "make citizen %number% (1ï¿½invulnerable|0ï¿½vulnerable)");
       Skript.registerEffect(EffCitizenSleep.class,
           "(make|force) (npc|citizen) with id %number% to sleep",
           "(make|force) (npc|citizen) with id %number% to wake [up]");
@@ -1076,6 +951,19 @@ public class Core extends JavaPlugin implements Listener {
       Skript.registerEffect(EffTabTitlesV1_11.class,
           "set tab header to %string% and footer to %string% for %player%");
     }
+    if (Bukkit.getVersion().contains("MC: 1.12")) {
+          getLogger().info("Getting the extra special 1.12 bacon!");
+          Skript.registerEffect(EffTitleV1_12.class,
+                  "send %players% title %string% [with subtitle %-string%] [for %-timespan%] "
+                          + "[with %-timespan% fade in and %-timespan% fade out]");
+          Skript.registerEffect(EffParticlesV1_12.class,
+                  "show %number% %string% particle[s] at %location% for %player% "
+                          + "[offset by %number%, %number%( and|,) %number%]");
+          Skript.registerEffect(EffActionBarV1_12.class, "set action bar of %players% to %string%",
+                  "set %player%['s] action bar to %string%");
+          Skript.registerEffect(EffTabTitlesV1_12.class,
+                  "set tab header to %string% and footer to %string% for %player%");
+      }
     enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
     if (this.getConfig().getBoolean("UpdateAlerts", false)) {
       Updater updater =

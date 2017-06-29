@@ -21,13 +21,13 @@
 					<artifactSet>
 						<includes>
 							<include>net.gravitydevelopment.updater:updater</include>
-							<include>org.mcstats.*:*</include>
 							<include>de.slikey</include>
+                            <include>org.bstats:*</include>
 						</includes>
 					</artifactSet>
 					<relocations>
 						<relocation>
-							<pattern>org.mcstats</pattern>
+                            <pattern>org.bstats</pattern>
 							<shadedPattern>net.rayfall.eyesniper2.skRayFall</shadedPattern>
 						</relocation>
 						<relocation>
@@ -60,10 +60,10 @@
 			<id>citizensapi-repo</id>
 			<url>http://repo.citizensnpcs.co/</url>
 		</repository>
-		<repository>
-			<id>Plugin Metrics</id>
-			<url>http://repo.mcstats.org/content/repositories/public</url>
-		</repository>
+        <repository>
+            <id>bstats-repo</id>
+            <url>http://repo.bstats.org/content/repositories/releases/</url>
+        </repository>
 		<repository>
 			<id>elmakers-repo</id>
 			<url>http://maven.elmakers.com/repository/</url>
@@ -91,19 +91,18 @@
 		<dependency>
 			<groupId>net.citizensnpcs</groupId>
 			<artifactId>citizensapi</artifactId>
-			<version>2.0.17-SNAPSHOT</version>
+			<version>2.0.22-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mcstats.bukkit</groupId>
-			<artifactId>metrics</artifactId>
-			<version>R8-SNAPSHOT</version>
-			<scope>compile</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>1.1</version>
+        </dependency>
 		<dependency>
 			<groupId>de.slikey</groupId>
 			<artifactId>effectlib</artifactId>
-			<version>5.0</version>
+			<version>5.4</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
@@ -123,7 +122,7 @@
 			<artifactId>citizensnpcs</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/libs/citizens-2.0.16-SNAPSHOT.jar</systemPath>
+			<systemPath>${project.basedir}/libs/citizens-2.0.22-SNAPSHOT.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>ch.njol</groupId>
@@ -196,6 +195,13 @@
             <systemPath>${project.basedir}/libs/spigot-1.11.jar</systemPath>
         </dependency>
 		<dependency>
+			<groupId>org.spigotmc</groupId>
+			<artifactId>spigotV1_12</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/spigot-1.12.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>net.aufdemrand</groupId>
 			<artifactId>sentry</artifactId>
 			<version>1.0</version>
@@ -225,7 +231,7 @@
 		<dependency>
 		    <groupId>org.inventivetalent</groupId>
 		    <artifactId>bossbarapi</artifactId>
-		    <version>2.3.8</version>
+		    <version>2.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>tfw.Capes.General</groupId>
@@ -247,5 +253,5 @@
 			<version>1.1.0</version>
 		</dependency>
 	</dependencies>
-	<version>1.9.7</version>
+	<version>1.9.9</version>
 </project>
