@@ -55,7 +55,7 @@ public class EffEffectLibText extends Effect {
       }
       text.infinite();
       text.start();
-      Boolean check = Core.effLibManager.setEffect(text, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(text, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         text.cancel();
       }
@@ -68,7 +68,7 @@ public class EffEffectLibText extends Effect {
       }
       text.infinite();
       text.start();
-      Boolean check = Core.effLibManager.setEffect(text, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(text, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         text.cancel();
       }

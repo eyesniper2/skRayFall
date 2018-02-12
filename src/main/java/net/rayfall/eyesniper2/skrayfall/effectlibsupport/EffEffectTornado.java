@@ -66,7 +66,7 @@ public class EffEffectTornado extends Effect {
       }
       effect.infinite();
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }
@@ -86,7 +86,7 @@ public class EffEffectTornado extends Effect {
       }
       effect.infinite();
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }

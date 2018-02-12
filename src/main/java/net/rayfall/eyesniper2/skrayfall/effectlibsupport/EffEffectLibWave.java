@@ -50,7 +50,7 @@ public class EffEffectLibWave extends Effect {
       }
       effect.infinite();
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }
@@ -61,7 +61,7 @@ public class EffEffectLibWave extends Effect {
         effect.particle = particle.getSingle(evt);
       }
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }

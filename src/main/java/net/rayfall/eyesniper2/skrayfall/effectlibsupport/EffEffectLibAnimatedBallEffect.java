@@ -67,7 +67,7 @@ public class EffEffectLibAnimatedBallEffect extends Effect {
     }
     effect.infinite();
     effect.start();
-    Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+    Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
     if (!check) {
       effect.cancel();
     }

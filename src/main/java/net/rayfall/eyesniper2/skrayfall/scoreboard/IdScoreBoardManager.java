@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -19,7 +20,7 @@ public class IdScoreBoardManager implements Listener {
   private HashMap<String, ArrayList<Player>> groupMap = new HashMap<String, ArrayList<Player>>();
   private HashMap<String, GroupScore> groupScoreMap = new HashMap<String, GroupScore>();
 
-  public IdScoreBoardManager(Core core) {
+  public IdScoreBoardManager(Plugin core) {
     core.getServer().getPluginManager().registerEvents(this, core);
   }
 

@@ -1,5 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.bossbar;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -9,6 +11,18 @@ import net.rayfall.eyesniper2.skrayfall.Core;
 
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
+
+@Name("Bossbars - Add flag")
+@Description("Adds a flag to a bossbar\n" +
+        "\n" +
+        "Flags:\n" +
+        "\n" +
+        "CREATE_FOG\n" +
+        "Creates fog around the world.\n" +
+        "DARKEN_SKY\n" +
+        "Darkens the sky like during fighting a wither.\n" +
+        "PLAY_BOSS_MUSIC\n" +
+        "Tells the client to play the Ender Dragon boss music.")
 
 public class EffBossBarAddFlag extends Effect {
 

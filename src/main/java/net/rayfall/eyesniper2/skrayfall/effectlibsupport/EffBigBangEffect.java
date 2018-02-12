@@ -45,7 +45,7 @@ public class EffBigBangEffect extends Effect {
       effect.setDynamicOrigin(new DynamicLocation((Entity) tar));
       effect.infinite();
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }
@@ -53,7 +53,7 @@ public class EffBigBangEffect extends Effect {
       effect.setDynamicOrigin(new DynamicLocation((Location) tar));
       effect.infinite();
       effect.start();
-      Boolean check = Core.effLibManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+      Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
       if (!check) {
         effect.cancel();
       }

@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Collection;
 
@@ -21,7 +22,7 @@ public class RayFallVoteListener implements Listener {
 
   private static Multimap<String, OfflineVote> voteMap = HashMultimap.create();
 
-  public RayFallVoteListener(Core core) {
+  public RayFallVoteListener(Plugin core) {
     core.getServer().getPluginManager().registerEvents(this, core);
   }
 

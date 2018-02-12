@@ -40,5 +40,4 @@ public class CondIsNaturalCoreProtect extends Condition {
     }
 
   }
-
 }

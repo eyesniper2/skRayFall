@@ -30,7 +30,7 @@ public class EffDeleteEffect extends Effect {
 
   @Override
   protected void execute(Event evt) {
-    Core.effLibManager.deleteEffect(id.getSingle(evt).replace("\"", ""));
+    Core.rayfallEffectManager.deleteEffect(id.getSingle(evt).replace("\"", ""));
   }
 
 }

@@ -1,5 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.bossbar;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -10,7 +12,8 @@ import net.rayfall.eyesniper2.skrayfall.Core;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-
+@Name("Hide BossBar")
+@Description("Hide a ID based Bossbar.")
 public class EffBossBarHide extends Effect {
 
   // hide bossbar %string%
