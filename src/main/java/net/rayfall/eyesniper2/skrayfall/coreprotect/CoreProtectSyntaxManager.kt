@@ -21,5 +21,4 @@ class CoreProtectSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             }
         }
     }
-
 }

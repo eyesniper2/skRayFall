@@ -16,26 +16,26 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Hide a ID based Bossbar.")
 public class EffBossBarHide extends Effect {
 
-  // hide bossbar %string%
+    // hide bossbar %string%
 
-  private Expression<String> id;
+    private Expression<String> id;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    id = (Expression<String>) exp[0];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
-
-  @Override
-  protected void execute(Event evt) {
-    if (id != null) {
-      Core.bossbarManager.hideBar(id.getSingle(evt).replace("\"", ""));
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        id = (Expression<String>) exp[0];
+        return true;
     }
-  }
+
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
+
+    @Override
+    protected void execute(Event evt) {
+        if (id != null) {
+            Core.bossbarManager.hideBar(id.getSingle(evt).replace("\"", ""));
+        }
+    }
 }

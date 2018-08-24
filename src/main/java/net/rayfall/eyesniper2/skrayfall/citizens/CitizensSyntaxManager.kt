@@ -34,7 +34,7 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             Skript.registerEffect(EffEquipCitizen::class.java,
                     "(equip|give) citizen %number% with [an] %itemstack%")
             Skript.registerEffect(EffCitizenHold::class.java, "make citizen %number% hold [an] %itemstack%")
-            Skript.registerEffect(EffSpawnCitizen::class.java,
+            Skript.registerEffect(EffRespawnCitizen::class.java,
                     "respawn citizen %number% (at|%direction%) %location%")
             Skript.registerEffect(EffDeleteCitizen::class.java, "(remove|destroy) citizen %number%")
             Skript.registerEffect(EffCitizenSpeak::class.java,
@@ -44,7 +44,7 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             Skript.registerEffect(EffCitizenSetMaxHealth::class.java,
                     "(set|make) citizen[s] %number% max health [to] %number%")
             // doesn't work
-            Skript.registerEffect(EffCitizenNameVisable::class.java,
+            Skript.registerEffect(EffCitizenNameVisible::class.java,
                     "(set|make) citizen[s] %number% nametag (1¦invisible|0¦visible)")
             Skript.registerEffect(EffCitizenLookTarget::class.java, "make citizen %number% look at %location%")
             Skript.registerEffect(EffCitizenAttack::class.java,
@@ -55,14 +55,14 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     "(give|set) npc %number% the look close trait")
             Skript.registerEffect(EffRemoveLookCloseTrait::class.java,
                     "remove npc %number%['s] look close trait")
-            Skript.registerEffect(EffCitizenVulnerablity::class.java,
+            Skript.registerEffect(EffCitizenVulnerability::class.java,
                     "make citizen %number% (1¦invulnerable|0¦vulnerable)")
             Skript.registerEffect(EffCitizenSleep::class.java,
                     "(make|force) (npc|citizen) with id %number% to sleep",
                     "(make|force) (npc|citizen) with id %number% to wake [up]")
             Skript.registerEffect(EffCitizenSetCrouch::class.java,
                     "(set|make) citizen %number% [to] [be] crouch[ed]",
-                    "(set|make) citizen %number% [to] [be] uncrouch[ed]")
+                    "(set|make) citizen %number% [to] [be] (uncrouch[ed]|standing)")
             Skript.registerEffect(EffCitizenToggleCrouch::class.java, "toggle citizen %number%['s] crouch")
             Skript.registerEffect(EffCitizenSwing::class.java, "make citizen %number% swing [arm]")
             Skript.registerExpression(ExprLastCitizen::class.java, Number::class.java, ExpressionType.SIMPLE,

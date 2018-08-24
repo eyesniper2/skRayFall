@@ -13,30 +13,28 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class EffAddPlayersToTeam extends Effect {
 
-  // (add|place) %players% on [to] team %string%
+    // (add|place) %players% on [to] team %string%
 
-  private Expression<Player> players;
-  private Expression<String> team;
+    private Expression<Player> players;
+    private Expression<String> team;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    players = (Expression<Player>) exp[0];
-    team = (Expression<String>) exp[1];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
-
-  @Override
-  protected void execute(Event evt) {
-    if (players != null && team != null) {
-      Core.teamManager.addPlayesrToTeam(team.getSingle(evt).replace("\"", ""), players.getAll(evt));
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        players = (Expression<Player>) exp[0];
+        team = (Expression<String>) exp[1];
+        return true;
     }
 
-  }
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
 
+    @Override
+    protected void execute(Event evt) {
+        if (players != null && team != null) {
+            Core.teamManager.addPlayesrToTeam(team.getSingle(evt).replace("\"", ""), players.getAll(evt));
+        }
+    }
 }

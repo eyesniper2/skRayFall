@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.50'
     repositories {
         mavenCentral()
     }
@@ -22,7 +22,7 @@ apply plugin: 'java'
 apply plugin: "kotlin"
 
 group = 'net.rayfall.eyesniper2.skrayfall'
-version = '1.9.11'
+version = '1.9.13'
 
 description = """"""
 
@@ -31,31 +31,35 @@ targetCompatibility = 1.7
 
 
 repositories {
+     jcenter()
      maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots" }
+     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
      maven { url "http://repo.citizensnpcs.co/" }
      maven { url "http://repo.bstats.org/content/repositories/releases/" }
      maven { url "http://maven.elmakers.com/repository/" }
      maven { url "http://repo1.maven.org/maven2/" }
      maven { url "http://repo.gravitydevelopment.net" }
      maven { url "https://repo.inventivetalent.org/content/groups/public/" }
-     maven { url "https://raw.githubusercontent.com/bensku/mvn-repo/master" }
+     maven { url 'https://repo.destroystokyo.com/repository/maven-public/' }
+     maven { url 'https://jitpack.io' }
 }
 
 dependencies {
 
+    implementation 'com.github.SkriptLang:Skript:dev37c'
+
     compile group: 'org.bstats', name: 'bstats-bukkit', version:'1.1'
-    compile group: 'de.slikey', name: 'EffectLib', version:'5.5'
+    compile group: 'de.slikey', name: 'EffectLib', version:'5.9'
+
     compile group: 'net.gravitydevelopment.updater', name: 'updater', version:'2.4'
-    compileOnly (group: 'ch.njol', name: 'skript', version: '2.2-dev33'){
-        transitive = false
-    }
+
     compileOnly group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version:'1.1.0'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version:'1.2.21'
+    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jre8', version:"$kotlin_version"
 
-    testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version:'1.2.21'
+    testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version:"$kotlin_version"
 
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version:'1.12.2-R0.1-SNAPSHOT'
-    compileOnly group: 'org.bukkit', name: 'bukkit', version:'1.12.2-R0.1-SNAPSHOT'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version:'1.13-R0.1-SNAPSHOT'
+    compileOnly group: 'org.bukkit', name: 'bukkit', version:'1.13-R0.1-SNAPSHOT'
     compileOnly group: 'org.inventivetalent', name: 'bossbarapi', version:'2.4.1'
     compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version:'2.0.22-SNAPSHOT'
 
@@ -70,8 +74,8 @@ shadowJar {
     dependencies {
         include dependency('net.gravitydevelopment.updater:updater')
         include dependency('org.bstats:bstats-bukkit')
-        include dependency('de.slikey:EffectLib:5.5')
-        include dependency('org.jetbrains.kotlin:kotlin-stdlib:1.2.21')
+        include dependency('de.slikey:EffectLib:5.9')
+        include dependency("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     }
     configurations = [project.configurations.compile]
     relocate 'org.bstats', 'net.rayfall.eyesniper2.skRayFall'

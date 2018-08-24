@@ -10,20 +10,19 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class EffTeamNameTagVisibility extends Effect {
 
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    return false;
-  }
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        return false;
+    }
 
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
 
-    return null;
-  }
+        return null;
+    }
 
-  @Override
-  protected void execute(Event evt) {
+    @Override
+    protected void execute(Event evt) {
 
-  }
-
+    }
 }

@@ -18,5 +18,4 @@ class BossBarApiSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     "bossbar of %player%")
         }
     }
-
 }

@@ -1,5 +1,8 @@
 package net.rayfall.eyesniper2.skrayfall.capes;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -13,30 +16,33 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import tfw.Capes.General.Capes;
 
+@Name("Set Cape")
+@Description("Give the player a cape. The Item stack in this effect MUST be a banner.")
+@RequiredPlugins("Capes")
 public class EffWearCape extends Effect {
-  // make %player% wear cape %itemstack%
+    // make %player% wear cape %itemstack%
 
-  private Expression<ItemStack> item;
-  private Expression<Player> player;
+    private Expression<ItemStack> item;
+    private Expression<Player> player;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    player = (Expression<Player>) exp[0];
-    item = (Expression<ItemStack>) exp[1];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
-
-  @Override
-  protected void execute(Event evt) {
-    if (player != null && item != null
-        && item.getSingle(evt).getData().getItemType().equals(Material.BANNER)) {
-      Capes.equipCape(player.getSingle(evt), item.getSingle(evt));
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        player = (Expression<Player>) exp[0];
+        item = (Expression<ItemStack>) exp[1];
+        return true;
     }
-  }
+
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
+
+    @Override
+    protected void execute(Event evt) {
+        if (player != null && item != null
+                && item.getSingle(evt).getData().getItemType().toString().contains("BANNER")) {
+            Capes.equipCape(player.getSingle(evt), item.getSingle(evt));
+        }
+    }
 }

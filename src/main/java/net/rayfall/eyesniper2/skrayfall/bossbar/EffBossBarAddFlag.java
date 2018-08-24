@@ -12,40 +12,30 @@ import net.rayfall.eyesniper2.skrayfall.Core;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
-@Name("Bossbars - Add flag")
-@Description("Adds a flag to a bossbar\n" +
-        "\n" +
-        "Flags:\n" +
-        "\n" +
-        "CREATE_FOG\n" +
-        "Creates fog around the world.\n" +
-        "DARKEN_SKY\n" +
-        "Darkens the sky like during fighting a wither.\n" +
-        "PLAY_BOSS_MUSIC\n" +
-        "Tells the client to play the Ender Dragon boss music.")
-
+@Name("Add/Set Bossbar Flag")
+@Description("Add a flag to a ID based Bossbar.")
 public class EffBossBarAddFlag extends Effect {
 
-  // (add|set)[a|the] flag %bossbarflags% to bossbar %string%
+    // (add|set)[a|the] flag %bossbarflags% to bossbar %string%
 
-  private Expression<RayFallBarFlag> flag;
-  private Expression<String> id;
+    private Expression<RayFallBarFlag> flag;
+    private Expression<String> id;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    flag = (Expression<RayFallBarFlag>) exp[0];
-    id = (Expression<String>) exp[1];
-    return true;
-  }
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        flag = (Expression<RayFallBarFlag>) exp[0];
+        id = (Expression<String>) exp[1];
+        return true;
+    }
 
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
 
-  @Override
-  protected void execute(Event evt) {
-    Core.bossbarManager.addFlag(id.getSingle(evt).replace("\"", ""), flag.getSingle(evt).getKey());
-  }
+    @Override
+    protected void execute(Event evt) {
+        Core.bossbarManager.addFlag(id.getSingle(evt).replace("\"", ""), flag.getSingle(evt).getKey());
+    }
 }

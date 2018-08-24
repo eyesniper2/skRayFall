@@ -35,111 +35,111 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Core extends JavaPlugin implements Listener {
 
-  public static EffectManager effectManager;
-  public static Plugin plugin = null;
-  public static RayFallEffectManager rayfallEffectManager;
-  public static IdScoreBoardManager sbManager;
-  public boolean enableFastScoreboards = true;
-  public static CoreProtectAPI skCoreProtect = null;
-  public static TeamManager teamManager;
-  public static BossBarManager bossbarManager;
+    public static EffectManager effectManager;
+    public static Plugin plugin = null;
+    public static RayFallEffectManager rayfallEffectManager;
+    public static IdScoreBoardManager sbManager;
+    public boolean enableFastScoreboards = true;
+    public static CoreProtectAPI skCoreProtect = null;
+    public static TeamManager teamManager;
+    public static BossBarManager bossbarManager;
 
-  @Override
-  public void onEnable() {
-    getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!");
-    getLogger().info("Nathan and Lewis <3 you.");
+    @Override
+    public void onEnable() {
+        getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!");
+        getLogger().info("Nathan and Lewis <3 you.");
 
-    getServer().getPluginManager().registerEvents(this, this);
-    Skript.registerAddon(this);
-    saveDefaultConfig();
+        getServer().getPluginManager().registerEvents(this, this);
+        Skript.registerAddon(this);
+        saveDefaultConfig();
 
-    this.getCommand("skrayfall").setExecutor(new GeneralCommands(this));
-    if (plugin == null) {
-      plugin = this;
+        this.getCommand("skrayfall").setExecutor(new GeneralCommands(this));
+        if (plugin == null) {
+            plugin = this;
+        }
+
+        getLogger().info("Cooking Bacon...");
+
+        Metrics metrics = new Metrics(this);
+
+        // Register all types
+        TypeManager typeManager = new TypeManager(this);
+        typeManager.registerSyntax();
+
+        CitizensSyntaxManager citizensSyntaxManager = new CitizensSyntaxManager(this);
+        citizensSyntaxManager.registerSyntax();
+
+        EffectLibSyntaxManager effectLibSyntaxManager = new EffectLibSyntaxManager(this);
+        effectLibSyntaxManager.registerSyntax();
+        effectManager = effectLibSyntaxManager.getEffectManager();
+        rayfallEffectManager = effectLibSyntaxManager.getRayfallEffectManager();
+
+        VotifierSyntaxManager votifierSyntaxManager = new VotifierSyntaxManager(this);
+        votifierSyntaxManager.registerSyntax();
+
+        HologramSyntaxManager hologramSyntaxManager = new HologramSyntaxManager(this);
+        hologramSyntaxManager.registerSyntax();
+
+        CrackshotSyntaxManager crackshotSyntaxManager = new CrackshotSyntaxManager(this);
+        crackshotSyntaxManager.registerSyntax();
+
+        BossBarApiSyntaxManager bossBarApiSyntaxManager = new BossBarApiSyntaxManager(this);
+        bossBarApiSyntaxManager.registerSyntax();
+
+        CapesSyntaxManager capesSyntaxManager = new CapesSyntaxManager(this);
+        capesSyntaxManager.registerSyntax();
+
+        CoreProtectSyntaxManager coreProtectSyntaxManager = new CoreProtectSyntaxManager(this);
+        coreProtectSyntaxManager.registerSyntax();
+        skCoreProtect = coreProtectSyntaxManager.getSkCoreProtect();
+
+        ScoreboardSyntaxManager scoreboardSyntaxManager = new ScoreboardSyntaxManager(this);
+        scoreboardSyntaxManager.registerSyntax();
+        sbManager = scoreboardSyntaxManager.getIdScoreBoardManager();
+
+        GeneralSyntaxManager generalSyntaxManager = new GeneralSyntaxManager(this);
+        generalSyntaxManager.registerSyntax();
+
+        VersionedGeneralSyntaxManager versionedGeneralSyntaxManager = new VersionedGeneralSyntaxManager(this);
+        versionedGeneralSyntaxManager.registerSyntax();
+        bossbarManager = versionedGeneralSyntaxManager.getBossbarManager();
+
+        enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
+        if (getConfig().getBoolean("UpdateAlerts", false)) {
+            Updater updater =
+                    new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
+            if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+                getServer().getConsoleSender().sendMessage("[" + ChatColor.DARK_AQUA + "skRayFall"
+                        + ChatColor.RESET + "] " + ChatColor.RED + "An update for skRayFall is available!");
+            }
+        }
+        getLogger().info("Bacon is ready!");
     }
 
-    getLogger().info("Cooking Bacon...");
-
-    Metrics metrics = new Metrics(this);
-
-    // Register all types
-    TypeManager typeManager = new TypeManager(this);
-    typeManager.registerSyntax();
-
-    CitizensSyntaxManager citizensSyntaxManager = new CitizensSyntaxManager(this);
-    citizensSyntaxManager.registerSyntax();
-
-    EffectLibSyntaxManager effectLibSyntaxManager = new EffectLibSyntaxManager(this);
-    effectLibSyntaxManager.registerSyntax();
-    effectManager = effectLibSyntaxManager.getEffectManager();
-    rayfallEffectManager = effectLibSyntaxManager.getRayfallEffectManager();
-
-    VotifierSyntaxManager votifierSyntaxManager = new VotifierSyntaxManager(this);
-    votifierSyntaxManager.registerSyntax();
-
-    HologramSyntaxManager hologramSyntaxManager = new HologramSyntaxManager(this);
-    hologramSyntaxManager.registerSyntax();
-
-    CrackshotSyntaxManager crackshotSyntaxManager = new CrackshotSyntaxManager(this);
-    crackshotSyntaxManager.registerSyntax();
-
-    BossBarApiSyntaxManager bossBarApiSyntaxManager = new BossBarApiSyntaxManager(this);
-    bossBarApiSyntaxManager.registerSyntax();
-
-    CapesSyntaxManager capesSyntaxManager = new CapesSyntaxManager(this);
-    capesSyntaxManager.registerSyntax();
-
-    CoreProtectSyntaxManager coreProtectSyntaxManager = new CoreProtectSyntaxManager(this);
-    coreProtectSyntaxManager.registerSyntax();
-    skCoreProtect = coreProtectSyntaxManager.getSkCoreProtect();
-
-    ScoreboardSyntaxManager scoreboardSyntaxManager = new ScoreboardSyntaxManager(this);
-    scoreboardSyntaxManager.registerSyntax();
-    sbManager = scoreboardSyntaxManager.getIdScoreBoardManager();
-
-    GeneralSyntaxManager generalSyntaxManager = new GeneralSyntaxManager(this);
-    generalSyntaxManager.registerSyntax();
-
-    VersionedGeneralSyntaxManager versionedGeneralSyntaxManager = new VersionedGeneralSyntaxManager(this);
-    versionedGeneralSyntaxManager.registerSyntax();
-
-    enableFastScoreboards = this.getConfig().getBoolean("enableFastScoreBoards");
-    if (getConfig().getBoolean("UpdateAlerts", false)) {
-      Updater updater =
-          new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
-      if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
-        getServer().getConsoleSender().sendMessage("[" + ChatColor.DARK_AQUA + "skRayFall"
-            + ChatColor.RESET + "] " + ChatColor.RED + "An update for skRayFall is available!");
-      }
+    @Override
+    public void onDisable() {
+        getLogger().info("Bacon has been eaten. Make some more soon!");
+        HoloManager.dumpHoloMap();
+        rayfallEffectManager.dumpData();
+        sbManager.dumpData();
+        if (bossbarManager != null) {
+            bossbarManager.dumpData();
+        }
     }
-    getLogger().info("Bacon is ready!");
-  }
 
-  @Override
-  public void onDisable() {
-    getLogger().info("Bacon has been eaten. Make some more soon!");
-    HoloManager.dumpHoloMap();
-    rayfallEffectManager.dumpData();
-    sbManager.dumpData();
-    if (bossbarManager != null) {
-      bossbarManager.dumpData();
+    /**
+     * Generates a new private scoreboard for the player when they join the server if
+     * enableFastScoreboards is set to true.
+     *
+     * @param evt The Player Join Event
+     */
+    @EventHandler
+    public void onJoinScoreboards(PlayerJoinEvent evt) {
+        if (enableFastScoreboards) {
+            Player player = evt.getPlayer();
+            ScoreboardManager manager = Bukkit.getScoreboardManager();
+            Scoreboard board = manager.getNewScoreboard();
+            player.setScoreboard(board);
+        }
     }
-  }
-  
-  /**
-   * Generates a new private scoreboard for the player when they join the server if
-   * enableFastScoreboards is set to true.
-   * 
-   *
-   * @param evt The Player Join Event
-   */
-  @EventHandler
-  public void onJoinScoreboards(PlayerJoinEvent evt) {
-    if (enableFastScoreboards) {
-      Player player = evt.getPlayer();
-      ScoreboardManager manager = Bukkit.getScoreboardManager();
-      Scoreboard board = manager.getNewScoreboard();
-      player.setScoreboard(board);
-    }
-  }
 }

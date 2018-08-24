@@ -13,7 +13,12 @@ class EffectLibSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
     val rayfallEffectManager: RayFallEffectManager = RayFallEffectManager(plugin)
 
     override fun registerSyntax() {
-        plugin.logger.info("Got bacon for the EffectLib partical ninjas!")
+        if (Skript.isRunningMinecraft(1, 13)) {
+            plugin.logger.warning("EffectLib 6.0 for 1.13 is not supported as of right now since it has backwards " +
+                    "breaking changes for users below 1.10")
+            return
+        }
+        plugin.logger.info("Got bacon for the EffectLib particle ninjas!")
         // more stuff and options to be added
         Skript.registerEffect(EffDeleteEffect::class.java, "(delete|stop) (effect|formation) %string%")
         Skript.registerEffect(EffEffectLibAtom::class.java,
@@ -55,5 +60,6 @@ class EffectLibSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
         // Skript.registerEffect(EffEffectLibUpwardsSpiral.class,
         // "(spawn|create|apply) (a|the|an) upward[s] spiral (effect|formation)
         // (at|on|for|to) %entity/location% with id %string%");
+
     }
 }

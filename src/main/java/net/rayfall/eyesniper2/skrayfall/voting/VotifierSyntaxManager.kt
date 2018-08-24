@@ -15,6 +15,12 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             plugin.logger.info("Getting more bacon for the Votifier runners!")
             RayFallVoteListener(plugin)
             Skript.registerEvent("On Vote", SimpleEvent::class.java, RayFallVoteEvent::class.java, "vote[ing]")
+                    .description("Check server vote by:",
+                            "* Player",
+                            "* Website",
+                            "This will be called when someone votes for the server. " +
+                            "Use event-string to return the name of the website they voted on")
+                    .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallVoteEvent::class.java, Player::class.java,
                     object : Getter<Player, RayFallVoteEvent>() {
                         @Nullable
@@ -31,6 +37,13 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     }, 0)
             Skript.registerEvent("On Offline Vote", SimpleEvent::class.java, RayFallOfflineVoteEvent::class.java,
                     "offline vote[ing]")
+                    .description("Check server vote by:",
+                            "* Player",
+                            "* Website",
+                            "This will be called whenever a vote is received by the server but the player is offline." +
+                            "Once the player rejoins the On Vote event will be triggered. Use event-string to return " +
+                            "the name of the website they voted on")
+                    .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallOfflineVoteEvent::class.java, Player::class.java,
                     object : Getter<Player, RayFallOfflineVoteEvent>() {
                         @Nullable
@@ -47,6 +60,12 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     }, 0)
             Skript.registerEvent("On Vote Received", SimpleEvent::class.java, RayFallVoteReceivedEvent::class.java,
                     "[raw ]vote receiv(e|ed)")
+                    .description("Check server vote by:",
+                            "* Player",
+                            "* Website",
+                            "This will be called whenever a vote is received by the server regardless if the player " +
+                            "is online. Use event-string to return the name of the website they voted on")
+                    .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallVoteReceivedEvent::class.java, String::class.java,
                     object : Getter<String, RayFallVoteReceivedEvent>() {
                         @Nullable
@@ -58,5 +77,4 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             plugin.logger.info("No Votifier Found! *Checks oven for finished bacon*")
         }
     }
-
 }

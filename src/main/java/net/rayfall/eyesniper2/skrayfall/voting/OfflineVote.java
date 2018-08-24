@@ -18,6 +18,4 @@ public class OfflineVote {
     return this.time;
   }
 
-
-
 }

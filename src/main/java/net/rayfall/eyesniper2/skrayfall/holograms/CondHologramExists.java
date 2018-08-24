@@ -1,5 +1,8 @@
 package net.rayfall.eyesniper2.skrayfall.holograms;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Condition;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -8,30 +11,32 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Check if Hologram Exists")
+@Description("Check to see if a Hologram/Holo Object exists by ID")
+@RequiredPlugins({"Holographic Displays", "Protocollib"})
 public class CondHologramExists extends Condition {
 
-  private Expression<String> id;
+    private Expression<String> id;
 
-  // (holo object|hologram) %string% exists
+    // (holo object|hologram) %string% exists
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    id = (Expression<String>) exp[0];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
-
-  @Override
-  public boolean check(Event evt) {
-    if (id != null) {
-      return HoloManager.isInHoloMap(id.getSingle(evt).replace("\"", ""));
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        id = (Expression<String>) exp[0];
+        return true;
     }
-    return false;
-  }
 
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
+
+    @Override
+    public boolean check(Event evt) {
+        if (id != null) {
+            return HoloManager.isInHoloMap(id.getSingle(evt).replace("\"", ""));
+        }
+        return false;
+    }
 }

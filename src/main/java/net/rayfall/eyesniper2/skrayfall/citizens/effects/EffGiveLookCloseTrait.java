@@ -1,5 +1,8 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -13,31 +16,35 @@ import net.citizensnpcs.trait.LookClose;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Citizens Look Close Trait")
+@Description("Allow citizens to look at the closest player automatically. " +
+        "This effect is toggleable, so to disable this trait for a citizen run this effect again.")
+@RequiredPlugins("Citizens")
 public class EffGiveLookCloseTrait extends Effect {
 
-  // give npc %number% the look close trait
+    // give npc %number% the look close trait
 
-  private Expression<Number> id;
+    private Expression<Number> id;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    id = (Expression<Number>) exp[0];
-    return true;
-  }
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        id = (Expression<Number>) exp[0];
+        return true;
+    }
 
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
 
-  @Override
-  protected void execute(Event evt) {
-    NPCRegistry registry = CitizensAPI.getNPCRegistry();
-    NPC npc = registry.getById(id.getSingle(evt).intValue());
-    npc.addTrait(LookClose.class);
-    npc.getTrait(LookClose.class).setRealisticLooking(true);
-    npc.getTrait(LookClose.class).toggle();
-  }
+    @Override
+    protected void execute(Event evt) {
+        NPCRegistry registry = CitizensAPI.getNPCRegistry();
+        NPC npc = registry.getById(id.getSingle(evt).intValue());
+        npc.addTrait(LookClose.class);
+        npc.getTrait(LookClose.class).setRealisticLooking(true);
+        npc.getTrait(LookClose.class).toggle();
+    }
 
 }

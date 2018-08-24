@@ -1,5 +1,8 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -15,32 +18,35 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Make Citizen Swing")
+@Description("Force a citizens to play the arm swing animation")
+@RequiredPlugins("Citizens")
 public class EffCitizenSwing extends Effect {
 
-  // make citizen %number% swing
+    // make citizen %number% swing
 
-  private Expression<Number> id;
+    private Expression<Number> id;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    id = (Expression<Number>) exp[0];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return null;
-  }
-
-  @Override
-  protected void execute(Event evt) {
-    NPCRegistry registry = CitizensAPI.getNPCRegistry();
-    NPC npc = registry.getById(id.getSingle(evt).intValue());
-    if (npc != null && npc.getEntity().getType().equals(EntityType.PLAYER)) {
-      PlayerAnimation.ARM_SWING.play((Player) npc.getEntity());
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        id = (Expression<Number>) exp[0];
+        return true;
     }
 
-  }
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return null;
+    }
+
+    @Override
+    protected void execute(Event evt) {
+        NPCRegistry registry = CitizensAPI.getNPCRegistry();
+        NPC npc = registry.getById(id.getSingle(evt).intValue());
+        if (npc != null && npc.getEntity().getType().equals(EntityType.PLAYER)) {
+            PlayerAnimation.ARM_SWING.play((Player) npc.getEntity());
+        }
+
+    }
 
 }

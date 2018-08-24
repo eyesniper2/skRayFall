@@ -1,5 +1,8 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -12,34 +15,40 @@ import net.citizensnpcs.api.npc.NPCRegistry;
 import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
+@Name("Despawn Citizen")
+@Description({"Despawn citizens by:",
+        "* ID",
+        "Unlike delete a citizen this will just kill the NPC you can respawn" +
+        "it back at the created location with the respawn citizen effect."})
+@RequiredPlugins("Citizens")
 public class EffDespawnCitizen extends Effect {
 
-  private Expression<Number> id;
+    private Expression<Number> id;
 
-  @SuppressWarnings("unchecked")
-  @Override
-  public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
-    id = (Expression<Number>) exp[0];
-    return true;
-  }
-
-  @Override
-  public String toString(@Nullable Event arg0, boolean arg1) {
-    return "Despawn NPC with ID: " + id.getSingle(arg0).intValue();
-  }
-
-  @Override
-  protected void execute(Event evt) {
-    NPCRegistry registry = CitizensAPI.getNPCRegistry();
-    if (registry.getById(id.getSingle(evt).intValue()) != null) {
-      try {
-        NPC despawn = registry.getById(id.getSingle(evt).intValue());
-        despawn.despawn(null);
-      } catch (NullPointerException exp) {
-        return;
-      }
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean init(Expression<?>[] exp, int arg1, Kleenean arg2, ParseResult arg3) {
+        id = (Expression<Number>) exp[0];
+        return true;
     }
 
-  }
+    @Override
+    public String toString(@Nullable Event arg0, boolean arg1) {
+        return "Despawn NPC with ID: " + id.getSingle(arg0).intValue();
+    }
+
+    @Override
+    protected void execute(Event evt) {
+        NPCRegistry registry = CitizensAPI.getNPCRegistry();
+        if (registry.getById(id.getSingle(evt).intValue()) != null) {
+            try {
+                NPC despawn = registry.getById(id.getSingle(evt).intValue());
+                despawn.despawn(null);
+            } catch (NullPointerException exp) {
+                return;
+            }
+        }
+
+    }
 
 }

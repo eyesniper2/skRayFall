@@ -9,7 +9,6 @@ class ScoreboardSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
     val idScoreBoardManager: IdScoreBoardManager = IdScoreBoardManager(plugin)
 
-
     override fun registerSyntax() {
         Skript.registerEffect(EffNameOfScore::class.java,
                 "set name of sidebar (of|for) %players% to %string%")
@@ -50,7 +49,7 @@ class ScoreboardSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                 "group score (value|number) (of|from) id %string%")
         Skript.registerExpression(ExprScoreBoardTitle::class.java, String::class.java, ExpressionType.SIMPLE,
                 "sidebar (title|name) for %player%")
-        Skript.registerCondition(CondisScoreboardSet::class.java, "side bar is set for %player%")
+        Skript.registerCondition(CondIsScoreboardSet::class.java, "side bar is set for %player%")
         // Team Support
         //teamManager = new TeamManager();
         //Skript.registerEffect(EffCreateTeam.class,
@@ -61,5 +60,4 @@ class ScoreboardSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
         //Skript.registerEffect(EffSetTeamDisplayName.class,
         //    "set team display names for %string% to %string%");
     }
-
 }
