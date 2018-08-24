@@ -7,13 +7,13 @@ skRayFall
 skRayFall is officially hosted on bukkit and can be downloaded [here](http://dev.bukkit.org/bukkit-plugins/skrayfall/).
 
 ## Documentation
-All documentation for using skRayFall can be found [here](http://www.skunity.com/SkRayFall).
+All documentation for using skRayFall can be found on [Skript Hub](http://skripthub.net/docs/?addon=skRayFall).
 
 ## Description
 skRayFall is an addon for the [Skript language](http://dev.bukkit.org/bukkit-plugins/skript/). Get the bleeding edge tools and features that will help make your server come alive and take it to the next level. Skript is the most popular high level coding language designed for minecraft, allowing you to make awesome features faster and easier then in java.
 
 ## Features
-Currently skRayFall adds over 50 extremely powerful syntax elements to the skript language and bridges many popular plugins into the language. These plugins include:
+Currently skRayFall adds over 100 extremely powerful syntax elements to the skript language and bridges many popular plugins into the language. These plugins include:
 
 * [Citizens](http://dev.bukkit.org/bukkit-plugins/citizens/)
 * [CrackShot](http://dev.bukkit.org/bukkit-plugins/crackshot/)
@@ -50,4 +50,4 @@ A detailed wiki guide will be coming soon on how to set up and build skRayFall i
 This plugin checks Bukkit Dev for updates when it starts up and will let you know about them. This feature can be disabled in the config by setting "UpdateAlerts" to false. If you do not see an option for it please delete your config and restart the server to allow it to reload. Then adjust the settings and restart the server once more.
 
 ## Metrics
-Usage metrics for skRayFall can be found [here](http://mcstats.org/plugin/skRayFall).
+Usage metrics for skRayFall can be found [here](https://bstats.org/plugin/bukkit/skRayFall).
