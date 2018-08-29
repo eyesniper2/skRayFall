@@ -32,6 +32,10 @@ import net.rayfall.eyesniper2.skrayfall.v1_13.EffActionBarV1_13
 import net.rayfall.eyesniper2.skrayfall.v1_13.EffParticlesV1_13
 import net.rayfall.eyesniper2.skrayfall.v1_13.EffTabTitlesV1_13
 import net.rayfall.eyesniper2.skrayfall.v1_13.EffTitleV1_13
+import net.rayfall.eyesniper2.skrayfall.v1_13_1.EffActionBarV1_13_1
+import net.rayfall.eyesniper2.skrayfall.v1_13_1.EffParticlesV1_13_1
+import net.rayfall.eyesniper2.skrayfall.v1_13_1.EffTabTitlesV1_13_1
+import net.rayfall.eyesniper2.skrayfall.v1_13_1.EffTitleV1_13_1
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffActionBarV1_8
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffParticlesV1_8
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffTabTitlesV1_8
@@ -220,7 +224,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffTabTitlesV1_12::class.java,
                     "set tab header to %string% and footer to %string% for %player%")
         }
-        if (Skript.getMinecraftVersion() >= Version(1, 13, 0) && Skript.getMinecraftVersion() < Version(1, 14, 0)) {
+        if (Skript.getMinecraftVersion() >= Version(1, 13, 0) && Skript.getMinecraftVersion() < Version(1, 13, 1)) {
             plugin.logger.info("Getting the extra special 1.13 bacon!")
             Skript.registerEffect(EffTitleV1_13::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
@@ -231,6 +235,16 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffTabTitlesV1_13::class.java,
                     "set tab header to %string% and footer to %string% for %player%")
         }
+        if (Skript.getMinecraftVersion() >= Version(1, 13, 1) && Skript.getMinecraftVersion() < Version(1, 14)) {
+            plugin.logger.info("Getting the extra special 1.13.1 bacon!")
+            Skript.registerEffect(EffTitleV1_13_1::class.java,
+                    "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
+            Skript.registerEffect(EffParticlesV1_13_1::class.java,
+                    "show %number% %string% particle[s] at %location% for %player% " + "[offset by %number%, %number%( and|,) %number%]")
+            Skript.registerEffect(EffActionBarV1_13_1::class.java, "set action bar of %players% to %string%",
+                    "set %player%['s] action bar to %string%")
+            Skript.registerEffect(EffTabTitlesV1_13_1::class.java,
+                    "set tab header to %string% and footer to %string% for %player%")
+        }
     }
-
 }

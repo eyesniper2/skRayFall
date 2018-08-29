@@ -9,7 +9,7 @@ import org.bukkit.plugin.Plugin
 
 class EffectLibSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
-    val effectManager: EffectManager = EffectManager(plugin)
+    var effectManager: EffectManager? = null
     val rayfallEffectManager: RayFallEffectManager = RayFallEffectManager(plugin)
 
     override fun registerSyntax() {
@@ -19,6 +19,7 @@ class EffectLibSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             return
         }
         plugin.logger.info("Got bacon for the EffectLib particle ninjas!")
+        effectManager = EffectManager(plugin)
         // more stuff and options to be added
         Skript.registerEffect(EffDeleteEffect::class.java, "(delete|stop) (effect|formation) %string%")
         Skript.registerEffect(EffEffectLibAtom::class.java,

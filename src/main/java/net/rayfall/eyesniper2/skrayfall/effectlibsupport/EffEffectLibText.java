@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.effectlibsupport;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -20,6 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Text Effect")
 @Description("Creates an EffectLib text effect.")
+@Examples({"command /texteffect:",
+        "\ttrigger:",
+        "\t\tapply the text effect with text \"Text Effect\" as Redstone to player with id \"texteffecttest\""})
 public class EffEffectLibText extends Effect {
     // create a text (effect|formation) with text %string% as %effectlibparticle% (at|on|for) %% with
     // id %string% [and %number% large]
@@ -80,7 +84,4 @@ public class EffEffectLibText extends Effect {
             assert false;
         }
     }
-
 }
-
-
