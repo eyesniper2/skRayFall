@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -20,6 +21,9 @@ import org.eclipse.jdt.annotation.Nullable;
         "* ID",
         "This will permanently remove a citizen"})
 @RequiredPlugins("Citizens")
+@Examples({"command /removelastnpc:",
+        "\ttrigger:",
+        "\t\tdestroy citizen last created citizen"})
 public class EffDeleteCitizen extends Effect {
 
     private Expression<Number> id;

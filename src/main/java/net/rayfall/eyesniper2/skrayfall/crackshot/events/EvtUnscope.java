@@ -1,9 +1,6 @@
 package net.rayfall.eyesniper2.skrayfall.crackshot.events;
 
-import ch.njol.skript.doc.Description;
-import ch.njol.skript.doc.DocumentationId;
-import ch.njol.skript.doc.Name;
-import ch.njol.skript.doc.RequiredPlugins;
+import ch.njol.skript.doc.*;
 import ch.njol.skript.lang.Literal;
 import ch.njol.skript.lang.SkriptEvent;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -18,6 +15,13 @@ import org.eclipse.jdt.annotation.Nullable;
         "Event-string will return name of the player’s weapon.")
 @RequiredPlugins("CrackShot")
 @DocumentationId("EvtCrackShotScopeUnscope")
+@Examples({"on scope:",
+        "\tbroadcast \"%event-string%\"",
+        "\tbroadcast \"%player%\"",
+        "",
+        "on unscope:",
+        "\tbroadcast \"%event-string%\"",
+        "\tbroadcast \"%player%\""})
 public class EvtUnscope extends SkriptEvent {
 
     @Override

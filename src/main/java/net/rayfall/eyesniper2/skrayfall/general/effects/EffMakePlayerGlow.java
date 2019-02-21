@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.general.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -13,11 +14,16 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Make Player Glow")
 @Description("Make a player glow. This is based on team color, will be white by default.")
+@Examples({"command /playerglow:",
+        "\ttrigger:",
+        "\t\tmake player glow",
+        "\t\twait 5 seconds",
+        "\t\tmake player stop glowing"})
 public class EffMakePlayerGlow extends Effect {
 
     // Make %player% glow
 
-    Expression<Player> player;
+    private Expression<Player> player;
 
     @SuppressWarnings("unchecked")
     @Override
@@ -33,7 +39,7 @@ public class EffMakePlayerGlow extends Effect {
 
     @Override
     protected void execute(Event evt) {
-        if (player != null) {
+        if (player != null && player.getSingle(evt) != null) {
             player.getSingle(evt).setGlowing(true);
         }
     }

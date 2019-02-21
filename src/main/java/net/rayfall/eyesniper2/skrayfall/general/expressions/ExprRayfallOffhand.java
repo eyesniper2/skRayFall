@@ -2,6 +2,7 @@ package net.rayfall.eyesniper2.skrayfall.general.expressions;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -16,6 +17,10 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("skRayFall Offhand")
 @Description("Manipulate items in the players offhand/secondary hand.")
+@Examples({"command /offhand:",
+        "\ttrigger:",
+        "\t\tbroadcast \"%player's offhand%\"",
+        "\t\tset player's offhand to 1 diamond block"})
 public class ExprRayfallOffhand extends SimpleExpression<ItemStack> {
     // %player%['s] offhand
     // item in %player%['s] offhand

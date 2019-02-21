@@ -53,12 +53,12 @@ public class EffTabTitlesV1_13_1 extends Effect {
                 IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + coreFooter.getSingle(evt).replace("\"", "") + "\"}");
         PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
         try {
-            Field headerField = packet.getClass().getDeclaredField("a");
+            Field headerField = packet.getClass().getDeclaredField("header");
             headerField.setAccessible(true);
             headerField.set(packet, header);
             headerField.setAccessible(!headerField.isAccessible());
 
-            Field footerField = packet.getClass().getDeclaredField("b");
+            Field footerField = packet.getClass().getDeclaredField("footer");
             footerField.setAccessible(true);
             footerField.set(packet, footer);
             footerField.setAccessible(!footerField.isAccessible());

@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.effectlibsupport;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -13,7 +14,13 @@ import org.bukkit.event.Event;
 import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Delete/Stop Effect")
-@Description("Stop's a EffectLib effect that matches the id value.")
+@Description("Stops a EffectLib effect that matches the id value.")
+@Examples({"command /bleedtest:",
+        "\ttrigger:",
+        "\t\tcreate a bleed effect to player with id \"bleedtest\"",
+        "\t\twait 10 seconds",
+        "\t\tmessage \"&cDelete\"",
+        "\t\tdelete effect \"bleedtest\""})
 public class EffDeleteEffect extends Effect {
 
     // (delete|stop) (effect|formation) %string%

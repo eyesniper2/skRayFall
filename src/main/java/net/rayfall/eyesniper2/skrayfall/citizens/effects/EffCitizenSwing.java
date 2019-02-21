@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -21,6 +22,9 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Make Citizen Swing")
 @Description("Force a citizens to play the arm swing animation")
 @RequiredPlugins("Citizens")
+@Examples({"command /npcarmswing:",
+        "\ttrigger:",
+        "\t\tmake citizen last created citizen swing arm    "})
 public class EffCitizenSwing extends Effect {
 
     // make citizen %number% swing

@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -18,6 +19,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Set Citizens Name")
 @Description("Set the name of a citizen/npc using their ID number.")
 @RequiredPlugins("Citizens")
+@Examples({"set citizen 1 name to \"eyesniper2\""})
 public class EffSetCitizenName extends Effect {
 
     private Expression<Number> idNum;

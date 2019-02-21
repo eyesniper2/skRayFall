@@ -18,9 +18,10 @@ class CondIsGlowing : Condition() {
     lateinit var player: Expression<Player>
 
     override fun check(e: Event?): Boolean {
-        return if (player.getSingle(e) != null) {
-            player.getSingle(e)!!.isGlowing
-        } else false
+        player.getSingle(e)?.let {
+            return it.isGlowing
+        }
+        return false
     }
 
     override fun toString(e: Event?, debug: Boolean): String {
@@ -28,7 +29,7 @@ class CondIsGlowing : Condition() {
     }
 
     override fun init(exprs: Array<out Expression<*>>?, matchedPattern: Int, isDelayed: Kleenean?, parseResult: SkriptParser.ParseResult?): Boolean {
-        player = exprs!![0] as Expression<Player>
+        player = exprs?.get(0) as Expression<Player>
         return true
     }
 }

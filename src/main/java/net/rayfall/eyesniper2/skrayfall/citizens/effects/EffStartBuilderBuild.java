@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -30,6 +31,10 @@ import java.io.IOException;
         "* Citizen ID",
         "This will have an NPC build a schematic that is located in plugins/Builder/schematics"})
 @RequiredPlugins({"Citizens", "Builder"})
+@Examples({"command /buildtest <text>:",
+        "\ttrigger:",
+        "\t\tcreate a citizen named \"eyesniper2\" at location of player",
+        "\t\tmake citizen last created citizen build arg 1 at location of player for player"})
 public class EffStartBuilderBuild extends Effect {
     // make citizen %number% build %schematic% at %location% [speed %number%] for %player%
     private Expression<Number> id;

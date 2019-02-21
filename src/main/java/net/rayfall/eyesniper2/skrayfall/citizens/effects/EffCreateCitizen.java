@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -25,6 +26,9 @@ import org.bukkit.event.Event;
         "* Entity Type",
         "This will place an NPC in your world that can be modified"})
 @RequiredPlugins("Citizens")
+@Examples({"command /createwolf <text>:",
+        "\ttrigger:",
+        "\t\tcreate a citizen named \"%arg 1%\" at location of player as a wolf"})
 public class EffCreateCitizen extends Effect {
 
     private Expression<Location> location;

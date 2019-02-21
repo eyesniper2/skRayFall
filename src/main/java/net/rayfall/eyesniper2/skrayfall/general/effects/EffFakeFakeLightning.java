@@ -2,6 +2,7 @@ package net.rayfall.eyesniper2.skrayfall.general.effects;
 
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -14,6 +15,9 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Fake Lightning (No Sound)")
 @Description("Creates a silent fake lightning strike at a location.")
+@Examples({"command /fakelightningtest:",
+        "\ttrigger:",
+        "\t\tcreate fake fake lightning at location of player"})
 public class EffFakeFakeLightning extends Effect {
 
     // create [fake|ultra|no sound] fake lighting at %location%

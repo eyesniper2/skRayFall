@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -23,6 +24,10 @@ import org.eclipse.jdt.annotation.Nullable;
         "* Players",
         "Makes a citizen attack a living entity. The entity must be close enough to the NPC"})
 @RequiredPlugins("Citizens")
+@Examples({"command /attack <integer>:",
+        "\ttrigger:",
+        "\t\tmake citizen arg 1 attack player",
+        "\t\tmake citizen arg 1 vulnerable"})
 public class EffCitizenAttack extends Effect {
 
     private Expression<Number> id;

@@ -17,7 +17,7 @@ class ScoreboardSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
         Skript.registerEffect(EffDeleteScore::class.java, "delete score %string% in sidebar of %player%")
         Skript.registerEffect(EffRemoveScoreboard::class.java, "(wipe|erase|delete) %player%['s] sidebar")
         Skript.registerEffect(EffSetScoreBelowName::class.java,
-                "set score %string% below %player% to %number% for %player%")
+                "set score %string% below %player% to %number% for %players%")
         Skript.registerEffect(EffRemoveScoreBelowName::class.java,
                 "(wipe|erase) below score[s] for %player%")
         Skript.registerEffect(EffSetScoreTab::class.java,

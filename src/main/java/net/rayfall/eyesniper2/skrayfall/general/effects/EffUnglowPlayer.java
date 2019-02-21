@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.general.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -13,6 +14,11 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Unglow/Stop Glowing")
 @Description("Remove the glowing effect from the player.")
+@Examples({"command /playerglow:",
+        "\ttrigger:",
+        "\t\tmake player glow",
+        "\t\twait 5 seconds",
+        "\t\tmake player stop glowing"})
 public class EffUnglowPlayer extends Effect {
 
     // make %player% (unglow|stop glowing)

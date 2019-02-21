@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -22,6 +23,10 @@ import org.eclipse.jdt.annotation.Nullable;
         "* Minecraft Username",
         "This will change the skin of an NPC to a given Minecraft username"})
 @RequiredPlugins("Citizens")
+@Examples({"command /npcskin:",
+        "\ttrigger:",
+        "\t\tcreate a citizen named \"notch\" at location of player",
+        "\t\tchange citizen last created citizen skin to \"eyesniper2\""})
 public class EffCitizenSetSkin extends Effect {
 
     private Expression<Number> id;

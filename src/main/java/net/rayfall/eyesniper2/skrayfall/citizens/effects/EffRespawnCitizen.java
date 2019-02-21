@@ -2,6 +2,7 @@ package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -27,6 +28,9 @@ import org.eclipse.jdt.annotation.Nullable;
         "despawn citizen effect. This will not work if the citizen is already alive so it can't be used " +
         "to duplicate citizens"})
 @RequiredPlugins("Citizens")
+@Examples({"command /npcrespawn:",
+        "\ttrigger:\n",
+        "\t\trespawn citizen 0 at location of player"})
 public class EffRespawnCitizen extends Effect {
 
     private Expression<Location> location;

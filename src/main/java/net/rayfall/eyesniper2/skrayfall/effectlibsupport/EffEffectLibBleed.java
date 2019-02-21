@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.effectlibsupport;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
@@ -19,6 +20,12 @@ import org.eclipse.jdt.annotation.Nullable;
 
 @Name("Bleed Effect")
 @Description("Creates an EffectLib bleed effect.")
+@Examples({"command /bleedtest:",
+        "\ttrigger:",
+        "\t\tcreate a bleed effect to player with id \"test\"",
+        "\t\twait 10 seconds",
+        "\t\tmessage \"&cDelete\"",
+        "\t\tdelete effect \"test\""})
 public class EffEffectLibBleed extends Effect {
 
     // (spawn|create|apply) (a|the|an) bleed (effect|formation) (at|on|for|to) %entity/location% with

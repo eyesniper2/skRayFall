@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -23,6 +24,9 @@ import org.eclipse.jdt.annotation.Nullable;
         "* Speed",
         "This will make a given NPC pathfind to a location"})
 @RequiredPlugins("Citizens")
+@Examples({"command /movenpc:",
+        "\ttrigger:",
+        "\t\tmove citizen 1 to location of player at speed 2"})
 public class EffCitizenMove extends Effect {
     private Expression<Number> idNum;
     private Expression<Number> speed;

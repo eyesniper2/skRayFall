@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.general.expressions;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 
@@ -17,6 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description({"Show Items by:",
         "* Glow",
         "Makes an item glow as an enchanted item but without the lore"})
+@Examples({"give player shiny diamond"})
 public class ExprShinyItem extends SimplePropertyExpression<ItemStack, ItemStack> {
 
     @Override

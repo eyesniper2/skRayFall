@@ -27,7 +27,7 @@ public class EffSetScoreBelowName extends Effect {
     // First player is score target, second player is who is seeing it
 
     private Expression<Player> player;
-    private Expression<Player> target;
+    private Expression<Player> targets;
     private Expression<String> name;
     private Expression<Number> num;
 
@@ -38,7 +38,7 @@ public class EffSetScoreBelowName extends Effect {
         player = (Expression<Player>) exp[1];
         name = (Expression<String>) exp[0];
         num = (Expression<Number>) exp[2];
-        target = (Expression<Player>) exp[3];
+        targets = (Expression<Player>) exp[3];
         return true;
     }
 
@@ -50,27 +50,30 @@ public class EffSetScoreBelowName extends Effect {
     @Override
     protected void execute(Event evt) {
         if (!(player.getSingle(evt).isOnline())) {
-            Skript.error("The player is not online!");
-        } else {
-            if (target.getSingle(evt).getScoreboard().getObjective("bottomHold") != null) {
-                Objective objective =
-                        target.getSingle(evt).getScoreboard().getObjective(DisplaySlot.BELOW_NAME);
-                objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
-                Score score = objective.getScore(player.getSingle(evt).getName());
-                if (num.getSingle(evt).equals(null)) {
-                    return;
+            Skript.error("[SetScoreBelowName] The player is not online!");
+        } else if (num.getSingle(evt) == null){
+            Skript.error("[SetScoreBelowName] The scoreboard value is not set!");
+        } else if (name.getSingle(evt) == null){
+            Skript.error("[SetScoreBelowName] The scoreboard name is not set!");
+        }
+        else {
+            int value = num.getSingle(evt).intValue();
+            String displayName = name.getSingle(evt).replace("\"", "");
+            for(Player target : targets.getAll(evt)){
+                if (target.getScoreboard().getObjective("bottomHold") != null) {
+                    Objective objective =
+                            target.getScoreboard().getObjective(DisplaySlot.BELOW_NAME);
+                    objective.setDisplayName(displayName);
+                    Score score = objective.getScore(player.getSingle(evt).getName());
+                    score.setScore(value);
+                } else {
+                    Objective objectiveh =
+                            target.getScoreboard().registerNewObjective("bottomHold", "dummy");
+                    objectiveh.setDisplaySlot(DisplaySlot.BELOW_NAME);
+                    objectiveh.setDisplayName(displayName);
+                    Score score = objectiveh.getScore(player.getSingle(evt).getName());
+                    score.setScore(value);
                 }
-                score.setScore(num.getSingle(evt).intValue());
-            } else {
-                Objective objectiveh =
-                        target.getSingle(evt).getScoreboard().registerNewObjective("bottomHold", "dummy");
-                objectiveh.setDisplaySlot(DisplaySlot.BELOW_NAME);
-                objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
-                Score score = objectiveh.getScore(player.getSingle(evt).getName());
-                if (num.getSingle(evt).equals(null)) {
-                    return;
-                }
-                score.setScore(num.getSingle(evt).intValue());
             }
         }
     }

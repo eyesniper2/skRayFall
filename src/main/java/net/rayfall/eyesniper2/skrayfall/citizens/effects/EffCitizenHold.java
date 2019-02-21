@@ -2,6 +2,7 @@ package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -23,6 +24,9 @@ import org.eclipse.jdt.annotation.Nullable;
 @Name("Citizen Hold")
 @Description("This will make a Citizen hold an object in their hand.")
 @RequiredPlugins("Citizens")
+@Examples({"command /npcholdsword:",
+        "\ttrigger:",
+        "\t\tmake citizen last created citizen id hold iron sword"})
 public class EffCitizenHold extends Effect {
 
     // make citizen %number% hold %itemstack%

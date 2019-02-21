@@ -2,6 +2,7 @@ package net.rayfall.eyesniper2.skrayfall.citizens.expressions;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Expression;
@@ -20,6 +21,10 @@ import org.eclipse.jdt.annotation.Nullable;
         "You can use this to check the ID of the last created citizen good for if you want to check the unique " +
         "ID of a citizen you just created"})
 @RequiredPlugins("Citizens")
+@Examples({"command /npctest <text>:",
+        "\ttrigger:",
+        "\t\tcreate a citizen named \"%arg 1%\" at location of player as a player",
+        "\t\tmessage \"%last created citizen%\""})
 public class ExprLastCitizen extends SimpleExpression<Number> {
 
     public static NPC lastNPC;

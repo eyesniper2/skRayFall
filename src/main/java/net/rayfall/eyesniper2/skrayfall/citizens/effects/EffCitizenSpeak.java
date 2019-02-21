@@ -1,6 +1,7 @@
 package net.rayfall.eyesniper2.skrayfall.citizens.effects;
 
 import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.RequiredPlugins;
 import ch.njol.skript.lang.Effect;
@@ -24,6 +25,9 @@ import org.eclipse.jdt.annotation.Nullable;
         "* Players",
         "This will make an NPC speak to a player with a custom message"})
 @RequiredPlugins("Citizens")
+@Examples({"command /npcspeak <integer> <text>:",
+        "\ttrigger:",
+        "\t\tmake citizen arg 1 say \"%arg 2%\" to player"})
 public class EffCitizenSpeak extends Effect {
 
     private Expression<Number> id;
