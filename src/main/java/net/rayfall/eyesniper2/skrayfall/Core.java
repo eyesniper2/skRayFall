@@ -21,7 +21,8 @@ import net.rayfall.eyesniper2.skrayfall.scoreboard.IdScoreBoardManager;
 import net.rayfall.eyesniper2.skrayfall.scoreboard.ScoreboardSyntaxManager;
 import net.rayfall.eyesniper2.skrayfall.teams.TeamManager;
 import net.rayfall.eyesniper2.skrayfall.voting.VotifierSyntaxManager;
-import org.bstats.Metrics;
+
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

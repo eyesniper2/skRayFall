@@ -28,6 +28,7 @@ class CondIsGlowing : Condition() {
         return ""
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun init(exprs: Array<out Expression<*>>?, matchedPattern: Int, isDelayed: Kleenean?, parseResult: SkriptParser.ParseResult?): Boolean {
         player = exprs?.get(0) as Expression<Player>
         return true

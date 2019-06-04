@@ -23,6 +23,7 @@ public class EffRemoveLookCloseTrait extends Effect {
 
     private Expression<Number> id;
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expressions, int i, Kleenean kleenean, SkriptParser.ParseResult parseResult) {
         id = (Expression<Number>) expressions[0];
