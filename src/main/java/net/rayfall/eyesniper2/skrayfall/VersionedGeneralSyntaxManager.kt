@@ -250,8 +250,8 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffTabTitlesV1_13_1::class.java,
                     "set tab header to %string% and footer to %string% for %player%")
         }
-        if (Skript.getMinecraftVersion() >= Version(1, 14, 0) && Skript.getMinecraftVersion() < Version(1, 14, 3)) {
-            plugin.logger.info("Getting the extra special 1.14 and 1.14.1 bacon!")
+        if (Skript.getMinecraftVersion() >= Version(1, 14, 0) && Skript.getMinecraftVersion() < Version(1, 14, 4)) {
+            plugin.logger.info("Getting the extra special 1.14 - 1.14.3 bacon!")
             Skript.registerEffect(EffTitleV1_14::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_14::class.java,
