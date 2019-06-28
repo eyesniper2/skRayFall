@@ -1,4 +1,5 @@
-<html><head>
+<html>
+  <head>
     <link rel="icon" href="Images\favicon.ico">
     <title>skRayFall</title>
     <meta charset="utf-8">
@@ -9,7 +10,33 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.5/yeti/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet" type="text/css">
     <link href="custom.css" rel="stylesheet" type="text/css">
-  </head><body>
+    <meta name="description" content="skRayFall is a powerful addon to the Skript language that adds Citizens support, EffectLib support and many other features">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-40878793-4"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-40878793-4');
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+      window.addEventListener("load", function(){
+      window.cookieconsent.initialise({
+        "palette": {
+          "popup": {
+            "background": "#252e39"
+          },
+          "button": {
+            "background": "#14a7d0"
+          }
+        },
+        "theme": "edgeless",
+        "position": "bottom-right"
+      })});
+    </script>
+  </head>
+  <body>
     <div class="cover">
       <div class="background-image-fixed cover-image" style="background-image : url('Images/bg.png')"></div>
       <div class="container">
@@ -138,4 +165,5 @@
         </div>
       </div>
     </footer>
-</body></html>
+  </body>
+</html>
