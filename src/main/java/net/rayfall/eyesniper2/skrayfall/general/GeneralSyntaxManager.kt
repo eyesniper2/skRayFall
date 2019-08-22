@@ -80,7 +80,7 @@ class GeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                 "play (resource|[custom ]sound) [sound] pack %string% to %player% [at %-location%] " + "[(and|with) volume %number%] [(and|with) pitch %number%]")
         Skript.registerEffect(EffFakeFakeLightning::class.java,
                 "(create|strike) (fake|ultra|no sound) fake lightning at %location%")
-        Skript.registerEffect(EffSetPlayerListName::class.java, "set %player% tab name to %string%")
+        Skript.registerEffect(EffSetPlayerListName::class.java, "set %player%['s] tab name to %string%")
         Skript.registerEffect(EffSetMetaData::class.java, "set meta %string% for %entity% to %string%")
         Skript.registerExpression(ExprArmorValue::class.java, Number::class.java, ExpressionType.PROPERTY,
                 "%player%['s] armo[u]r value")
