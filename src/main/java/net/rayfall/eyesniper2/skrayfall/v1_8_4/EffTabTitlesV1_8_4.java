@@ -54,20 +54,17 @@ public class EffTabTitlesV1_8_4 extends Effect {
                 ChatSerializer.a("{\"text\": \"" + coreHeader.getSingle(evt).replace("\"", "") + "\"}");
         IChatBaseComponent footer =
                 ChatSerializer.a("{\"text\": \"" + coreFooter.getSingle(evt).replace("\"", "") + "\"}");
-        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
-        try {
-            Field headerField = packet.getClass().getDeclaredField("a");
-            headerField.setAccessible(true);
-            headerField.set(packet, header);
-            headerField.setAccessible(!headerField.isAccessible());
+        PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter(header);
 
+        try {
             Field footerField = packet.getClass().getDeclaredField("b");
             footerField.setAccessible(true);
             footerField.set(packet, footer);
-            footerField.setAccessible(!footerField.isAccessible());
+            footerField.setAccessible(false);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+
         ((CraftPlayer) player.getSingle(evt)).getHandle().playerConnection.sendPacket(packet);
     }
 }
