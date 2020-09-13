@@ -3,10 +3,9 @@ package net.rayfall.eyesniper2.skrayfall.effectlibsupport;
 import de.slikey.effectlib.Effect;
 import de.slikey.effectlib.EffectManager;
 import de.slikey.effectlib.EffectType;
-import de.slikey.effectlib.util.ParticleEffect;
-
 import org.bukkit.Color;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 
 
 /*
@@ -17,7 +16,7 @@ import org.bukkit.Location;
 
 public class SpiralUpwardsEffect extends Effect {
 
-    public ParticleEffect particle = ParticleEffect.FLAME;
+    public Particle particle = Particle.FLAME;
     public Color particleColor = null;
 
     public double heightScale = 0;

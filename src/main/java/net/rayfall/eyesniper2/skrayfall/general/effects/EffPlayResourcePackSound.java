@@ -46,19 +46,19 @@ public class EffPlayResourcePackSound extends Effect {
     protected void execute(Event evt) {
         if (player != null) {
             Location locationOfSound = player.getSingle(evt).getLocation();
-            float fvol = 1;
-            float fpitch = 1;
+            float fVol = 1.0F;
+            float fPitch = 1.0F;
             if (vol != null) {
-                fvol = vol.getSingle(evt).floatValue();
+                fVol = vol.getSingle(evt).floatValue();
             }
             if (pitch != null) {
-                fpitch = pitch.getSingle(evt).floatValue();
+                fPitch = pitch.getSingle(evt).floatValue();
             }
             if (loc != null) {
                 locationOfSound = loc.getSingle(evt);
             }
-            player.getSingle(evt).playSound(locationOfSound, sound.getSingle(evt).replace("\"", ""), fvol,
-                    fpitch);
+            player.getSingle(evt).playSound(locationOfSound, sound.getSingle(evt).replace("\"", ""),
+                    fVol, fPitch);
         }
     }
 }

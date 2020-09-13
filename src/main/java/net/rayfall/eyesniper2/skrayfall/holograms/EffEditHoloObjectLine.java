@@ -94,7 +94,7 @@ public class EffEditHoloObjectLine extends Effect {
                 }
 
                 ItemLine itemline = hologram.insertItemLine(finalLineNumber, stack);
-                if (check == true) {
+                if (check) {
                     itemline.setTouchHandler(new TouchHandler() {
                         @Override
                         public void onTouch(Player player) {
@@ -114,7 +114,7 @@ public class EffEditHoloObjectLine extends Effect {
                 }
             } else {
                 TextLine textline = hologram.insertTextLine(finalLineNumber, line);
-                if (check == true) {
+                if (check) {
                     textline.setTouchHandler(new TouchHandler() {
                         @Override
                         public void onTouch(Player player) {

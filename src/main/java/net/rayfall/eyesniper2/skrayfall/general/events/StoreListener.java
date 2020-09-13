@@ -143,12 +143,15 @@ public class StoreListener implements Listener {
                         || evt.getView().getTopInventory().getType() == InventoryType.DISPENSER
                         || evt.getView().getTopInventory().getType() == InventoryType.DROPPER)
                         && evt.getView().getBottomInventory().getType() == InventoryType.PLAYER) {
-                    StoreEvent event = new StoreEvent((Player) evt.getWhoClicked(),
-                            evt.getCurrentItem().clone(), evt.getInventory());
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (event.isCancelled()) {
-                        evt.setCancelled(true);
-                        return;
+                    ItemStack currentItem = evt.getCurrentItem();
+                    if (currentItem != null){
+                        StoreEvent event = new StoreEvent((Player) evt.getWhoClicked(),
+                                currentItem.clone(), evt.getInventory());
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) {
+                            evt.setCancelled(true);
+                            return;
+                        }
                     }
                     storePossible.remove(evt.getWhoClicked());
                 }
@@ -331,5 +334,4 @@ public class StoreListener implements Listener {
             }
         }
     }
-
 }

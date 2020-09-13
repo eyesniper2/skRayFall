@@ -26,7 +26,6 @@ public class TypeManager implements SyntaxManagerInterface{
 
     public void registerSyntax(){
         if (Skript.isAcceptRegistrations()) {
-            registerTypes();
             if (Skript.isRunningMinecraft(1, 9)){
                 registerV1_9Elements();
                 if (!(Bukkit.getVersion().contains("(MC: 1.9)")
@@ -41,45 +40,6 @@ public class TypeManager implements SyntaxManagerInterface{
         } else {
             plugin.getLogger().info("skRayFall was unable to register some extra types.");
         }
-    }
-
-    private void registerTypes() {
-        if (Skript.isRunningMinecraft(1, 13)) {
-            plugin.getLogger().warning("EffectLib 6.0 for 1.13 is not supported as of right now since it has backwards " +
-                    "breaking changes for users below 1.10");
-            return;
-        }
-        Classes.registerClass(new ClassInfo<>(ParticleEffect.class, "effectlibparticle")
-                .parser(new Parser<ParticleEffect>() {
-                    @Override
-                    public String getVariableNamePattern() {
-                        return ".+";
-                    }
-
-                    @Override
-                    @Nullable
-                    public ParticleEffect parse(String value, ParseContext cont) {
-                        try {
-                            return ParticleEffect.valueOf(value.replace(" ", "_").trim().toUpperCase());
-                        } catch (IllegalArgumentException exception) {
-                            return null;
-                        }
-                    }
-
-                    @Override
-                    public String toString(ParticleEffect eff, int in) {
-                        return eff.name().replace("_", " ").toLowerCase();
-                    }
-
-                    @Override
-                    public String toVariableNameString(ParticleEffect eff) {
-                        return eff.name().replace("_", " ").toLowerCase();
-                    }
-                })
-                .name("EffectLib Particle")
-                .description("Particles that are to be used in EffectLib based effects. Full list can be found here!")
-                .usage("Lava, Mob, Note, Portal, Redstone, Slime, etc.")
-        );
     }
 
     private void registerNon1_9_2TeamElements() {

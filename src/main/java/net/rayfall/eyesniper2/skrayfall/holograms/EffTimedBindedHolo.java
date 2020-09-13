@@ -77,7 +77,7 @@ public class EffTimedBindedHolo extends Effect {
         final Hologram hologram =
                 HologramsAPI.createHologram(Core.plugin, tar.getSingle(evt).getLocation());
         String core = text.getSingle(evt).replace("\"", "");
-        while (core.indexOf(";") != -1) {
+        while (core.contains(";")) {
             String line = core.substring(0, core.indexOf(";"));
             core = core.substring(core.indexOf(";") + 1);
             if (line.startsWith("ItemStack:")) {
@@ -115,14 +115,20 @@ public class EffTimedBindedHolo extends Effect {
         final double fhy = hy;
         final double fhz = hz;
         new BukkitRunnable() {
-            int ticksRun;
+            long ticksRun;
+            Entity target = tar.getSingle(evt);
+            Timespan hologramTimespan = time.getSingle(evt);
 
             @Override
             public void run() {
                 ticksRun++;
-                hologram.teleport(tar.getSingle(evt).getLocation().add(fhx, fhy, fhz));
 
-                if (ticksRun > time.getSingle(evt).getTicks()) {
+                if (target != null) {
+                    hologram.teleport(target.getLocation().add(fhx, fhy, fhz));
+                }
+
+                // Fail safe if hologramTimespan is null.
+                if (hologramTimespan == null || ticksRun > hologramTimespan.getTicks_i()) {
                     hologram.delete();
                     cancel();
                 }

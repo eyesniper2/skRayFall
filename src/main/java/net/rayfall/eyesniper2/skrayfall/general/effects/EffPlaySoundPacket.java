@@ -56,12 +56,11 @@ public class EffPlaySoundPacket extends Effect {
                 .valueOf(sound.getSingle(evt).replace("\"", "").trim().replace(" ", "_").toUpperCase());
         if (vol != null) {
             for (Player p : player.getAll(evt)) {
-                p.playSound(p.getLocation(), soundToPlay, (float) vol.getSingle(evt).doubleValue(),
-                        (float) 1.0D);
+                p.playSound(p.getLocation(), soundToPlay, vol.getSingle(evt).floatValue(), 1.0F);
             }
         } else {
             for (Player p : player.getAll(evt)) {
-                p.playSound(p.getLocation(), soundToPlay, (float) 1.0D, (float) 1.0D);
+                p.playSound(p.getLocation(), soundToPlay, 1.0F, 1.0F);
             }
         }
     }

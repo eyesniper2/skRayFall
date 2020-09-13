@@ -36,6 +36,8 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Core extends JavaPlugin implements Listener {
 
+    public static int bStatsId = 1037;
+
     public static EffectManager effectManager;
     public static Plugin plugin = null;
     public static RayFallEffectManager rayfallEffectManager;
@@ -61,7 +63,7 @@ public class Core extends JavaPlugin implements Listener {
 
         getLogger().info("Cooking Bacon...");
 
-        Metrics metrics = new Metrics(this);
+        Metrics metrics = new Metrics(this, bStatsId);
 
         // Register all types
         TypeManager typeManager = new TypeManager(this);
