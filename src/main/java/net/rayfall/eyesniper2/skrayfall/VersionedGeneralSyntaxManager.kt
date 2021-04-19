@@ -51,6 +51,10 @@ import net.rayfall.eyesniper2.skrayfall.v1_16_2.EffActionBarV1_16_2
 import net.rayfall.eyesniper2.skrayfall.v1_16_2.EffParticlesV1_16_2
 import net.rayfall.eyesniper2.skrayfall.v1_16_2.EffTabTitlesV1_16_2
 import net.rayfall.eyesniper2.skrayfall.v1_16_2.EffTitleV1_16_2
+import net.rayfall.eyesniper2.skrayfall.v1_16_3.EffActionBarV1_16_3
+import net.rayfall.eyesniper2.skrayfall.v1_16_3.EffParticlesV1_16_3
+import net.rayfall.eyesniper2.skrayfall.v1_16_3.EffTabTitlesV1_16_3
+import net.rayfall.eyesniper2.skrayfall.v1_16_3.EffTitleV1_16_3
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffActionBarV1_8
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffParticlesV1_8
 import net.rayfall.eyesniper2.skrayfall.v1_8.EffTabTitlesV1_8
@@ -294,8 +298,8 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffTabTitlesV1_16::class.java,
                     "set tab header to %string% and footer to %string% for %player%")
         }
-        if (Skript.getMinecraftVersion() >= Version(1, 16, 2) && Skript.getMinecraftVersion() < Version(1, 16, 3)) {
-            plugin.logger.info("Getting the extra special 1.16.2 bacon!")
+        if (Skript.getMinecraftVersion() >= Version(1, 16, 2) && Skript.getMinecraftVersion() < Version(1, 16, 4)) {
+            plugin.logger.info("Getting the extra special 1.16.2 - 1.16.4 bacon!")
             Skript.registerEffect(EffTitleV1_16_2::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_16_2::class.java,
@@ -303,6 +307,17 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffActionBarV1_16_2::class.java, "set action bar of %players% to %string%",
                     "set %player%['s] action bar to %string%")
             Skript.registerEffect(EffTabTitlesV1_16_2::class.java,
+                    "set tab header to %string% and footer to %string% for %player%")
+        }
+        if (Skript.getMinecraftVersion() >= Version(1, 16, 4) && Skript.getMinecraftVersion() < Version(1, 16, 6)) {
+            plugin.logger.info("Getting the extra special 1.16.4 bacon!")
+            Skript.registerEffect(EffTitleV1_16_3::class.java,
+                    "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
+            Skript.registerEffect(EffParticlesV1_16_3::class.java,
+                    "show %number% %string% particle[s] at %location% for %player% " + "[offset by %number%, %number%( and|,) %number%]")
+            Skript.registerEffect(EffActionBarV1_16_3::class.java, "set action bar of %players% to %string%",
+                    "set %player%['s] action bar to %string%")
+            Skript.registerEffect(EffTabTitlesV1_16_3::class.java,
                     "set tab header to %string% and footer to %string% for %player%")
         }
     }

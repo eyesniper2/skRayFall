@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.4.21'
     repositories {
         mavenCentral()
     }
@@ -25,7 +25,7 @@ compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
 group = 'net.rayfall.eyesniper2.skrayfall'
-version = '1.9.22'
+version = '1.9.25'
 
 description = """"""
 
@@ -54,14 +54,14 @@ dependencies {
     compile group: 'org.bstats', name: 'bstats-bukkit', version:'1.7'
     compile group: 'de.slikey', name: 'EffectLib', version:'6.3'
 
-    compile group: 'net.gravitydevelopment.updater', name: 'updater', version:'2.4'
+    compile group: 'com.github.gravitylow', name: 'Updater', version:'2.3'
 
     compileOnly group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version:'1.1.0'
     compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version:"$kotlin_version"
 
     testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version:"$kotlin_version"
 
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version:'1.16.2-R0.1-SNAPSHOT'
+    compileOnly group: 'org.spigotmc', name: 'spigot-api', version:'1.16.4-R0.1-SNAPSHOT'
     compileOnly group: 'org.inventivetalent', name: 'bossbarapi', version:'2.4.1'
     compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version:'2.0.25-SNAPSHOT'
 
@@ -74,7 +74,7 @@ compileKotlin {
 
 shadowJar {
     dependencies {
-        include dependency('net.gravitydevelopment.updater:updater')
+        include dependency('com.github.gravitylow:Updater')
         include dependency('org.bstats:bstats-bukkit')
         include dependency('de.slikey:EffectLib:6.3')
         include dependency("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")

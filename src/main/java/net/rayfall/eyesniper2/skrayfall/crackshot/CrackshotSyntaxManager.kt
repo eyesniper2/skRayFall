@@ -7,10 +7,12 @@ import ch.njol.skript.registrations.EventValues
 import ch.njol.skript.util.Getter
 import com.shampaggon.crackshot.events.*
 import net.rayfall.eyesniper2.skrayfall.SyntaxManagerInterface
+import net.rayfall.eyesniper2.skrayfall.crackshot.effects.EffGenerateExplosion
 import net.rayfall.eyesniper2.skrayfall.crackshot.effects.EffPlaceMine
 import net.rayfall.eyesniper2.skrayfall.crackshot.events.EvtScope
 import net.rayfall.eyesniper2.skrayfall.crackshot.events.EvtUnscope
 import net.rayfall.eyesniper2.skrayfall.crackshot.expressions.ExprCrackShotWeapon
+import org.bukkit.block.Block
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -26,6 +28,8 @@ class CrackshotSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     "(gun|crackshot weapon) %string%")
             Skript.registerEffect<EffPlaceMine>(EffPlaceMine::class.java,
                     "(place|set|spawn) mine at %location% for %player% as %string%")
+            Skript.registerEffect(EffGenerateExplosion::class.java,
+                    "(generate|create) an explosion for %player% at %location% for weapon %string%")
             Skript.registerEvent("(crackshot|weapon|gun) shoot", SimpleEvent::class.java,
                     WeaponShootEvent::class.java, "(crackshot|weapon|gun) shoot")
             EventValues.registerEventValue(WeaponShootEvent::class.java, Player::class.java,
@@ -133,6 +137,45 @@ class CrackshotSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     object : Getter<String, WeaponReloadCompleteEvent>() {
                         @Nullable
                         override fun get(evt: WeaponReloadCompleteEvent): String {
+                            return evt.weaponTitle
+                        }
+                    }, 0)
+            Skript.registerEvent("(crackshot|weapon|gun) hit block", SimpleEvent::class.java,
+                    WeaponHitBlockEvent::class.java, "(crackshot|weapon|gun) hit block")
+            EventValues.registerEventValue(WeaponHitBlockEvent::class.java, Player::class.java,
+                    object : Getter<Player, WeaponHitBlockEvent>() {
+                        @Nullable
+                        override fun get(evt: WeaponHitBlockEvent): Player {
+                            return evt.player
+                        }
+                    }, 0)
+            EventValues.registerEventValue(WeaponHitBlockEvent::class.java, Block::class.java,
+                    object : Getter<Block, WeaponHitBlockEvent>() {
+                        @Nullable
+                        override fun get(evt: WeaponHitBlockEvent): Block {
+                            return evt.block
+                        }
+                    }, 0)
+            EventValues.registerEventValue(WeaponHitBlockEvent::class.java, String::class.java,
+                    object : Getter<String, WeaponHitBlockEvent>() {
+                        @Nullable
+                        override fun get(evt: WeaponHitBlockEvent): String {
+                            return evt.weaponTitle
+                        }
+                    }, 0)
+            Skript.registerEvent("(before|prepare) (crackshot|weapon|gun) shoot", SimpleEvent::class.java,
+                    WeaponPrepareShootEvent::class.java, "(before|prepare) (crackshot|weapon|gun) shoot")
+            EventValues.registerEventValue(WeaponPrepareShootEvent::class.java, Player::class.java,
+                    object : Getter<Player, WeaponPrepareShootEvent>() {
+                        @Nullable
+                        override fun get(evt: WeaponPrepareShootEvent): Player {
+                            return evt.player
+                        }
+                    }, 0)
+            EventValues.registerEventValue(WeaponPrepareShootEvent::class.java, String::class.java,
+                    object : Getter<String, WeaponPrepareShootEvent>() {
+                        @Nullable
+                        override fun get(evt: WeaponPrepareShootEvent): String {
                             return evt.weaponTitle
                         }
                     }, 0)
