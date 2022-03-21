@@ -5,6 +5,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import net.rayfall.eyesniper2.skrayfall.Core;
@@ -42,7 +43,8 @@ public class EffCreateGroupIdScore extends Effect {
     @Override
     protected void execute(Event evt) {
         String finalId = id.getSingle(evt).replace("\"", "");
-        Core.sbManager.adjustGroupIdScore(finalId, score.getSingle(evt).replace("\"", ""),
+        Core.sbManager.adjustGroupIdScore(finalId,
+                Utils.replaceChatStyles(score.getSingle(evt).replace("\"", "")),
                 value.getSingle(evt).intValue());
         for (Player p : players.getArray(evt)) {
             if (p != null && finalId != null) {

@@ -6,6 +6,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import net.rayfall.eyesniper2.skrayfall.Core;
@@ -41,7 +42,8 @@ public class EffEditIdScore extends Effect {
     protected void execute(Event evt) {
         String testId = id.getSingle(evt).replace("\"", "");
         if (Core.sbManager.getScore(testId) != null) {
-            Core.sbManager.updateSingleScore(testId, newName.getSingle(evt).replace("\"", ""),
+            Core.sbManager.updateSingleScore(testId,
+                    Utils.replaceChatStyles(newName.getSingle(evt).replace("\"", "")),
                     slot.getSingle(evt).intValue());
         } else {
             Skript.error("The score id " + testId + " does not exist!");

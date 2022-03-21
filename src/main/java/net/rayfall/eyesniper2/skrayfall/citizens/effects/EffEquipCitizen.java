@@ -20,10 +20,6 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.eclipse.jdt.annotation.Nullable;
 
-import static org.bukkit.Material.GOLD_HELMET;
-import static org.bukkit.Material.GOLD_HELMET;
-import static org.bukkit.Material.GOLD_HELMET;
-
 @Name("Equip Citizen")
 @Description({"Give citizens:",
         "* Tools",
@@ -56,28 +52,28 @@ public class EffEquipCitizen extends Effect {
         switch (item.getSingle(evt).getType()) {
             case LEATHER_BOOTS:
             case IRON_BOOTS:
-            case GOLD_BOOTS:
+            case GOLDEN_BOOTS:
             case CHAINMAIL_BOOTS:
             case DIAMOND_BOOTS:
                 slot = EquipmentSlot.BOOTS;
                 break;
             case LEATHER_LEGGINGS:
             case IRON_LEGGINGS:
-            case GOLD_LEGGINGS:
+            case GOLDEN_LEGGINGS:
             case CHAINMAIL_LEGGINGS:
             case DIAMOND_LEGGINGS:
                 slot = EquipmentSlot.LEGGINGS;
                 break;
             case LEATHER_CHESTPLATE:
             case IRON_CHESTPLATE:
-            case GOLD_CHESTPLATE:
+            case GOLDEN_CHESTPLATE:
             case CHAINMAIL_CHESTPLATE:
             case DIAMOND_CHESTPLATE:
                 slot = EquipmentSlot.CHESTPLATE;
                 break;
             case LEATHER_HELMET:
             case IRON_HELMET:
-            case GOLD_HELMET:
+            case GOLDEN_HELMET:
             case CHAINMAIL_HELMET:
             case DIAMOND_HELMET:
                 slot = EquipmentSlot.HELMET;

@@ -43,7 +43,7 @@ public class ScrubEntityType {
             case "ocelot":
                 return EntityType.OCELOT;
             case "pig zombie":
-                return EntityType.PIG_ZOMBIE;
+                return EntityType.ZOMBIFIED_PIGLIN;
             case "sheep":
                 return EntityType.SHEEP;
             case "silverfish":

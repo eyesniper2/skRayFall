@@ -4,7 +4,6 @@ import ch.njol.skript.Skript;
 import de.slikey.effectlib.EffectManager;
 import net.coreprotect.CoreProtectAPI;
 import net.gravitydevelopment.updater.Updater;
-import net.gravitydevelopment.updater.Updater.UpdateResult;
 import net.rayfall.eyesniper2.skrayfall.bossbar.BossBarManager;
 import net.rayfall.eyesniper2.skrayfall.bossbarapi.BossBarApiSyntaxManager;
 import net.rayfall.eyesniper2.skrayfall.capes.CapesSyntaxManager;
@@ -111,7 +110,7 @@ public class Core extends JavaPlugin implements Listener {
         if (getConfig().getBoolean("UpdateAlerts", false)) {
             Updater updater =
                     new Updater(this, 88677, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, true);
-            if (updater.getResult() == UpdateResult.UPDATE_AVAILABLE) {
+            if (updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE) {
                 getServer().getConsoleSender().sendMessage("[" + ChatColor.DARK_AQUA + "skRayFall"
                         + ChatColor.RESET + "] " + ChatColor.RED + "An update for skRayFall is available!");
             }
@@ -122,9 +121,16 @@ public class Core extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         getLogger().info("Bacon has been eaten. Make some more soon!");
+
         HoloManager.dumpHoloMap();
-        rayfallEffectManager.dumpData();
-        sbManager.dumpData();
+        if (rayfallEffectManager != null) {
+            rayfallEffectManager.dumpData();
+        }
+
+        if (sbManager != null) {
+            sbManager.dumpData();
+        }
+
         if (bossbarManager != null) {
             bossbarManager.dumpData();
         }

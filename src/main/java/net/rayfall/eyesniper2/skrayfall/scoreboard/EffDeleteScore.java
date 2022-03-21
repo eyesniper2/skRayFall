@@ -6,6 +6,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import org.bukkit.entity.Player;
@@ -44,8 +45,8 @@ public class EffDeleteScore extends Effect {
         } else {
             if (player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR) != null) {
                 if (player.getSingle(evt).getScoreboard().getObjective(DisplaySlot.SIDEBAR)
-                        .getScore(name.getSingle(evt).replace("\"", "")) != null) {
-                    player.getSingle(evt).getScoreboard().resetScores(name.getSingle(evt).replace("\"", ""));
+                        .getScore(Utils.replaceChatStyles(name.getSingle(evt).replace("\"", ""))) != null) {
+                    player.getSingle(evt).getScoreboard().resetScores(Utils.replaceChatStyles(name.getSingle(evt).replace("\"", "")));
                 } else {
                     Skript.error("That score does not exist!");
                 }

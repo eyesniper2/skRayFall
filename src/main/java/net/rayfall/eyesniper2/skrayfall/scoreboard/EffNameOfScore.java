@@ -6,6 +6,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import org.bukkit.entity.Player;
@@ -52,11 +53,11 @@ public class EffNameOfScore extends Effect {
             try {
                 if (p.getScoreboard().getObjective("sidebarHold") != null) {
                     Objective objective = p.getScoreboard().getObjective(DisplaySlot.SIDEBAR);
-                    objective.setDisplayName(name.getSingle(evt).replace("\"", ""));
+                    objective.setDisplayName(Utils.replaceChatStyles(name.getSingle(evt).replace("\"", "")));
                 } else {
                     Objective objectiveh = p.getScoreboard().registerNewObjective("sidebarHold", "dummy");
                     objectiveh.setDisplaySlot(DisplaySlot.SIDEBAR);
-                    objectiveh.setDisplayName(name.getSingle(evt).replace("\"", ""));
+                    objectiveh.setDisplayName(Utils.replaceChatStyles(name.getSingle(evt).replace("\"", "")));
                 }
             } catch (IllegalArgumentException e){
                 Skript.error(e.getLocalizedMessage());

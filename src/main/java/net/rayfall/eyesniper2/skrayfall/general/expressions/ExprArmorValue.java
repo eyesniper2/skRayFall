@@ -29,7 +29,7 @@ public class ExprArmorValue extends SimplePropertyExpression<Player, Number> {
                 armorValue = armorValue.doubleValue() + 0.5;
             } else if (evt.getInventory().getBoots().getType() == Material.IRON_BOOTS) {
                 armorValue = armorValue.doubleValue() + 1;
-            } else if (evt.getInventory().getBoots().getType() == Material.GOLD_BOOTS) {
+            } else if (evt.getInventory().getBoots().getType() == Material.GOLDEN_BOOTS) {
                 armorValue = armorValue.doubleValue() + 0.5;
             } else if (evt.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
                 armorValue = armorValue.doubleValue() + 1.5;
@@ -43,7 +43,7 @@ public class ExprArmorValue extends SimplePropertyExpression<Player, Number> {
                 armorValue = armorValue.doubleValue() + 2;
             } else if (evt.getInventory().getLeggings().getType() == Material.IRON_LEGGINGS) {
                 armorValue = armorValue.doubleValue() + 2.5;
-            } else if (evt.getInventory().getLeggings().getType() == Material.GOLD_LEGGINGS) {
+            } else if (evt.getInventory().getLeggings().getType() == Material.GOLDEN_LEGGINGS) {
                 armorValue = armorValue.doubleValue() + 1.5;
             } else if (evt.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
                 armorValue = armorValue.doubleValue() + 3;
@@ -57,7 +57,7 @@ public class ExprArmorValue extends SimplePropertyExpression<Player, Number> {
                 armorValue = armorValue.doubleValue() + 2.5;
             } else if (evt.getInventory().getChestplate().getType() == Material.IRON_CHESTPLATE) {
                 armorValue = armorValue.doubleValue() + 3;
-            } else if (evt.getInventory().getChestplate().getType() == Material.GOLD_CHESTPLATE) {
+            } else if (evt.getInventory().getChestplate().getType() == Material.GOLDEN_CHESTPLATE) {
                 armorValue = armorValue.doubleValue() + 2.5;
             } else if (evt.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
                 armorValue = armorValue.doubleValue() + 4;
@@ -71,7 +71,7 @@ public class ExprArmorValue extends SimplePropertyExpression<Player, Number> {
                 armorValue = armorValue.doubleValue() + 1;
             } else if (evt.getInventory().getHelmet().getType() == Material.IRON_HELMET) {
                 armorValue = armorValue.doubleValue() + 1;
-            } else if (evt.getInventory().getHelmet().getType() == Material.GOLD_HELMET) {
+            } else if (evt.getInventory().getHelmet().getType() == Material.GOLDEN_HELMET) {
                 armorValue = armorValue.doubleValue() + 1;
             } else if (evt.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) {
                 armorValue = armorValue.doubleValue() + 1.5;

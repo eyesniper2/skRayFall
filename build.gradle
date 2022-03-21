@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.6.10'
     repositories {
         mavenCentral()
     }
@@ -10,10 +10,10 @@ buildscript {
 
 buildscript {
     repositories {
-        jcenter()
+        gradlePluginPortal()
     }
     dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
+        classpath 'gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0'
     }
 }
 
@@ -24,62 +24,63 @@ apply plugin: "kotlin"
 compileJava.options.encoding = 'UTF-8'
 compileTestJava.options.encoding = 'UTF-8'
 
+// compileJava.options.verbose = true
+
 group = 'net.rayfall.eyesniper2.skrayfall'
-version = '1.9.25'
+version = '1.9.27'
 
 description = """"""
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-
 repositories {
-     jcenter()
-     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots" }
-     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
-     maven { url "http://repo.citizensnpcs.co/" }
-     maven { url "https://repo.codemc.org/repository/maven-public" }
-     maven { url "http://maven.elmakers.com/repository/" }
-     maven { url "https://repo1.maven.org/maven2/" }
-     maven { url "http://repo.gravitydevelopment.net" }
-     maven { url "https://repo.inventivetalent.org/content/groups/public/" }
-     maven { url 'https://repo.destroystokyo.com/repository/maven-public/' }
-     maven { url 'https://jitpack.io' }
+    mavenCentral()
+    maven {
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+        }
+    }
+    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+    maven { url "https://repo.citizensnpcs.co/" }
+    maven { url "https://repo.codemc.org/repository/maven-public" }
+    maven {
+        url "http://maven.elmakers.com/repository/"
+        allowInsecureProtocol true
+    }
+    maven { url "https://repo1.maven.org/maven2/" }
+    maven { url "https://repo.inventivetalent.org/content/groups/public/" }
+    maven { url 'https://repo.destroystokyo.com/repository/maven-public/' }
+    maven { url 'https://ci.emc.gs/nexus/content/groups/aikar/' }
+    maven { url 'https://papermc.io/repo/repository/maven-public/' }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
+    implementation 'com.github.SkriptLang:Skript:2.5.3'
+    implementation group: 'org.bstats', name: 'bstats-bukkit', version:'1.7'
+    implementation group: 'de.slikey', name: 'EffectLib', version:'6.5-SNAPSHOT'
+    implementation 'com.github.gravitylow:Updater:2.3'
+    implementation group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version:'1.1.0'
 
-    implementation 'com.github.SkriptLang:Skript:2.5-beta2'
+    implementation group: 'org.spigotmc', name: 'spigot', version:'1.18-R0.1-SNAPSHOT'
 
-    compile group: 'org.bstats', name: 'bstats-bukkit', version:'1.7'
-    compile group: 'de.slikey', name: 'EffectLib', version:'6.3'
+    testImplementation group: 'org.jetbrains.kotlin', name: 'kotlin-test', version:"$kotlin_version"
 
-    compile group: 'com.github.gravitylow', name: 'Updater', version:'2.3'
-
-    compileOnly group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version:'1.1.0'
-    compile group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk8', version:"$kotlin_version"
-
-    testCompile group: 'org.jetbrains.kotlin', name: 'kotlin-test', version:"$kotlin_version"
-
-    compileOnly group: 'org.spigotmc', name: 'spigot-api', version:'1.16.4-R0.1-SNAPSHOT'
-    compileOnly group: 'org.inventivetalent', name: 'bossbarapi', version:'2.4.1'
-    compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version:'2.0.25-SNAPSHOT'
+    compileOnly 'com.github.InventivetalentDev:BossBarAPI:2.4.3-SNAPSHOT'
+    compileOnly group: 'net.citizensnpcs', name: 'citizensapi', version:'2.0.28-SNAPSHOT'
 
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
 
 shadowJar {
     dependencies {
         include dependency('com.github.gravitylow:Updater')
         include dependency('org.bstats:bstats-bukkit')
-        include dependency('de.slikey:EffectLib:6.3')
+        include dependency('de.slikey:EffectLib:6.5-SNAPSHOT')
         include dependency("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     }
-    configurations = [project.configurations.compile]
     relocate 'org.bstats', 'net.rayfall.eyesniper2.skRayFall'
     relocate 'net.gravitydevelopment.updater', 'net.rayfall.eyesniper2.skRayFall'
     relocate 'de.slikey', 'net.rayfall.eyesniper2.skRayFall'

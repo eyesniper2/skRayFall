@@ -6,6 +6,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import net.rayfall.eyesniper2.skrayfall.Core;
@@ -54,7 +55,7 @@ public class EffSetIdBasedScore extends Effect {
         } else {
             Scoreboard sb = player.getSingle(evt).getScoreboard();
             Objective objective = sb.getObjective(DisplaySlot.SIDEBAR);
-            Score score = objective.getScore(name.getSingle(evt).replace("\"", ""));
+            Score score = objective.getScore(Utils.replaceChatStyles(name.getSingle(evt).replace("\"", "")));
             score.setScore(num.getSingle(evt).intValue());
             Core.sbManager.setScoreId(id.getSingle(evt).replace("\"", ""), score, player.getSingle(evt));
         }

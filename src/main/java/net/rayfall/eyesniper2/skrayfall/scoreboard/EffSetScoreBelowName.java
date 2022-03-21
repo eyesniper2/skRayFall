@@ -6,6 +6,7 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Utils;
 import ch.njol.util.Kleenean;
 
 import org.bukkit.entity.Player;
@@ -58,7 +59,7 @@ public class EffSetScoreBelowName extends Effect {
         }
         else {
             int value = num.getSingle(evt).intValue();
-            String displayName = name.getSingle(evt).replace("\"", "");
+            String displayName = Utils.replaceChatStyles(name.getSingle(evt).replace("\"", ""));
             for(Player target : targets.getAll(evt)){
                 if (target.getScoreboard().getObjective("bottomHold") != null) {
                     Objective objective =
