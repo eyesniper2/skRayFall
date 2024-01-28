@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Set the style of an ID based Bossbar.")
 public class EffChangeBossBarStyle extends Effect {
 
-    // (set|edit) bossbar %string% style to %bossbarstyle%
+    // (set|edit) bossbar %string% style to %skrayfallbossbarstyle%
 
     private Expression<RayFallBarStyle> style;
     private Expression<String> id;

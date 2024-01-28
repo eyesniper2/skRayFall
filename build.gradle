@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.6.10'
+    ext.kotlin_version = '1.6.21'
     repositories {
         mavenCentral()
     }
@@ -27,7 +27,7 @@ compileTestJava.options.encoding = 'UTF-8'
 // compileJava.options.verbose = true
 
 group = 'net.rayfall.eyesniper2.skrayfall'
-version = '1.9.27'
+version = '1.9.29'
 
 description = """"""
 
@@ -48,6 +48,7 @@ repositories {
         url "http://maven.elmakers.com/repository/"
         allowInsecureProtocol true
     }
+    maven { url "https://maven.playpro.com" }
     maven { url "https://repo1.maven.org/maven2/" }
     maven { url "https://repo.inventivetalent.org/content/groups/public/" }
     maven { url 'https://repo.destroystokyo.com/repository/maven-public/' }
@@ -61,6 +62,7 @@ dependencies {
     implementation group: 'org.bstats', name: 'bstats-bukkit', version:'1.7'
     implementation group: 'de.slikey', name: 'EffectLib', version:'6.5-SNAPSHOT'
     implementation 'com.github.gravitylow:Updater:2.3'
+    implementation 'net.coreprotect:coreprotect:21.2'
     implementation group: 'org.eclipse.jdt', name: 'org.eclipse.jdt.annotation', version:'1.1.0'
 
     implementation group: 'org.spigotmc', name: 'spigot', version:'1.18-R0.1-SNAPSHOT'

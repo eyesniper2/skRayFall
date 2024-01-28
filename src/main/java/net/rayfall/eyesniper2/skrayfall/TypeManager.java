@@ -30,7 +30,7 @@ public class TypeManager implements SyntaxManagerInterface{
     }
 
     private void registerV1_9Elements() {
-        Classes.registerClass(new ClassInfo<>(RayFallBarColor.class, "bossbarcolor")
+        Classes.registerClass(new ClassInfo<>(RayFallBarColor.class, "skrayfallbossbarcolor")
                 .parser(new Parser<RayFallBarColor>() {
                     @Override
                     public String getVariableNamePattern() {
@@ -61,7 +61,7 @@ public class TypeManager implements SyntaxManagerInterface{
                 .description("A data type to call the colors for the new 1.9 bossbars.")
                 .usage("blue, green, pink, purple, red, white or yellow")
         );
-        Classes.registerClass(new ClassInfo<>(RayFallBarFlag.class, "bossbarflag")
+        Classes.registerClass(new ClassInfo<>(RayFallBarFlag.class, "skrayfallbossbarflag")
                 .parser(new Parser<RayFallBarFlag>() {
                     @Override
                     public String getVariableNamePattern() {
@@ -92,7 +92,7 @@ public class TypeManager implements SyntaxManagerInterface{
                 .description("Bar Flags to support the new 1.9 bossbars.")
                 .usage("create fog, darken sky or play boss music")
         );
-        Classes.registerClass(new ClassInfo<>(RayFallBarStyle.class, "bossbarstyle")
+        Classes.registerClass(new ClassInfo<>(RayFallBarStyle.class, "skrayfallbossbarstyle")
                 .parser(new Parser<RayFallBarStyle>() {
                     @Override
                     public String getVariableNamePattern() {

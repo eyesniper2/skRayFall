@@ -16,7 +16,7 @@ import org.eclipse.jdt.annotation.Nullable;
 @Description("Add a flag to a ID based Bossbar.")
 public class EffBossBarAddFlag extends Effect {
 
-    // (add|set)[a|the] flag %bossbarflags% to bossbar %string%
+    // (add|set)[a|the] flag %skrayfallbossbarflags% to bossbar %string%
 
     private Expression<RayFallBarFlag> flag;
     private Expression<String> id;

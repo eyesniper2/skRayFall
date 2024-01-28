@@ -24,8 +24,8 @@ import org.eclipse.jdt.annotation.Nullable;
 public class EffCreateModernBossBar extends Effect {
 
     // create (bossbar|boss bar) title[d] %string% and id %string% for %players% [with
-    // (value|progress) %number%] [with colors %-bossbarcolors%] [with style %-bossbarstyle%] [with
-    // flags %-bossbarflags%]
+    // (value|progress) %number%] [with colors %-skrayfallbossbarcolors%] [with style %-skrayfallbossbarstyle%] [with
+    // flags %-skrayfallbossbarflags%]
 
     private Expression<String> id;
     private Expression<String> title;

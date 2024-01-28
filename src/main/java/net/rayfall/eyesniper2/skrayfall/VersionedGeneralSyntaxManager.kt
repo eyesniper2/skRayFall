@@ -152,8 +152,8 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             // New bossbar content
             Skript.registerEffect(EffCreateModernBossBar::class.java,
                     "create (bossbar|boss bar) title[d] %string% and id %string% for %players% "
-                            + "[with (value|progress) %number%] [with colors %-bossbarcolor%] "
-                            + "[with style %-bossbarstyle%] [with flags %-bossbarflag%]")
+                            + "[with (value|progress) %number%] [with colors %-skrayfallbossbarcolor%] "
+                            + "[with style %-skrayfallbossbarstyle%] [with flags %-skrayfallbossbarflag%]")
             Skript.registerEffect(EffDeleteModernBossBar::class.java, "(remove|destroy) bossbar %string%")
             Skript.registerEffect(EffRemovePlayerFromBossBar::class.java,
                     "remove %players% [from] bossbar %string%")
@@ -163,15 +163,15 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEffect(EffChangeBossBarValue::class.java,
                     "(set|edit) bossbar %string% (value|progress) to %number%")
             Skript.registerEffect(EffChangeBossBarColor::class.java,
-                    "(set|edit) bossbar %string% colo[u]r to %bossbarcolor%")
+                    "(set|edit) bossbar %string% colo[u]r to %skrayfallbossbarcolor%")
             Skript.registerEffect(EffChangeBossBarTitle::class.java,
                     "(set|edit) bossbar %string% (title|name) to %string%")
             Skript.registerEffect(EffChangeBossBarStyle::class.java,
-                    "(set|edit) bossbar %string% style to %bossbarstyle%")
+                    "(set|edit) bossbar %string% style to %skrayfallbossbarstyle%")
             Skript.registerEffect(EffBossBarAddFlag::class.java,
-                    "(add|set) [a] [the] flag %bossbarflag% to [the] bossbar %string%")
+                    "(add|set) [a] [the] flag %skrayfallbossbarflag% to [the] bossbar %string%")
             Skript.registerEffect(EffBossBarRemoveFlag::class.java,
-                    "(remove|delete) [a] [the] flag %bossbarflag% [to] [from] [the] bossbar %string%")
+                    "(remove|delete) [a] [the] flag %skrayfallbossbarflag% [to] [from] [the] bossbar %string%")
             Skript.registerEffect(EffBossBarShow::class.java, "(show|display|unhide) bossbar %string%")
             Skript.registerEffect(EffBossBarHide::class.java, "hide bossbar %string%")
             Skript.registerExpression(ExprBossBarTitle::class.java, String::class.java, ExpressionType.SIMPLE,
