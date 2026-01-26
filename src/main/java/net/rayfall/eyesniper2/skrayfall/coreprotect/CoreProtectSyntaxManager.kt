@@ -28,7 +28,7 @@ class CoreProtectSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             }
 
             skCoreProtect = coreProtect
-            plugin.logger.info("Cooking bacon for the CoreProtect loggers.")
+            plugin.logger.info("Enabling CoreProtect support")
             Skript.registerCondition(CondIsNaturalCoreProtect::class.java, "%block% is natural")
             Skript.registerCondition(CondIsNotNaturalCoreProtect::class.java, "%block% is not natural")
         }

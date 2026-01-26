@@ -21,7 +21,6 @@ Currently skRayFall adds over 100 extremely powerful syntax elements to the skri
 * [EffectLib](http://dev.bukkit.org/bukkit-plugins/effectlib/)
 * [Holographic Displays](http://dev.bukkit.org/bukkit-plugins/holographic-displays/)
 * [Votifier](http://dev.bukkit.org/bukkit-plugins/votifier/)
-* [BossBarAPI](https://www.spigotmc.org/resources/api-bossbarapi-1-7-1-8.7504/)
 * [Capes](https://www.spigotmc.org/resources/capes.9068/)
 * [CoreProtect](http://dev.bukkit.org/bukkit-plugins/coreprotect/)
 

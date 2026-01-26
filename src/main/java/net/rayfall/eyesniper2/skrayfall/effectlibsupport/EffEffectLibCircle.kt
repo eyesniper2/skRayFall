@@ -6,15 +6,14 @@ import ch.njol.skript.doc.Name
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
-import ch.njol.skript.util.VisualEffect
 import ch.njol.util.Kleenean
 import de.slikey.effectlib.effect.CircleEffect
 import de.slikey.effectlib.util.DynamicLocation
 import net.rayfall.eyesniper2.skrayfall.Core
 import org.bukkit.Location
-import org.bukkit.Particle
 import org.bukkit.entity.Entity
 import org.bukkit.event.Event
+import org.skriptlang.skript.bukkit.particles.particleeffects.ParticleEffect
 
 @Name("Circle Effect")
 @Description("Creates an EffectLib circle effect.")
@@ -25,14 +24,14 @@ class EffEffectLibCircle : Effect() {
 
     private var targetExpression: Expression<*>? = null
     private var idExpression: Expression<String>? = null
-    private var particleExpression: Expression<VisualEffect>? = null
+    private var particleExpression: Expression<ParticleEffect>? = null
     private var radiusExpression: Expression<Number>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(exp: Array<Expression<*>?>, arg1: Int, arg2: Kleenean, arg3: SkriptParser.ParseResult): Boolean {
         targetExpression = exp[0]
         idExpression = exp[1] as Expression<String>?
-        particleExpression = exp[2] as? Expression<VisualEffect>?
+        particleExpression = exp[2] as? Expression<ParticleEffect>?
         radiusExpression = exp[3] as Expression<Number>?
         return true
     }

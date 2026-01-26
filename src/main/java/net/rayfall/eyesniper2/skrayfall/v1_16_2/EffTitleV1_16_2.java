@@ -59,7 +59,7 @@ public class EffTitleV1_16_2 extends Effect {
     protected void execute(Event evt) {
         int timeTick = 60;
         if (time != null) {
-            timeTick = time.getSingle(evt).getTicks();
+            timeTick = (int) time.getSingle(evt).getTicks();
         }
 
         for (Player p : player.getAll(evt)) {
@@ -67,15 +67,15 @@ public class EffTitleV1_16_2 extends Effect {
 
             if (fadeIn != null && fadeOut != null) {
                 PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, null,
-                        fadeIn.getSingle(evt).getTicks(), timeTick, fadeOut.getSingle(evt).getTicks());
+                        (int) fadeIn.getSingle(evt).getTicks(), timeTick, (int) fadeOut.getSingle(evt).getTicks());
                 connection.sendPacket(packetPlayOutTimes);
             } else if (fadeIn == null && fadeOut != null) {
                 PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, null,
-                        5, timeTick, fadeOut.getSingle(evt).getTicks());
+                        5, timeTick, (int) fadeOut.getSingle(evt).getTicks());
                 connection.sendPacket(packetPlayOutTimes);
             } else if (fadeIn != null && fadeOut == null) {
                 PacketPlayOutTitle packetPlayOutTimes = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TIMES, null,
-                        fadeIn.getSingle(evt).getTicks(), timeTick, 5);
+                        (int) fadeIn.getSingle(evt).getTicks(), timeTick, 5);
                 connection.sendPacket(packetPlayOutTimes);
             } else {
                 PacketPlayOutTitle packetPlayOutTimes =

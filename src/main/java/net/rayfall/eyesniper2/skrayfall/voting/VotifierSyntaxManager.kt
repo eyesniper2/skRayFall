@@ -12,7 +12,7 @@ import org.eclipse.jdt.annotation.Nullable
 class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
     override fun registerSyntax() {
         if (plugin.server.pluginManager.isPluginEnabled("Votifier")) {
-            plugin.logger.info("Getting more bacon for the Votifier runners!")
+            plugin.logger.info("Enabling Votifier support")
             RayFallVoteListener(plugin)
             Skript.registerEvent("On Vote", SimpleEvent::class.java, RayFallVoteEvent::class.java, "vote[ing]")
                     .description("Check server vote by:",
@@ -74,7 +74,7 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                         }
                     }, 0)
         } else {
-            plugin.logger.info("No Votifier Found! *Checks oven for finished bacon*")
+            plugin.logger.info("No Votifier Found")
         }
     }
 }

@@ -1,6 +1,5 @@
 package net.rayfall.eyesniper2.skrayfall.bossbar;
 
-import ch.njol.skript.Skript;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;

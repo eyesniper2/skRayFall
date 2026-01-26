@@ -3,9 +3,7 @@ package net.rayfall.eyesniper2.skrayfall;
 import ch.njol.skript.Skript;
 import de.slikey.effectlib.EffectManager;
 import net.coreprotect.CoreProtectAPI;
-import net.gravitydevelopment.updater.Updater;
 import net.rayfall.eyesniper2.skrayfall.bossbar.BossBarManager;
-import net.rayfall.eyesniper2.skrayfall.bossbarapi.BossBarApiSyntaxManager;
 import net.rayfall.eyesniper2.skrayfall.capes.CapesSyntaxManager;
 import net.rayfall.eyesniper2.skrayfall.citizens.CitizensSyntaxManager;
 import net.rayfall.eyesniper2.skrayfall.commands.GeneralCommands;
@@ -48,8 +46,7 @@ public class Core extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        getLogger().info("Yay! You are running skRayFall " + this.getDescription().getVersion() + "!");
-        getLogger().info("Nathan and Lewis <3 you.");
+        getLogger().info("Enabling skRayFall " + this.getDescription().getVersion());
 
         getServer().getPluginManager().registerEvents(this, this);
         Skript.registerAddon(this);
@@ -59,8 +56,6 @@ public class Core extends JavaPlugin implements Listener {
         if (plugin == null) {
             plugin = this;
         }
-
-        getLogger().info("Cooking Bacon...");
 
         Metrics metrics = new Metrics(this, bStatsId);
 
@@ -84,9 +79,6 @@ public class Core extends JavaPlugin implements Listener {
 
         CrackshotSyntaxManager crackshotSyntaxManager = new CrackshotSyntaxManager(this);
         crackshotSyntaxManager.registerSyntax();
-
-        BossBarApiSyntaxManager bossBarApiSyntaxManager = new BossBarApiSyntaxManager(this);
-        bossBarApiSyntaxManager.registerSyntax();
 
         CapesSyntaxManager capesSyntaxManager = new CapesSyntaxManager(this);
         capesSyntaxManager.registerSyntax();
@@ -115,12 +107,12 @@ public class Core extends JavaPlugin implements Listener {
                         + ChatColor.RESET + "] " + ChatColor.RED + "An update for skRayFall is available!");
             }
         }
-        getLogger().info("Bacon is ready!");
+        getLogger().info("skRayFall is ready");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Bacon has been eaten. Make some more soon!");
+        getLogger().info("Disabling skRayFall");
 
         HoloManager.dumpHoloMap();
         if (rayfallEffectManager != null) {

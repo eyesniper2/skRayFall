@@ -56,7 +56,7 @@ public class EffEffectImage extends Effect {
         } else {
             assert false;
         }
-        Boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
+        boolean check = Core.rayfallEffectManager.setEffect(effect, id.getSingle(evt).replace("\"", ""));
         if (!check) {
             effect.cancel();
         }

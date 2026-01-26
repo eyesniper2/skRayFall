@@ -6,32 +6,31 @@ import ch.njol.skript.doc.Name
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
-import ch.njol.skript.util.VisualEffect
 import ch.njol.util.Kleenean
 import de.slikey.effectlib.effect.WaveEffect
 import de.slikey.effectlib.util.DynamicLocation
 import net.rayfall.eyesniper2.skrayfall.Core
 import org.bukkit.Location
-import org.bukkit.Particle
 import org.bukkit.entity.Entity
 import org.bukkit.event.Event
+import org.skriptlang.skript.bukkit.particles.particleeffects.ParticleEffect
 
 @Name("Wave Effect")
 @Description("Creates an EffectLib wave effect.")
 class EffEffectLibWave : Effect() {
 
     // (spawn|create|apply) (a|the|an) wave (effect|formation) at %entity/location% with id %string%
-    // [with particle[s] %-effectlibparticle%]
+    // [with particle[s] %-particles%]
 
     private var targetExpression: Expression<*>? = null
     private var idExpression: Expression<String>? = null
-    private var particleExpression: Expression<VisualEffect>? = null
+    private var particleExpression: Expression<ParticleEffect>? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun init(exp: Array<Expression<*>?>, arg1: Int, arg2: Kleenean, arg3: SkriptParser.ParseResult): Boolean {
         targetExpression = exp[0]
         idExpression = exp[1] as Expression<String>?
-        particleExpression = exp[2] as? Expression<VisualEffect>?
+        particleExpression = exp[2] as? Expression<ParticleEffect>?
         return true
     }
 

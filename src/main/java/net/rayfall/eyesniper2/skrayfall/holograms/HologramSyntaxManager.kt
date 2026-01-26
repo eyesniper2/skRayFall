@@ -14,7 +14,7 @@ class HologramSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
     override fun registerSyntax() {
         if (plugin.server.pluginManager.isPluginEnabled("HolographicDisplays")) {
-            plugin.logger.info("Bacon holograms found")
+            plugin.logger.info("Enabling holograms")
             Skript.registerEffect(EffTimedHologram::class.java,
                     "create hologram %string% at %location% for %timespan%")
             Skript.registerEffect(EffTimedBindedHolo::class.java,
@@ -83,7 +83,7 @@ class HologramSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                         }
                     }, 0)
             if (plugin.server.pluginManager.isPluginEnabled("ProtocolLib")) {
-                plugin.logger.info("Client Side bacon holograms enabled")
+                plugin.logger.info("Enabling client side holograms")
                 Skript.registerEffect(EffCreateInteractiveStaticClientSideHolograms::class.java,
                         "create interactive client side holo object %string% with id %string% at " + "%location% to %player%")
                 Skript.registerEffect(EffTimedClientSideHolo::class.java,

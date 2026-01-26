@@ -6,7 +6,6 @@ import ch.njol.skript.doc.Name
 import ch.njol.skript.lang.Effect
 import ch.njol.skript.lang.Expression
 import ch.njol.skript.lang.SkriptParser
-import ch.njol.skript.util.VisualEffect
 import ch.njol.util.Kleenean
 import de.slikey.effectlib.effect.ArcEffect
 import de.slikey.effectlib.util.DynamicLocation
@@ -14,6 +13,7 @@ import net.rayfall.eyesniper2.skrayfall.Core
 import org.bukkit.Location
 import org.bukkit.entity.Entity
 import org.bukkit.event.Event
+import org.skriptlang.skript.bukkit.particles.particleeffects.ParticleEffect
 
 @Name("Arc Effect")
 @Description("Creates an EffectLib arc effect.")
@@ -26,7 +26,7 @@ class EffEffectLibArc : Effect() {
     private var startExpression: Expression<*>? = null
     private var endExpression: Expression<*>? = null
     private var idExpression: Expression<String>? = null
-    private var particleExpression: Expression<VisualEffect>? = null
+    private var particleExpression: Expression<ParticleEffect>? = null
     private var heightExpression: Expression<Number?>? = null
     private var numberOfParticlesExpression: Expression<Number?>? = null
 
@@ -35,7 +35,7 @@ class EffEffectLibArc : Effect() {
         startExpression = exp[0]
         endExpression = exp[1]
         idExpression = exp[2] as Expression<String>
-        particleExpression = exp[3] as? Expression<VisualEffect>
+        particleExpression = exp[3] as? Expression<ParticleEffect>
         heightExpression = exp[4] as Expression<Number?>
         numberOfParticlesExpression = exp[5] as Expression<Number?>
         return true

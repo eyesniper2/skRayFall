@@ -91,7 +91,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
 
     override fun registerSyntax() {
         if (Skript.isRunningMinecraft(1, 8)) {
-            plugin.logger.info("Enabling general 1.8+ bacon!")
+            plugin.logger.info("Enabling 1.8+ support")
             Skript.registerExpression(ExprShinyItem::class.java, ItemStack::class.java, ExpressionType.PROPERTY,
                     "shiny %itemstacks%")
             Skript.registerExpression(ExprNoNbt::class.java, ItemStack::class.java, ExpressionType.PROPERTY,
@@ -115,7 +115,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     }, 0)
         }
         if (Skript.getMinecraftVersion().compareTo(Version(1, 8)) == 0) {
-            plugin.logger.info("Getting all the special 1.8 bacon!")
+            plugin.logger.info("Enabling 1.8 support")
             Skript.registerEffect(EffTitleV1_8::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_8::class.java,
@@ -126,7 +126,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion().compareTo(Version(1, 8, 3)) == 0) {
-            plugin.logger.info("Getting the extra special 1.8.3 bacon!")
+            plugin.logger.info("Enabling 1.8.3 support")
             Skript.registerEffect(EffTitleV1_8_3::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_8_3::class.java,
@@ -137,7 +137,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 8, 4) && Skript.getMinecraftVersion() <= Version(1, 8, 8)) {
-            plugin.logger.info("Getting the extra special 1.8.4 - 1.8.8 bacon!")
+            plugin.logger.info("Enabling 1.8.4 - 1.8.8 support")
             Skript.registerEffect(EffTitleV1_8_4::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_8_4::class.java,
@@ -148,7 +148,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.isRunningMinecraft(1, 9)) {
-            plugin.logger.info("Getting the general 1.9+ bacon!")
+            plugin.logger.info("Enabling 1.9+ support")
             // New bossbar content
             Skript.registerEffect(EffCreateModernBossBar::class.java,
                     "create (bossbar|boss bar) title[d] %string% and id %string% for %players% "
@@ -193,7 +193,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "%player%['s] offhand", "item in %player%['s] offhand")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 9, 0) && Skript.getMinecraftVersion() <= Version(1, 9, 3)) {
-            plugin.logger.info("Getting the extra special 1.9 - 1.9.3 bacon!")
+            plugin.logger.info("Enabling 1.9 - 1.9.3 support")
             Skript.registerEffect(EffTitleV1_9::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_9::class.java,
@@ -204,7 +204,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion().compareTo(Version(1, 9, 4)) == 0) {
-            plugin.logger.info("Getting the extra special 1.9.4 bacon!")
+            plugin.logger.info("Enabling 1.9.4 support")
             Skript.registerEffect(EffTitleV1_9_4::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_9_4::class.java,
@@ -215,7 +215,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 10, 0) && Skript.getMinecraftVersion() <= Version(1, 10, 3)) {
-            plugin.logger.info("Getting the extra special 1.10 - 1.10.2 bacon!")
+            plugin.logger.info("Enabling 1.10 - 1.10.2 support")
             Skript.registerEffect(EffTitleV1_10::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_10::class.java,
@@ -226,7 +226,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 11, 0) && Skript.getMinecraftVersion() < Version(1, 12, 0)) {
-            plugin.logger.info("Getting the extra special 1.11 bacon!")
+            plugin.logger.info("Enabling 1.11 support")
             Skript.registerEffect(EffTitleV1_11::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_11::class.java,
@@ -237,7 +237,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 12, 0) && Skript.getMinecraftVersion() < Version(1, 13, 0)) {
-            plugin.logger.info("Getting the extra special 1.12 bacon!")
+            plugin.logger.info("Enabling 1.12 support")
             Skript.registerEffect(EffTitleV1_12::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_12::class.java,
@@ -248,7 +248,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 13, 0) && Skript.getMinecraftVersion() < Version(1, 13, 1)) {
-            plugin.logger.info("Getting the extra special 1.13 bacon!")
+            plugin.logger.info("Enabling 1.13 support")
             Skript.registerEffect(EffTitleV1_13::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_13::class.java,
@@ -259,7 +259,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 13, 1) && Skript.getMinecraftVersion() < Version(1, 14)) {
-            plugin.logger.info("Getting the extra special 1.13.1 bacon!")
+            plugin.logger.info("Enabling 1.13.1 support")
             Skript.registerEffect(EffTitleV1_13_1::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_13_1::class.java,
@@ -270,7 +270,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 14, 0) && Skript.getMinecraftVersion() < Version(1, 14, 5)) {
-            plugin.logger.info("Getting the extra special 1.14 - 1.14.4 bacon!")
+            plugin.logger.info("Enabling 1.14 - 1.14.4 support")
             Skript.registerEffect(EffTitleV1_14::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_14::class.java,
@@ -281,7 +281,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 15, 0) && Skript.getMinecraftVersion() < Version(1, 15, 3)) {
-            plugin.logger.info("Getting the extra special 1.15 - 1.15.2 bacon!")
+            plugin.logger.info("Enabling 1.15 - 1.15.2 support")
             Skript.registerEffect(EffTitleV1_15::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_15::class.java,
@@ -292,7 +292,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 16, 0) && Skript.getMinecraftVersion() < Version(1, 16, 2)) {
-            plugin.logger.info("Getting the extra special 1.16 - 1.16.2 bacon!")
+            plugin.logger.info("Enabling 1.16 - 1.16.2 support")
             Skript.registerEffect(EffTitleV1_16::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_16::class.java,
@@ -303,7 +303,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 16, 2) && Skript.getMinecraftVersion() < Version(1, 16, 4)) {
-            plugin.logger.info("Getting the extra special 1.16.2 - 1.16.4 bacon!")
+            plugin.logger.info("Enabling 1.16.2 - 1.16.4 support")
             Skript.registerEffect(EffTitleV1_16_2::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_16_2::class.java,
@@ -314,7 +314,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 16, 4) && Skript.getMinecraftVersion() < Version(1, 16, 6)) {
-            plugin.logger.info("Getting the extra special 1.16.4 bacon!")
+            plugin.logger.info("Enabling 1.16.4 support")
             Skript.registerEffect(EffTitleV1_16_3::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_16_3::class.java,
@@ -325,7 +325,7 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
                     "set tab header to %string% and footer to %string% for %player%")
         }
         if (Skript.getMinecraftVersion() >= Version(1, 17, 0)) {
-            plugin.logger.info("Getting the extra special 1.17+ bacon!")
+            plugin.logger.info("Enabling 1.17+ support")
             Skript.registerEffect(EffTitleV1_17::class.java,
                     "send %players% title %string% [with subtitle %-string%] [for %-timespan%] " + "[with %-timespan% fade in and %-timespan% fade out]")
             Skript.registerEffect(EffParticlesV1_17::class.java,

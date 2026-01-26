@@ -5,7 +5,7 @@ website: https://sk.rayfall.net/
 main: net.rayfall.eyesniper2.skrayfall.Core
 version: 1.9.29
 depend: [Skript]
-softdepend: [Citizens, EffectLib, Votifier, ProtocolLib, Builder, HolographicDisplays, Sentry, CrackShot, CoreProtect, BossBarAPI]
+softdepend: [Citizens, EffectLib, Votifier, ProtocolLib, Builder, HolographicDisplays, Sentry, CrackShot, CoreProtect]
 api-version: 1.16
 commands:
   skrayfall:

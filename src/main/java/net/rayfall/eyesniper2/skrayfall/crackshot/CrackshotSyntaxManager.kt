@@ -23,7 +23,7 @@ class CrackshotSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
     override fun registerSyntax() {
         if (plugin.server.pluginManager.isPluginEnabled("CrackShot")) {
-            plugin.logger.info("Giving CrackShot snipers bacon.")
+            plugin.logger.info("Enabling CrackShot support")
             Skript.registerExpression<ExprCrackShotWeapon, ItemStack>(ExprCrackShotWeapon::class.java, ItemStack::class.java, ExpressionType.SIMPLE,
                     "(gun|crackshot weapon) %string%")
             Skript.registerEffect<EffPlaceMine>(EffPlaceMine::class.java,

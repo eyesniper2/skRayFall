@@ -8,7 +8,7 @@ class CapesSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
     override fun registerSyntax() {
         // Capes
         if (plugin.server.pluginManager.isPluginEnabled("Capes")) {
-            plugin.logger.info("Getting heroic cape bacon.")
+            plugin.logger.info("Enabling cape support")
             Skript.registerEffect(EffRemoveCape::class.java, "remove cape of %player%")
             Skript.registerEffect(EffWearCape::class.java, "make %player% wear cape %itemstack%")
         }

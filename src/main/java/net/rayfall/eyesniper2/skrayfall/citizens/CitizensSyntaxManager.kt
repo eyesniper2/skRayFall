@@ -25,7 +25,7 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
     override fun registerSyntax() {
         if (plugin.server.pluginManager.isPluginEnabled("Citizens")) {
-            plugin.logger.info("Getting more bacon for the army of citizens...")
+            plugin.logger.info("Enabling citizens support")
             Skript.registerEffect(EffCreateCitizen::class.java,
                     "create [a] citizen named %string% (at|%direction%) %location% " + "[as (a|an) %entitytypes%]")
             Skript.registerEffect(EffCitizenMove::class.java,
@@ -129,7 +129,7 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                     "(NPC|Citizen)['s] [is] name[d] [is] %string%")
             Skript.registerCondition<CondIsNpc>(CondIsNpc::class.java, "%entity% is [a] (npc|citizen)")
             if (plugin.server.pluginManager.isPluginEnabled("Builder")) {
-                plugin.logger.info("Getting bacon sandwiches for builders!")
+                plugin.logger.info("Enabling builder support")
                 Skript.registerEffect(EffStartBuilderBuild::class.java,
                         "make citizen %number% build %string% at %location% [speed %number%] for %player%")
                 Skript.registerExpression(ExprTopLeftSchematic::class.java, Location::class.java, ExpressionType.SIMPLE,
@@ -139,14 +139,14 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                         "for builder %number% get the location of the bottom right of schematic centered " + "at %location%")
             }
             if (plugin.server.pluginManager.isPluginEnabled("Sentry")) {
-                plugin.logger.info("Roasting bacon for Sentry's!")
+                plugin.logger.info("Enabling Sentry support")
                 Skript.registerEffect(EffSentryProtect::class.java, "set citizen %number% to protect %player%")
                 Skript.registerEffect(EffSentryStopFollow::class.java, "make sentry %number% stop following")
                 Skript.registerEffect(EffSentryFollowDistance::class.java,
                         "set follow[ distance] of citizen %number% to %number%")
             }
         } else {
-            plugin.logger.info("Citizens not found! Sorry you cant make friends, " + "but don't worry we will still be your friend <3")
+            plugin.logger.info("Citizens not found!")
         }
     }
 

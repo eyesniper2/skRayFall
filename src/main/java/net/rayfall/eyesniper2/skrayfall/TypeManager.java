@@ -33,11 +33,6 @@ public class TypeManager implements SyntaxManagerInterface{
         Classes.registerClass(new ClassInfo<>(RayFallBarColor.class, "skrayfallbossbarcolor")
                 .parser(new Parser<RayFallBarColor>() {
                     @Override
-                    public String getVariableNamePattern() {
-                        return ".+";
-                    }
-
-                    @Override
                     @Nullable
                     public RayFallBarColor parse(String value, ParseContext cont) {
                         try {
@@ -64,11 +59,6 @@ public class TypeManager implements SyntaxManagerInterface{
         Classes.registerClass(new ClassInfo<>(RayFallBarFlag.class, "skrayfallbossbarflag")
                 .parser(new Parser<RayFallBarFlag>() {
                     @Override
-                    public String getVariableNamePattern() {
-                        return ".+";
-                    }
-
-                    @Override
                     @Nullable
                     public RayFallBarFlag parse(String value, ParseContext cont) {
                         try {
@@ -94,11 +84,6 @@ public class TypeManager implements SyntaxManagerInterface{
         );
         Classes.registerClass(new ClassInfo<>(RayFallBarStyle.class, "skrayfallbossbarstyle")
                 .parser(new Parser<RayFallBarStyle>() {
-                    @Override
-                    public String getVariableNamePattern() {
-                        return ".+";
-                    }
-
                     @Override
                     @Nullable
                     public RayFallBarStyle parse(String value, ParseContext cont) {
