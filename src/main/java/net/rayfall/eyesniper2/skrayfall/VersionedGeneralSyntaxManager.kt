@@ -100,19 +100,9 @@ class VersionedGeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface
             Skript.registerEvent("armorstand damage", SimpleEvent::class.java, ArmorStandDamageEvent::class.java,
                     "armo[u]r stand damage")
             EventValues.registerEventValue(ArmorStandDamageEvent::class.java, Entity::class.java,
-                    object : Getter<Entity, ArmorStandDamageEvent>() {
-                        @Nullable
-                        override fun get(evt: ArmorStandDamageEvent): Entity {
-                            return evt.armorStand
-                        }
-                    }, 0)
+                { evt -> evt.armorStand }, 0)
             EventValues.registerEventValue(ArmorStandDamageEvent::class.java, Player::class.java,
-                    object : Getter<Player, ArmorStandDamageEvent>() {
-                        @Nullable
-                        override fun get(evt: ArmorStandDamageEvent): Player {
-                            return evt.damager
-                        }
-                    }, 0)
+                { evt -> evt.damager }, 0)
         }
         if (Skript.getMinecraftVersion().compareTo(Version(1, 8)) == 0) {
             plugin.logger.info("Enabling 1.8 support")

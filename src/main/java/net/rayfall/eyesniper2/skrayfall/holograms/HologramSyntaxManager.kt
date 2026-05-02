@@ -4,11 +4,9 @@ import ch.njol.skript.Skript
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.util.SimpleEvent
 import ch.njol.skript.registrations.EventValues
-import ch.njol.skript.util.Getter
 import net.rayfall.eyesniper2.skrayfall.SyntaxManagerInterface
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
-import org.eclipse.jdt.annotation.Nullable
 
 class HologramSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
 
@@ -39,49 +37,19 @@ class HologramSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             Skript.registerExpression(ExprGetHoloLine::class.java, String::class.java, ExpressionType.SIMPLE,
                     "text in line %number% of holo[gram] [object] %string%")
             EventValues.registerEventValue(HoloTouchEvent::class.java, String::class.java,
-                    object : Getter<String, HoloTouchEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloTouchEvent): String {
-                            return evt.holoId
-                        }
-                    }, 0)
+                { evt -> evt.holoId }, 0)
             EventValues.registerEventValue(HoloTouchEvent::class.java, Number::class.java,
-                    object : Getter<Number, HoloTouchEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloTouchEvent): Number {
-                            return evt.lineNumber
-                        }
-                    }, 0)
+                { evt -> evt.lineNumber }, 0)
             EventValues.registerEventValue(HoloTouchEvent::class.java, Player::class.java,
-                    object : Getter<Player, HoloTouchEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloTouchEvent): Player {
-                            return evt.player
-                        }
-                    }, 0)
+                { evt -> evt.player }, 0)
             Skript.registerEvent("hologram pickup", SimpleEvent::class.java, HoloPickupEvent::class.java,
                     "hologram pickup")
             EventValues.registerEventValue(HoloPickupEvent::class.java, String::class.java,
-                    object : Getter<String, HoloPickupEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloPickupEvent): String {
-                            return evt.holoId
-                        }
-                    }, 0)
+                { evt -> evt.holoId }, 0)
             EventValues.registerEventValue(HoloPickupEvent::class.java, Number::class.java,
-                    object : Getter<Number, HoloPickupEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloPickupEvent): Number {
-                            return evt.lineNumber
-                        }
-                    }, 0)
+                { evt -> evt.lineNumber }, 0)
             EventValues.registerEventValue(HoloPickupEvent::class.java, Player::class.java,
-                    object : Getter<Player, HoloPickupEvent>() {
-                        @Nullable
-                        override fun get(evt: HoloPickupEvent): Player {
-                            return evt.player
-                        }
-                    }, 0)
+                { evt -> evt.player }, 0)
             if (plugin.server.pluginManager.isPluginEnabled("ProtocolLib")) {
                 plugin.logger.info("Enabling client side holograms")
                 Skript.registerEffect(EffCreateInteractiveStaticClientSideHolograms::class.java,

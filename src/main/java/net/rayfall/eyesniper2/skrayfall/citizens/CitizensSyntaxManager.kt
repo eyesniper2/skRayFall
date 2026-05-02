@@ -4,7 +4,6 @@ import ch.njol.skript.Skript
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.util.SimpleEvent
 import ch.njol.skript.registrations.EventValues
-import ch.njol.skript.util.Getter
 import net.citizensnpcs.api.event.NPCDeathEvent
 import net.citizensnpcs.api.event.NPCLeftClickEvent
 import net.citizensnpcs.api.event.NPCRightClickEvent
@@ -78,51 +77,23 @@ class CitizensSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
             Skript.registerEvent("NPC/Citizen Right Click", SimpleEvent::class.java, NPCRightClickEvent::class.java,
                     "(NPC|Citizen) right click")
             EventValues.registerEventValue(NPCRightClickEvent::class.java, Player::class.java,
-                    object : Getter<Player, NPCRightClickEvent>() {
-                        override fun get(event: NPCRightClickEvent): Player {
-                            return event.clicker
-                        }
-                    }, 0)
+                { evt -> evt.clicker }, 0)
             EventValues.registerEventValue(NPCRightClickEvent::class.java, NPC::class.java,
-                    object : Getter<NPC, NPCRightClickEvent>() {
-                        override fun get(event: NPCRightClickEvent): NPC {
-                            return event.npc
-                        }
-                    }, 0)
+                { evt -> evt.npc }, 0)
             EventValues.registerEventValue(NPCRightClickEvent::class.java, Number::class.java,
-                    object : Getter<Number, NPCRightClickEvent>() {
-                        override fun get(event: NPCRightClickEvent): Number {
-                            return event.npc.id
-                        }
-                    }, 0)
+                { evt -> evt.npc.id }, 0)
             Skript.registerEvent("NPC/Citizen Left Click", SimpleEvent::class.java, NPCLeftClickEvent::class.java,
                     "(NPC|Citizen) left click")
             EventValues.registerEventValue(NPCLeftClickEvent::class.java, Player::class.java,
-                    object : Getter<Player, NPCLeftClickEvent>() {
-                        override fun get(event: NPCLeftClickEvent): Player {
-                            return event.clicker
-                        }
-                    }, 0)
+                { evt -> evt.clicker }, 0)
             EventValues.registerEventValue(NPCLeftClickEvent::class.java, NPC::class.java,
-                    object : Getter<NPC, NPCLeftClickEvent>() {
-                        override fun get(event: NPCLeftClickEvent): NPC {
-                            return event.npc
-                        }
-                    }, 0)
+                { evt -> evt.npc }, 0)
             EventValues.registerEventValue(NPCLeftClickEvent::class.java, Number::class.java,
-                    object : Getter<Number, NPCLeftClickEvent>() {
-                        override fun get(event: NPCLeftClickEvent): Number {
-                            return event.npc.id
-                        }
-                    }, 0)
+                { evt -> evt.npc.id }, 0)
             Skript.registerEvent("NPC/Citizen Death", SimpleEvent::class.java, NPCDeathEvent::class.java,
                     "(NPC|Citizen) death")
             EventValues.registerEventValue(NPCDeathEvent::class.java, NPC::class.java,
-                    object : Getter<NPC, NPCDeathEvent>() {
-                        override fun get(event: NPCDeathEvent): NPC {
-                            return event.npc
-                        }
-                    }, 0)
+                { evt -> evt.npc }, 0)
             Skript.registerCondition<CondIsNpcId>(CondIsNpcId::class.java, "(NPC|Citizen) is %number%")
             Skript.registerCondition<CondIsNpcIdGeneral>(CondIsNpcIdGeneral::class.java, "%entity% is (citizen|npc) %number%")
             Skript.registerCondition<CondIsNpcNamed>(CondIsNpcNamed::class.java,

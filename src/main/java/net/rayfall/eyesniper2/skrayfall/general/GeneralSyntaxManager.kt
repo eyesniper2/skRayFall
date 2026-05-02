@@ -4,7 +4,6 @@ import ch.njol.skript.Skript
 import ch.njol.skript.lang.ExpressionType
 import ch.njol.skript.lang.util.SimpleEvent
 import ch.njol.skript.registrations.EventValues
-import ch.njol.skript.util.Getter
 import net.rayfall.eyesniper2.skrayfall.SyntaxManagerInterface
 import net.rayfall.eyesniper2.skrayfall.general.effects.*
 import net.rayfall.eyesniper2.skrayfall.general.events.EvtCraftClick
@@ -18,7 +17,6 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.Plugin
-import org.eclipse.jdt.annotation.Nullable
 
 class GeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
     override fun registerSyntax() {
@@ -31,47 +29,17 @@ class GeneralSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                 "(unstore|chest remove)")
         StoreListener(plugin)
         EventValues.registerEventValue(StoreEvent::class.java, ItemStack::class.java,
-                object : Getter<ItemStack, StoreEvent>() {
-                    @Nullable
-                    override fun get(evt: StoreEvent): ItemStack {
-                        return evt.getItem()
-                    }
-                }, 0)
+            { evt -> evt.item }, 0)
         EventValues.registerEventValue(StoreEvent::class.java, Player::class.java,
-                object : Getter<Player, StoreEvent>() {
-                    @Nullable
-                    override fun get(evt: StoreEvent): Player {
-                        return evt.getPlayer()
-                    }
-                }, 0)
+            { evt -> evt.player }, 0)
         EventValues.registerEventValue(StoreEvent::class.java, Inventory::class.java,
-                object : Getter<Inventory, StoreEvent>() {
-                    @Nullable
-                    override fun get(evt: StoreEvent): Inventory {
-                        return evt.getInventory()
-                    }
-                }, 0)
+            { evt -> evt.inventory }, 0)
         EventValues.registerEventValue(UnstoreEvent::class.java, ItemStack::class.java,
-                object : Getter<ItemStack, UnstoreEvent>() {
-                    @Nullable
-                    override fun get(evt: UnstoreEvent): ItemStack {
-                        return evt.getItem()
-                    }
-                }, 0)
+            { evt -> evt.item }, 0)
         EventValues.registerEventValue(UnstoreEvent::class.java, Player::class.java,
-                object : Getter<Player, UnstoreEvent>() {
-                    @Nullable
-                    override fun get(evt: UnstoreEvent): Player {
-                        return evt.getPlayer()
-                    }
-                }, 0)
+            { evt -> evt.player }, 0)
         EventValues.registerEventValue(UnstoreEvent::class.java, Inventory::class.java,
-                object : Getter<Inventory, UnstoreEvent>() {
-                    @Nullable
-                    override fun get(evt: UnstoreEvent): Inventory {
-                        return evt.getInventory()
-                    }
-                }, 0)
+            { evt -> evt.inventory }, 0)
         // Made by njol, ported by eyesniper2 to 1.8. All credit goes to njol on this one!
         Skript.registerEffect(EffMaxHealth::class.java,
                 "set rf max[imum] h(p|ealth) of %livingentities% to %number%")

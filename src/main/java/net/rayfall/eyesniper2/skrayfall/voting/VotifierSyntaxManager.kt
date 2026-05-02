@@ -22,19 +22,9 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                             "Use event-string to return the name of the website they voted on")
                     .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallVoteEvent::class.java, Player::class.java,
-                    object : Getter<Player, RayFallVoteEvent>() {
-                        @Nullable
-                        override fun get(evt: RayFallVoteEvent): Player {
-                            return evt.player
-                        }
-                    }, 0)
+                { evt -> evt.player }, 0)
             EventValues.registerEventValue(RayFallVoteEvent::class.java, String::class.java,
-                    object : Getter<String, RayFallVoteEvent>() {
-                        @Nullable
-                        override fun get(evt: RayFallVoteEvent): String {
-                            return evt.site
-                        }
-                    }, 0)
+                { evt -> evt.site }, 0)
             Skript.registerEvent("On Offline Vote", SimpleEvent::class.java, RayFallOfflineVoteEvent::class.java,
                     "offline vote[ing]")
                     .description("Check server vote by:",
@@ -45,19 +35,9 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                             "the name of the website they voted on")
                     .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallOfflineVoteEvent::class.java, Player::class.java,
-                    object : Getter<Player, RayFallOfflineVoteEvent>() {
-                        @Nullable
-                        override fun get(evt: RayFallOfflineVoteEvent): Player {
-                            return evt.player
-                        }
-                    }, 0)
+                { evt -> evt.player }, 0)
             EventValues.registerEventValue(RayFallOfflineVoteEvent::class.java, String::class.java,
-                    object : Getter<String, RayFallOfflineVoteEvent>() {
-                        @Nullable
-                        override fun get(evt: RayFallOfflineVoteEvent): String {
-                            return evt.site
-                        }
-                    }, 0)
+                { evt -> evt.site }, 0)
             Skript.registerEvent("On Vote Received", SimpleEvent::class.java, RayFallVoteReceivedEvent::class.java,
                     "[raw ]vote receiv(e|ed)")
                     .description("Check server vote by:",
@@ -67,12 +47,7 @@ class VotifierSyntaxManager(val plugin: Plugin) : SyntaxManagerInterface {
                             "is online. Use event-string to return the name of the website they voted on")
                     .requiredPlugins("Votifier")
             EventValues.registerEventValue(RayFallVoteReceivedEvent::class.java, String::class.java,
-                    object : Getter<String, RayFallVoteReceivedEvent>() {
-                        @Nullable
-                        override fun get(evt: RayFallVoteReceivedEvent): String {
-                            return evt.votersName
-                        }
-                    }, 0)
+                { evt -> evt.votersName }, 0)
         } else {
             plugin.logger.info("No Votifier Found")
         }

@@ -31,7 +31,7 @@ java {
 // compileJava.options.verbose = true
 
 group = 'net.rayfall.eyesniper2.skrayfall'
-version = '1.9.29'
+version = '1.9.30'
 
 description = """"""
 
@@ -60,7 +60,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.SkriptLang:Skript:2.14.0'
+    implementation 'com.github.SkriptLang:Skript:2.15.0'
     implementation group: 'org.bstats', name: 'bstats-bukkit', version:'1.7'
     implementation group: 'de.slikey', name: 'EffectLib', version:'6.5-SNAPSHOT'
     implementation 'net.coreprotect:coreprotect:21.2'
